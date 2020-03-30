@@ -1,0 +1,43 @@
+<app-nav></app-nav>
+<div class="row">
+    <!-- En el formulario, el name de cada entrada será el título de cada campo del value. La propiedad precedida con un # será
+         la que nos permita acceder a ese valor dentro de la vista del formulario (por ejemplo, para ver si está pristine o valid)
+    -->
+    <form #fenomenosForm="ngForm" id="formulario" (ngSubmit)="addFenomeno()">
+        <div class="col-10 mx-auto text-left">
+
+            <label for="ciudad">Ciudad</label>
+            <input class="form-control" [(ngModel)]="fenomeno.ciudad" type="text" name="ciudad" id="ciudad" placeholder="Ej: Sevilla" #ciudad="ngModel" required><br>
+            <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por favor, introduce una ciudad válida.</div>
+
+            <label for="pais">País</label>
+            <input class="form-control" [(ngModel)]="fenomeno.pais" type="text" name="pais" id="pais" placeholder="Ej: España" required #pais="ngModel"><br>
+            <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país válido.</div>
+
+            <label for="coordenadas">Coordenadas</label>
+            <input class="form-control" [(ngModel)]="fenomeno.coordenadas" type="text" name="coordenadas" id="coordenadas" placeholder="Coordenadas" #coordenadas="ngModel"><br>
+            <div [hidden]="coordenadas.valid || coordenadas.pristine" class="alert alert-danger">Por favor, introduce unas coordenadas válidas.</div>
+
+            <label for="fecha">Fecha</label>
+            <input class="form-control" [(ngModel)]="fenomeno.fecha" type="date" name="fecha" id="fecha" required #fecha="ngModel"><br>
+            <div [hidden]="fecha.valid || fecha.pristine" class="alert alert-danger">Por favor, introduce una fecha válida.</div>
+
+        </div>
+        <div class="col-10 mx-auto text-left">
+            <label for="titulo">Titulo</label>
+            <textarea name="titulo" id="titulo" class="form-control" [(ngModel)]="fenomeno.titulo" rows="4" required #titulo="ngModel"></textarea><br>
+            <div [hidden]="titulo.valid || titulo.pristine" class="alert alert-danger">Por favor, introduce un título válido.</div>
+
+            <label for="descripcion">Descripcion</label>
+            <textarea name="descripcion" id="descripcion" class="form-control" [(ngModel)]="fenomeno.descripcionCorta" rows="4" required #descripcion="ngModel"></textarea><br>
+            <div [hidden]="descripcion.valid || descripcion.pristine" class="alert alert-danger">Por favor, introduce una descripción válida.</div>
+
+            <label for="contenido">Contenido</label>
+            <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido" rows="16" required #contenido="ngModel"></textarea><br>
+            <div [hidden]="contenido.valid || contenido.pristine" class="alert alert-danger">Por favor, introduce un contenido válido.</div>
+
+            <input class="btn btn-info w-100" id="submit" type="submit" [value]="accion"><br><br>
+            <a type="button" class="btn btn-warning w-100" routerLink="/view/{{investigadorId}}/fenomenos">Volver</a><br><br>
+        </div>
+    </form>
+</div>

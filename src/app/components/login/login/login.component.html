@@ -1,0 +1,16 @@
+<form #loginForm="ngForm" id="formulario" class="col-md-6 mx-auto" (ngSubmit)="checkLogin()">
+
+  <h3>Acceso personal investigador</h3>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input class="form-control" type="email" [(ngModel)]="emailLogin" name="emailLogin" id="emailLogin" placeholder="Introduce tu correo electrónico aquí." #emailForm="ngModel" required>
+    <div [hidden]="emailForm.valid || emailForm.pristine" class="alert alert-danger">Por favor, introduce un email válido.</div>
+  </div>
+  <div class="form-group">
+    <label for="clave">Contraseña</label>
+    <input class="form-control" type="password" [(ngModel)]="clave" name="claveLogin" id="clave" placeholder="Tu clave está segura, no te preocupes." #claveForm="ngModel" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Acceder</button><br><br>
+  <div [hidden]="!loginIncorrecto" class="alert alert-danger">El usuario y/o la contraseña son incorrectos.</div>
+  <p>Puedes acceder a la plataforma como visitante pulsando <a routerLink="fenomenos">aquí</a>.</p>
+</form>

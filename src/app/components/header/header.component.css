@@ -1,0 +1,15 @@
+header {
+  margin: auto;
+  text-align: center;
+  color: white;
+}
+
+header h1 {
+  cursor: pointer;
+  font-size: 60px;
+}
+
+img {
+
+  width: 30px;
+}

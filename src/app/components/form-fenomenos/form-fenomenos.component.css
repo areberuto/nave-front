@@ -1,0 +1,14 @@
+#formulario {
+  color: black;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 5px;
+  padding-top: 40px;
+  width: 75%;
+}
+
+textarea {
+
+    resize: none;
+    
+}

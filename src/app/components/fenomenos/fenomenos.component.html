@@ -1,0 +1,26 @@
+<app-nav [idInvestigador]="idInvestigador" (verMisFenomenos)="getFenomenosUser($event)"></app-nav>
+<div id="fenomenosContainer" class="row">
+    <div class="col-lg-10 mx-lg-auto">
+        <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
+            <div class="card py-2 px-4">
+                <div class="card-body">
+                    <h4 class="card-title">{{fenomeno.titulo}}</h4>
+                    <p class="card-text">{{fenomeno.descripcionCorta}}</p>
+                    <p>{{fenomeno.contenido}}</p>
+                    <p>{{fenomeno.ciudad}}, {{fenomeno.pais}}</p>
+                    <div id="autor" class="row">
+                        <p class="col-12">Reportado por {{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}
+                            {{fenomeno.apellidoInv2}} // {{fenomeno.fecha}}</p>
+                        <div *ngIf="idInvestigador == fenomeno.investigadorId" class="col-12">
+                            <div class="row justify-content-between" id="actionButtons">
+                                <button class="col-5 btn btn-warning my-2">Modificar</button>
+                                <button class="col-5 btn btn-danger my-2" (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

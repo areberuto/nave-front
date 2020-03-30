@@ -1,0 +1,25 @@
+nav {
+  /* border: 1px solid white; */
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: auto;
+}
+
+nav .btn {
+  white-space: normal;
+}
+
+#buscar {
+  background-color: rgb(212, 208, 208);
+  padding: 20px;
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+h3, h4 {
+
+  color: white;
+  
+}

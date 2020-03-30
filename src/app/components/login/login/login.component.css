@@ -1,0 +1,13 @@
+#formulario {
+  color: black;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 5px;
+  padding: 40px;
+  
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 30px;
+}

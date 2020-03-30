@@ -1,0 +1,24 @@
+#fenomenosContainer {
+  border: 1px solid white;
+  padding-top: 40px;
+}
+
+.fenomeno {
+  color: black;
+  word-wrap: break-word;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 20px auto;
+  padding: 10px 20px;
+}
+
+#autor {
+  border-top: 2px solid black;
+  padding-top: 10px;
+}
+
+#actionButtons {
+
+  padding: 0 15px;
+  
+}
