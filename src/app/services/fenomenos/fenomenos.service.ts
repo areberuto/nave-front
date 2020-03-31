@@ -20,9 +20,15 @@ export class FenomenosService {
 
   }
 
-  getFenomenosById(id: Number){
+  getFenomenosByInvestigador(idInv: Number){
 
-    return this.http.get<Fenomeno[]>(`${this.url}?id=${id}`);
+    return this.http.get<Fenomeno[]>(`${this.url}?idInv=${idInv}`);
+
+  }
+
+  getFenomenoById(id: Number){
+
+    return this.http.get<Fenomeno>(`${this.url}?idFen=${id}`);
 
   }
 
@@ -31,6 +37,13 @@ export class FenomenosService {
     console.log("El servicio de post ha recibido:");
     console.log(fenomeno);  
     return this.http.post(`${this.url}/`, {fenomeno: fenomeno});
+
+  }
+
+  putFenomeno(fenomeno: Fenomeno){
+
+    console.log("Ejecutando servicio de actualización.");
+    return this.http.put(`${this.url}/`, {fenomeno: fenomeno});
 
   }
 

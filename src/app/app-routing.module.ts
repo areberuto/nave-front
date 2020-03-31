@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: "view/:id/addFenomeno",
     component: FormFenomenosComponent
+  },
+  {
+    path: "view/:id/modFenomeno/:idFen",
+    component: FormFenomenosComponent
   }
 ];
 

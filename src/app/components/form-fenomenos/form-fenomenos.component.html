@@ -1,9 +1,9 @@
-<app-nav></app-nav>
+<app-nav [idInvestigador]="investigadorId"></app-nav>
 <div class="row">
     <!-- En el formulario, el name de cada entrada será el título de cada campo del value. La propiedad precedida con un # será
          la que nos permita acceder a ese valor dentro de la vista del formulario (por ejemplo, para ver si está pristine o valid)
     -->
-    <form #fenomenosForm="ngForm" id="formulario" (ngSubmit)="addFenomeno()">
+    <form #fenomenosForm="ngForm" id="formulario" (ngSubmit)="ejecutarAccion()">
         <div class="col-10 mx-auto text-left">
 
             <label for="ciudad">Ciudad</label>
@@ -36,7 +36,7 @@
             <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido" rows="16" required #contenido="ngModel"></textarea><br>
             <div [hidden]="contenido.valid || contenido.pristine" class="alert alert-danger">Por favor, introduce un contenido válido.</div>
 
-            <input class="btn btn-info w-100" id="submit" type="submit" [value]="accion"><br><br>
+            <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!fenomenosForm.valid" [value]="accion"><br><br>
             <a type="button" class="btn btn-warning w-100" routerLink="/view/{{investigadorId}}/fenomenos">Volver</a><br><br>
         </div>
     </form>

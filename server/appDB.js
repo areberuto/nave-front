@@ -79,39 +79,69 @@ const validFenomeno = (req, res, next) => {
 //Fenomenos
 
 fenomenosRouter.get('/', (req, res, next) => {
-
+    
     let query = "SELECT f.*, i.nombre as nombreInvestigador, i.apellido1 as apellidoInv1, i.apellido2 as apellidoInv2 FROM fenomenos as f INNER JOIN investigadores as i ON f.investigadorId = i.id";
     
-    if(req.query.id){
+    console.log(req.query);
 
-        query = query + ` WHERE i.id = ${req.query.id}` 
+    if(req.query.idInv){
+
+        query = query + ` WHERE i.id = ${req.query.idInv}`;
+        db.all(query, (err, rows) => {
+
+            if (err) {
+    
+                console.log(err);
+                res.status(500).send();
+    
+            }
+    
+            res.send(rows);
+    
+        });
 
     }
 
-    console.log(query);
+    if(req.query.idFen){
 
-    db.all(query, (err, rows) => {
+        query = query + ` WHERE f.id = ${req.query.idFen}`;
+        db.get(query, (err, row) => {
 
-        if (err) {
+            if (err) {
+    
+                console.log(err);
+                res.status(500).send();
+    
+            }
+    
+            res.send(row);
+    
+        });
 
-            console.log(err);
-            res.status(500).send();
+    } else {
 
-        }
+        db.all(query, (err, rows) => {
 
-        console.log(rows);
+            if (err) {
+    
+                console.log(err);
+                res.status(500).send();
+    
+            }
+    
+            res.send(rows);
+    
+        });
 
-        res.send(rows);
+    }
 
-    });
-
-
+    
 
 });
 
 fenomenosRouter.post('/', validFenomeno, (req, res, next) => {
     
-    fenomeno = req.fenomeno;
+    let fenomeno = req.fenomeno;
 
     db.run("INSERT INTO fenomenos (investigadorId, titulo, descripcionCorta, contenido, fecha, ciudad, pais, coordenadas) VALUES ($investigadorId, $titulo, $descripcionCorta, $contenido, $fecha, $ciudad, $pais, $coordenadas)", {
 
@@ -139,6 +169,29 @@ fenomenosRouter.post('/', validFenomeno, (req, res, next) => {
         }
 
     }); 
+
+});
+
+fenomenosRouter.put('/', validFenomeno, (req, res, next) => {
+
+    let fenomeno = req.fenomeno;
+
+    db.run(`UPDATE fenomenos SET titulo = '${fenomeno.titulo}', descripcionCorta = '${fenomeno.descripcionCorta}', contenido = '${fenomeno.contenido}', fecha = '${fenomeno.fecha}', ciudad = '${fenomeno.ciudad}', pais = '${fenomeno.pais}', coordenadas = '${fenomeno.coordenadas}' WHERE id = ${fenomeno.id}`, function (err) {
+
+        if (err) {
+
+            console.log(`Error en la actualización: ${err}`);
+            res.status(500).send();
+
+        } else {
+
+            console.log(`Inserción realizada con éxito.`)
+            res.status(201).send({status: 201});
+
+        }
+
+    });
+
 
 });
 

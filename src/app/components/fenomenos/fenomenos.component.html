@@ -12,9 +12,9 @@
                         <p class="col-12">Reportado por {{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}
                             {{fenomeno.apellidoInv2}} // {{fenomeno.fecha}}</p>
                         <div *ngIf="idInvestigador == fenomeno.investigadorId" class="col-12">
-                            <div class="row justify-content-between" id="actionButtons">
-                                <button class="col-5 btn btn-warning my-2">Modificar</button>
-                                <button class="col-5 btn btn-danger my-2" (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
+                            <div class="row justify-content-start" id="actionButtons">
+                                <button class="col-md-2 btn btn-warning mx-1 my-2" routerLink="/view/{{idInvestigador}}/modFenomeno/{{fenomeno.id}}">Modificar</button>
+                                <button class="col-md-2 btn btn-danger mx-1 my-2" (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
                             </div>
                         </div>
                     </div>

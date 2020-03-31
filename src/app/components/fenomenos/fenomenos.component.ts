@@ -49,7 +49,7 @@ export class FenomenosComponent implements OnInit {
   getFenomenosUser(event: Number){
 
     console.log('Getting fenomenos del usuario');
-    this.fenomenosService.getFenomenosById(event).subscribe(data => {
+    this.fenomenosService.getFenomenosByInvestigador(event).subscribe(data => {
 
       console.log(data);
       this.fenomenos = data;

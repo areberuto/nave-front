@@ -26,14 +26,14 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.2",
     "popper.js": "^1.16.1",
-    "rxjs": "~6.5.4",
+    "rxjs": "^6.5.4",
     "sqlite3": "^4.1.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.7",
-    "@angular/cli": "^9.0.7",
+    "@angular/cli": "^9.1.0",
     "@angular/compiler-cli": "~9.0.7",
     "@angular/language-service": "~9.0.7",
     "@types/jasmine": "~3.5.0",
