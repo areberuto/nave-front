@@ -1,26 +1,27 @@
 <div class="row">
-
-  <nav class="col-lg-10 mx-lg-auto">
-
-    <div class="row">
-      <button type="button" routerLink="/" class="col-8 col-lg-2 btn btn-info mx-auto my-2">Listado de
-        investigadores</button>
-      <button type="button" routerLink="/" class="col-8 col-lg-2 btn btn-info mx-auto my-2">Búsqueda
-        personalizada</button>
-      <button type="button" routerLink="/" class="col-8 col-lg-2 btn mx-auto my-2" id="log">{{logAction}}</button>
-    </div>
-
-  </nav>
   <nav *ngIf="investigador" class="col-lg-10 mx-lg-auto">
-    
+
     <div class="row justify-content-center">
       <h3 class="col-10">Hola, {{investigador.nombre}}.</h3>
       <h4 class="col-10">{{saludo}}</h4>
-      <button type="button" class="col-8 col-lg-2 btn btn-info mx-1 my-2" (click)="mostrarMisFenomenos()">Mis fenómenos</button>
+      <button type="button" class="col-8 col-lg-2 btn btn-info mx-1 my-2" (click)="mostrarMisFenomenos()">Mis
+        fenómenos</button>
       <button type="button" routerLink="/view/{{idInvestigador}}/addFenomeno"
         class="col-8 col-lg-2 btn btn-info mx-1 my-2">Añadir fenómeno</button>
       <button type="button" class="col-8 col-lg-2 btn btn-info mx-1 my-2">Mi perfil</button>
     </div>
 
   </nav>
+  <nav class="col-lg-10 mx-lg-auto">
+
+    <div class="row justify-content-center">
+      <button type="button" routerLink="/" class="col-8 col-lg-2 btn btn-info mx-1 my-2">Listado de
+        investigadores</button>
+      <button type="button" routerLink="/" class="col-8 col-lg-2 btn btn-info mx-1 my-2">Búsqueda
+        personalizada</button>
+      <button type="button" routerLink="/" class="col-8 col-lg-2 btn mx-1 my-2" id="log">{{logAction}}</button>
+    </div>
+
+  </nav>
+
 </div>
