@@ -12,10 +12,12 @@ export class FenomenosService {
 
   constructor(private http: HttpClient) {  
 
+
+    
   }
 
   getFenomenos(){
-
+    
     return this.http.get<Fenomeno[]>(`${this.url}/`);
 
   }
@@ -34,7 +36,7 @@ export class FenomenosService {
 
   postFenomeno(fenomeno: Fenomeno){
 
-    console.log("El servicio de post ha recibido:");
+    console.log("Fenómeno recibido para insertar:");
     console.log(fenomeno);  
     return this.http.post(`${this.url}/`, {fenomeno: fenomeno});
 
@@ -42,7 +44,7 @@ export class FenomenosService {
 
   putFenomeno(fenomeno: Fenomeno){
 
-    console.log("Ejecutando servicio de actualización.");
+    console.log("Actualizando fenómeno.");
     return this.http.put(`${this.url}/`, {fenomeno: fenomeno});
 
   }

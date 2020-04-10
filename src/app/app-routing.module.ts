@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { FenomenosComponent } from './components/fenomenos/fenomenos.component';
 import { FormFenomenosComponent } from './components/form-fenomenos/form-fenomenos.component';
 import { LoginComponent } from './components/login/login/login.component';
+import { InvestigadoresComponent } from './components/investigadores/investigadores/investigadores.component';
 
 const routes: Routes = [
   {
@@ -14,15 +15,15 @@ const routes: Routes = [
     component: FenomenosComponent
   },
   {
-    path: "view/:id/fenomenos",
-    component: FenomenosComponent
+    path: "investigadores",
+    component: InvestigadoresComponent
   },
   {
-    path: "view/:id/addFenomeno",
+    path: "addFenomeno",
     component: FormFenomenosComponent
   },
   {
-    path: "view/:id/modFenomeno/:idFen",
+    path: "modFenomeno/:idFen",
     component: FormFenomenosComponent
   }
 ];

@@ -9,8 +9,9 @@
   <div class="form-group">
     <label for="clave">Contraseña</label>
     <input class="form-control" type="password" [(ngModel)]="clave" name="claveLogin" id="clave" placeholder="Tu clave está segura, no te preocupes." #claveForm="ngModel" required>
+    <div [hidden]="claveForm.valid || claveForm.pristine" class="alert alert-danger">Por favor, introduce un valor en la contraseña.</div>
   </div>
-  <button type="submit" class="btn btn-primary">Acceder</button><br><br>
+  <button [disabled]="!emailForm.valid || !claveForm.valid" type="submit" class="btn btn-primary">Acceder</button><br><br>
   <div [hidden]="!loginIncorrecto" class="alert alert-danger">El usuario y/o la contraseña son incorrectos.</div>
-  <p>Puedes acceder a la plataforma como visitante pulsando <a routerLink="fenomenos">aquí</a>.</p>
+  <p>Puedes acceder a la plataforma como visitante pulsando <a href="#" (click)='loginPublico($event)'>aquí</a>.</p>
 </form>
