@@ -10,11 +10,10 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item">➖ 🌐 {{investigador.organismo}}</li>
         <li class="list-group-item">➖ 🏡 {{investigador.ciudad}}, {{investigador.pais}}</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item">➖ 📧 {{investigador.correo}}</li>
       </ul>
       <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <a routerLink="/fenomenos/see/{{investigador.id}}" class="card-link">Fenómenos reportados por {{investigador.nombre}}</a>
       </div>
     </div>
   </div>

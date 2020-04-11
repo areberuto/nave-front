@@ -15,6 +15,10 @@ const routes: Routes = [
     component: FenomenosComponent
   },
   {
+    path: "fenomenos/see/:seeInv",
+    component: FenomenosComponent
+  },
+  {
     path: "investigadores",
     component: InvestigadoresComponent
   },

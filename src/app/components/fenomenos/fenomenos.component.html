@@ -1,4 +1,6 @@
 <div id="fenomenosContainer" class="row">
+    <h3 class="reportedBy col-10 mx-auto" *ngIf="fenomenos && fenomenos.length > 0 && seeInv">Fenómenos reportados por {{seeInvName}}</h3>
+    <h3 class="reportedBy col-10 mx-auto" *ngIf="fenomenos && fenomenos.length == 0">{{seeInvName}} aún no ha reportado fenómenos.</h3>
     <div class="col-lg-10 mx-lg-auto">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
             <div class="card py-2 px-4">

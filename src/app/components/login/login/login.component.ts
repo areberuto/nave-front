@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
     this.loginService.setLoginStatus({isAdmin: false, idInv: undefined});
     this.loginService.logOut();
-
+    
   }
 
   checkLogin(){
