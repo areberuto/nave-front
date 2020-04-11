@@ -9,7 +9,7 @@ import { FormFenomenosComponent } from './components/form-fenomenos/form-fenomen
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 import { LoginComponent } from './components/login/login/login.component';
-import { InvestigadoresComponent } from './components/investigadores/investigadores/investigadores.component';
+import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.service';
 
 @NgModule({

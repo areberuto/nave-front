@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { FenomenosComponent } from './components/fenomenos/fenomenos.component';
 import { FormFenomenosComponent } from './components/form-fenomenos/form-fenomenos.component';
 import { LoginComponent } from './components/login/login/login.component';
-import { InvestigadoresComponent } from './components/investigadores/investigadores/investigadores.component';
+import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 
 const routes: Routes = [
   {

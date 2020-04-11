@@ -1,0 +1,21 @@
+<div id="investigadoresContainer" class="row">
+  <div *ngFor="let investigador of investigadores" class="investigador col-sm-6 col-lg-4 mx-auto">
+    <div class="card" style="background-color: white; color: black">
+      <img class="card-img-top" src="assets/photo.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{investigador.nombre}} {{investigador.apellido1}} {{investigador.apellido2}}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+          content.</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">➖ 🌐 {{investigador.organismo}}</li>
+        <li class="list-group-item">➖ 🏡 {{investigador.ciudad}}, {{investigador.pais}}</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+    </div>
+  </div>
+</div>
