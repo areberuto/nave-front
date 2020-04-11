@@ -42,8 +42,6 @@ export class NavComponent implements OnInit {
     
     this.loginStatus$.subscribe(data => {
       
-      console.log('Nav ha recibido el cambio de loginStatus', data);
-
       this.loginStatus = data;
 
       if(this.loginStatus.idInv == -1){

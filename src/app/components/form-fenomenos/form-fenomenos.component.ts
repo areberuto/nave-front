@@ -56,13 +56,10 @@ export class FormFenomenosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('loginStatus inicial del form:', this.loginStatus);
-
     //Suscripción para futuros cambios del loginStatus
 
     this.loginStatus$.subscribe(data => {
 
-      console.log('Actualizando loginStatus en form a:', data);
       this.loginStatus = data;
 
     });
@@ -79,8 +76,6 @@ export class FormFenomenosComponent implements OnInit {
 
       if(sessionStorage.getItem('idToken')){
 
-        console.log('Hay token en la sessionStorage.');
-
         this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe( data => {
   
             //Para guardar el nuevo token, que tendrá tiempos de
@@ -93,8 +88,6 @@ export class FormFenomenosComponent implements OnInit {
             this.loginService.setLoginStatus({isAdmin: data['isAdmin'], idInv: data['idInv']});
   
             this.investigadorId = this.loginStatus.idInv;
-
-            console.log('Estado del login actualizado en el form, con la info del usuario', data['idInv']);
             
           },
 
@@ -115,7 +108,6 @@ export class FormFenomenosComponent implements OnInit {
 
       else {
 
-        console.log('No hay token. Pasamos a vista público.');
         this.loginService.setLoginStatus({isAdmin: false, idInv: -1}); 
 
       }

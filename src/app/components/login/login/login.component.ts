@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -24,8 +24,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('onInit Login');
-
     //Reseteo del estado del login cada vez que se entra a esta pantalla
 
     this.loginService.setLoginStatus({isAdmin: false, idInv: undefined});
@@ -35,7 +33,9 @@ export class LoginComponent implements OnInit {
 
   checkLogin(){
 
-    this.loginService.checkLogin(this.emailLogin, this.clave).subscribe(
+    let hashedClave = CryptoJS.SHA3(this.clave).toString();
+
+    this.loginService.checkLogin(this.emailLogin, hashedClave).subscribe(
 
       data => {
         

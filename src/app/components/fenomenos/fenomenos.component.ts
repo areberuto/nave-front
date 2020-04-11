@@ -28,13 +28,10 @@ export class FenomenosComponent implements OnInit {
   
   ngOnInit() {
     
-    console.log('loginStatus inicial de fenomenos:', this.loginStatus);
-
     //Suscripción para futuros cambios del loginStatus
 
     this.loginStatus$.subscribe(data => {
 
-      console.log('Actualizando loginStatus en fenomenos a:', data);
       this.loginStatus = data;
 
     });
@@ -51,8 +48,6 @@ export class FenomenosComponent implements OnInit {
 
       if(sessionStorage.getItem('idToken')){
 
-        console.log('Hay token en la sessionStorage.');
-
         this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe( data => {
   
             //Para guardar el nuevo token, que tendrá tiempos de
@@ -65,8 +60,6 @@ export class FenomenosComponent implements OnInit {
             this.loginService.setLoginStatus({isAdmin: data['isAdmin'], idInv: data['idInv']});
   
             this.idInvestigador = this.loginStatus.idInv;
-
-            console.log('Estado del login actualizado en fenomenos, con la info del usuario', data['idInv']);
             
           },
 
@@ -87,7 +80,6 @@ export class FenomenosComponent implements OnInit {
 
       else {
 
-        console.log('No hay token. Pasamos a vista público.');
         this.loginService.setLoginStatus({isAdmin: false, idInv: -1}); 
 
       }
