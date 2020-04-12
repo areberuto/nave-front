@@ -8,7 +8,8 @@ export class Fenomeno {
     titulo: String;
     descripcionCorta: String;
     contenido: String;
-    coordenadas: String;
+    latitud: Number;
+    longitud: Number;
     categoria: String;
     nombreInvestigador: String;
     apellidoInv1: String;

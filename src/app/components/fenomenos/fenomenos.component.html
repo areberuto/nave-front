@@ -3,15 +3,23 @@
     <h3 class="reportedBy col-10 mx-auto" *ngIf="fenomenos && fenomenos.length == 0">{{seeInvName}} aún no ha reportado fenómenos.</h3>
     <div class="col-lg-10 mx-lg-auto">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
-            <div class="card py-2 px-4">
+            <div class="card px-4">
                 <div class="card-body">
                     <h4 class="card-title">{{fenomeno.titulo}}</h4>
                     <p class="card-text">{{fenomeno.descripcionCorta}}</p>
-                    <p>{{fenomeno.contenido}}</p>
-
-                    <div id="autor" class="row">
-                        <p class="col-12">🔎 {{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}
-                            {{fenomeno.apellidoInv2}} ➖ 📅 {{fenomeno.fecha}} ➖ 🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}}</p>
+                    <div class="row">
+                        <div class="mapContainer col-md-4 my-4 my-md-0 mx-auto">
+                            <app-mapa [idFen]="fenomeno.id" [latitud]="fenomeno.latitud" [longitud]="fenomeno.longitud"></app-mapa>
+                        </div>
+                        <div class="col-md-8">
+                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} ➖ 📅 {{fenomeno.fecha}}</p>
+                            <p>{{fenomeno.contenido}}</p>
+                        </div>  
+                    </div>
+                    
+                    <div id="autor" class="row mt-4">
+                        <p class="col-12 mb-2">🔎 {{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}
+                            {{fenomeno.apellidoInv2}} ➖ 📂 {{fenomeno.categoria}}</p>
                         <div *ngIf="idInvestigador == fenomeno.investigadorId" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
                                 <button class="col-md-2 btn btn-warning mx-1 my-2"

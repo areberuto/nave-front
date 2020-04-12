@@ -11,6 +11,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { LoginComponent } from './components/login/login/login.component';
 import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.service';
+import { MapaComponent } from './components/mapa/mapa/mapa.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AuthInterceptor } from './services/interceptors/auth-interceptor.servic
     HeaderComponent,
     NavComponent,
     LoginComponent,
-    InvestigadoresComponent
+    InvestigadoresComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule,

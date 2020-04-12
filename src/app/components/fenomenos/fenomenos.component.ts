@@ -13,6 +13,7 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./fenomenos.component.css"],
 })
 export class FenomenosComponent implements OnInit {
+
   public fenomenos: Array<Fenomeno>;
   public idInvestigador: Number;
   public seeInv: Number;
@@ -20,21 +21,19 @@ export class FenomenosComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
-  constructor(
-    private fenomenosService: FenomenosService,
-    private investigadoresService: InvestigadoresService,
-    private loginService: LoginService,
-    private activatedRoute: ActivatedRoute
-  ) {
+  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService,private activatedRoute: ActivatedRoute) {
+
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
 
     if (this.activatedRoute.snapshot.params["seeInv"]) {
       this.seeInv = this.activatedRoute.snapshot.params["seeInv"];
     }
+
   }
 
   ngOnInit() {
+
     //Suscripción para futuros cambios del loginStatus
 
     this.loginStatus$.subscribe((data) => {
@@ -97,9 +96,11 @@ export class FenomenosComponent implements OnInit {
     } else {
       this.getFenomenosUser(this.seeInv);
     }
+
   }
 
   getFenomenos() {
+
     this.fenomenosService.getFenomenos().subscribe(
       (fenomenos) => {
         console.log(fenomenos);
@@ -109,9 +110,11 @@ export class FenomenosComponent implements OnInit {
         console.log(err);
       }
     );
+
   }
 
   getFenomenosUser(seeInv: Number) {
+
     console.log("Getting fenomenos del usuario", seeInv);
 
     this.fenomenosService.getFenomenosByInvestigador(seeInv).subscribe(
@@ -144,10 +147,10 @@ export class FenomenosComponent implements OnInit {
       }
     );
 
-
   }
 
   deleteFenomeno(id: Number) {
+
     if (
       confirm(
         "El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?"
@@ -161,5 +164,6 @@ export class FenomenosComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+
   }
 }

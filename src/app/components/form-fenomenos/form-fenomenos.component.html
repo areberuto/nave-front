@@ -31,11 +31,17 @@
             <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país válido.
             </div>
 
-            <label for="coordenadas">Coordenadas</label>
-            <input class="form-control" [(ngModel)]="fenomeno.coordenadas" type="text" name="coordenadas"
-                id="coordenadas" placeholder="Coordenadas" #coordenadas="ngModel"><br>
-            <div [hidden]="coordenadas.valid || coordenadas.pristine" class="alert alert-danger">Por favor, introduce
-                unas coordenadas válidas.</div>
+            <label for="latitud">Latitud</label>
+            <input class="form-control" [(ngModel)]="fenomeno.latitud" type="number" max="90" min="-90" step="0.01" name="latitud"
+                id="latitud" placeholder="Latitud" #latitud="ngModel"><br>
+            <div [hidden]="latitud.valid || latitud.pristine" class="alert alert-danger">Por favor, introduce
+                una latitud válida.</div>
+
+            <label for="longitud">Longitud</label>
+            <input class="form-control" [(ngModel)]="fenomeno.longitud" type="number" max="180" min="-180" step="0.01" name="longitud"
+                id="longitud" placeholder="Longitud" #longitud="ngModel"><br>
+            <div [hidden]="longitud.valid || longitud.pristine" class="alert alert-danger">Por favor, introduce
+                una longitud válida.</div>
 
             <label for="fecha">Fecha*</label>
             <input class="form-control" [(ngModel)]="fenomeno.fecha" type="date" name="fecha" id="fecha" required
@@ -65,8 +71,7 @@
 
             <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!fenomenosForm.valid"
                 [value]="accion"><br><br>
-            <a type="button" class="btn btn-warning w-100"
-                routerLink="/fenomenos">Volver</a><br><br>
+            <a type="button" class="btn btn-warning w-100" routerLink="/fenomenos">Volver</a><br><br>
         </div>
     </form>
 </div>
