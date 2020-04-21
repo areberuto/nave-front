@@ -9,6 +9,7 @@ export class Investigador {
     organismo: String;
     genero: String;
     ciudad: String;
+    pais: String;
     fechaNacimiento: Date;
 
 }

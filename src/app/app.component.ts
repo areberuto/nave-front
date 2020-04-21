@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from './services/login/login.service';
 
 declare let L;
 
@@ -11,5 +12,14 @@ export class AppComponent {
 
   public title: string = 'La nave del misterio';
   
+  constructor(private loginService: LoginService){
+
+  }
+
+  ngOnInit(){
+
+    this.loginService.logOut();
+    
+  }
 
 }

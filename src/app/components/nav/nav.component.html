@@ -1,23 +1,29 @@
-<div class="row" *ngIf="loginStatus && loginStatus.idInv">
-  <nav class="col-lg-10 mx-lg-auto">
-
-    <div *ngIf="investigador">
-      <div class="row justify-content-center">
-        <h3 class="col-10">Hola, {{investigador.nombre}}.</h3>
-        <h4 class="col-10">{{saludo}}</h4>
-        <button type="button" routerLink="addFenomeno"
-          class="col-6 col-lg-2 btn btn-success mx-1 my-2">Añadir fenómeno</button>
-        <button type="button" class="col-6 col-lg-2 btn btn-secondary mx-1 my-2">Mi perfil</button>
-      </div>
-    </div>
-    
-    <div class="row justify-content-center">
-      <button type="button" routerLink="investigadores" class="col-6 col-lg-2 btn btn-info mx-1 my-2">Listado de
-        investigadores</button>
-      <button type="button" routerLink="/fenomenos" class="col-6 col-lg-2 btn btn-info mx-1 my-2">Fenómenos reportados</button>
-      <button type="button" (click)="log()" class="col-6 col-lg-2 btn btn-info mx-1 my-2" id="log">{{logAction}}</button>
-    </div>
-
-  </nav>
-
-</div>
+<nav class="navbar navbar-expand" *ngIf="loginStatus && loginStatus.idInv">
+  <a class="navbar-brand" routerLink="/fenomenos">
+    <img src="./favicon.ico" height="25" alt="Web logo">
+    <span *ngIf="investigador; else saludoPublico" class="d-none d-md-inline">¡Hola {{investigador.nombre}}!</span>
+    <ng-template #saludoPublico>¡Bienvenido/a!</ng-template>
+  </a>
+  <!-- Hacer lo de los iconos cuando pueda descargarlos -->
+  <ul class="navbar-nav ml-auto mr-0">
+    <li class="nav-item" *ngIf="investigador">
+      <a class="nav-link" routerLink="profile">
+        <span class="d-lg-inline">Mi perfil</span>
+      </a>
+    </li>
+    <li class="nav-item" *ngIf="investigador">
+      <a class="nav-link" routerLink="addFenomeno">
+        <span class="d-lg-inline">Añadir fenómeno</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="investigadores">Investigadores</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="fenomenos">Fenómenos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="">{{logAction}}</a>
+    </li>
+  </ul>
+</nav>

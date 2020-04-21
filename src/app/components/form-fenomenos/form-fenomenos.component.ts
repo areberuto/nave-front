@@ -135,19 +135,19 @@ export class FormFenomenosComponent implements OnInit {
 
     console.log(this.fenomeno);
     
-    // this.fenomeno.investigadorId = this.investigadorId;
+    this.fenomeno.investigadorId = this.investigadorId;
 
-    // this.fenomenosService.postFenomeno(this.fenomeno).subscribe(data => {
+    this.fenomenosService.postFenomeno(this.fenomeno).subscribe(data => {
 
-    //   console.log(data);
+      console.log(data);
 
-    //   this.router.navigate(['/fenomenos']);
+      this.router.navigate(['/fenomenos']);
 
-    // }, err => {
+    }, err => {
 
-    //   console.log(err);
+      console.log(err);
 
-    // });
+    });
 
   }
 

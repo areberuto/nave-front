@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login/login.component';
 import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.service';
 import { MapaComponent } from './components/mapa/mapa/mapa.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { MapaComponent } from './components/mapa/mapa/mapa.component';
     NavComponent,
     LoginComponent,
     InvestigadoresComponent,
-    MapaComponent
+    MapaComponent,
+    SignUpComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

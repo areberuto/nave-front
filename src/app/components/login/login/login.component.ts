@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   checkLogin(){
 
-    let hashedClave = CryptoJS.SHA3(this.clave).toString();
+    const hashedClave = CryptoJS.SHA3(this.clave).toString();
 
     this.loginService.checkLogin(this.emailLogin, hashedClave).subscribe(
 

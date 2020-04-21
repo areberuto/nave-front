@@ -12,20 +12,21 @@
 }
 
 #actionButtons {
-
   padding: 0 15px;
-  
 }
 
 .reported {
-
   color: white;
   text-align: center;
-
 }
 
 .mapContainer {
-
   height: 225px;
+}
+
+#aviso {
+
+  background-color: yellow;
+  border-radius: 5px;
 
 }

@@ -73,6 +73,15 @@ export class LoginService {
   }
 
   registerInvestigador(investigador: Investigador) {
-    //TO-DO
+    
+    return this.http.post(`${this.url}/register`, {investigador: investigador});
+
   }
+
+  checkPassword(claveInput: String){
+
+    return this.http.post(`${this.url}/checkPassword`, {clave: claveInput});
+    
+  }
+
 }

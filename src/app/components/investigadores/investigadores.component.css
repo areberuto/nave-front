@@ -1,5 +1,5 @@
 #investigadoresContainer {
-  padding: 40px 40px;
+  padding: 20px 20px;
 }
 
 .investigador {
@@ -8,5 +8,12 @@
   border: 1px solid black;
   border-radius: 10px;
   margin: 20px auto;
-  padding: 20px 40px;
+  padding: 20px 20px;
+}
+
+.investigadores {
+
+  color: white;
+  text-align: center;
+
 }

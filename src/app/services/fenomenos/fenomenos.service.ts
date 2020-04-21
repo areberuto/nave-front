@@ -35,9 +35,7 @@ export class FenomenosService {
   }
 
   postFenomeno(fenomeno: Fenomeno){
-
-    console.log("Fenómeno recibido para insertar:");
-    console.log(fenomeno);  
+ 
     return this.http.post(`${this.url}/`, {fenomeno: fenomeno});
 
   }

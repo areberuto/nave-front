@@ -26,10 +26,16 @@ export class InvestigadoresService {
 
   }
 
-  getInvestigadorByEmail(email: string){
+  getInvestigadorByEmail(email: String){
 
     return this.http.get<Investigador>(`${this.url}?email=${email}`);
   
+  }
+
+  deleteInv(idInv: Number){
+
+    return this.http.delete(`${this.url}/delete?idInv=${idInv}`)
+
   }
 
 }

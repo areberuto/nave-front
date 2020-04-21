@@ -1,0 +1,105 @@
+<app-header></app-header>
+<div class="row">
+    <div id="msg">
+        <div class="col-10 mx-auto text-left">
+            <h3 class="text-center">👋 ¡Hola camarada! 👋</h3><br>
+            <h4 class="text-center">Necesitaremos que rellenes todos los campos para poder registrarte.</h4><br>
+            <p>Al entrar a formar parte de nuestra base de datos, confirmas que estás de acuerdo con cedernos tu alma.
+                Debes saber
+                que, si uno de nuestros administradores detecta prácticas irresponsables por tu parte, podrá sancionarte
+                e incluso eliminar tu perfil.</p><br>
+            <button type="button" class="mx-auto w-100 btn btn-warning" routerLink="/">Volver</button><br><br>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- En el formulario, el name de cada entrada será el título de cada campo del value. La propiedad precedida con un # será
+         la que nos permita acceder a ese valor dentro de la vista del formulario (por ejemplo, para ver si está pristine o valid)
+    -->
+    <form #registroForm="ngForm" id="formulario" (ngSubmit)="signUp()">
+        <h3 class="col-10 mx-auto text-center">Tus datos</h3><br>
+
+        <div class="col-10 col-md-8 py-4 mx-auto text-left">
+
+            <label for="nombre">🆔 ➖ Tu nombre</label>
+            <input class="form-control" [(ngModel)]="investigador.nombre" type="text" name="nombre" id="nombre"
+                placeholder="¿Cómo te llamas?" required #nombre="ngModel"><br>
+            <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">Por favor, introduce un nombre.
+            </div>
+
+            <label for="apellido1">🆔 ➖ Primer apellido</label>
+            <input class="form-control" [(ngModel)]="investigador.apellido1" type="text" name="apellido1" id="apellido1"
+                placeholder="¿Cuál es tu primer apellido?" required #apellido1="ngModel"><br>
+            <div [hidden]="apellido1.valid || apellido1.pristine" class="alert alert-danger">Por favor, introduce tu
+                primer apellido.</div>
+
+            <label for="apellido2">🆔 ➖ Segundo apellido</label>
+            <input class="form-control" [(ngModel)]="investigador.apellido2" type="text" name="apellido2" id="apellido2"
+                placeholder="¿Cuál es tu segundo apellido?" required #apellido2="ngModel"><br>
+            <div [hidden]="apellido2.valid || apellido2.pristine" class="alert alert-danger">Por favor, introduce tu
+                segundo apellido.</div>
+
+
+            <label for="genero">👨‍🔬👩‍🔬 ➖ Género</label>
+            <select class="form-control" [(ngModel)]="investigador.genero" name="genero" id="genero" #genero="ngModel" [value]="'hombre'" required>
+                <option [value]="'hombre'">Hombre</option>
+                <option [value]="'mujer'">Mujer</option>
+            </select><br>
+            <div [hidden]="genero.valid || genero.pristine" class="alert alert-danger">Por favor, selecciona tu
+                género.</div>
+
+            <label for="correo">📧 ➖ E-mail</label>
+            <input class="form-control" [(ngModel)]="investigador.correo" type="text" name="correo" id="correo"
+                placeholder="tu@correo.com" #correo="ngModel" required><br>
+            <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">Por favor, introduce un correo
+                válido.</div>
+
+            <label for="clave">🔑 ➖ Clave (6 caracteres como mínimo)</label>
+
+            <div>
+
+                <input class="form-control" [(ngModel)]="investigador.clave" type="password" minlength="
+                6" name="clave" id="clave" placeholder="Cuanto más compleja, mejor." #clave="ngModel" required>
+                <span class="mx-2" (mousedown)="verPassword()" (mouseup)="ocultarPassword()" id="togglePassword">👁
+                </span>
+
+            </div>
+            <br>
+
+            <div [hidden]="clave.valid || clave.pristine" class="alert alert-danger">Por favor, introduce una clave
+                válida.</div>
+
+            <label for="organismo">🌐 ➖ Organismo</label>
+            <input class="form-control" [(ngModel)]="investigador.organismo" type="text"
+                placeholder="¿A qué organismo investigador perteneces?" name="organismo" id="organismo" required
+                #organismo="ngModel"><br>
+            <div [hidden]="organismo.valid || organismo.pristine" class="alert alert-danger">Por favor, introduce un
+                organismo.</div>
+
+            <label for="ciudad">🏙 ➖ Ciudad</label>
+            <input class="form-control" [(ngModel)]="investigador.ciudad" type="text" name="ciudad" id="ciudad"
+                placeholder="Tu ciudad de residencia." #ciudad="ngModel" required><br>
+            <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por favor, introduce una ciudad
+                válida.</div>
+
+            <label for="pais">🌍 ➖ País</label>
+            <input class="form-control" [(ngModel)]="investigador.pais" type="text" name="pais" id="pais"
+                placeholder="Tu país de residencia." required #pais="ngModel"><br>
+            <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país válido.
+            </div>
+
+            <label for="fecha">👶 ➖ Fecha de nacimiento</label>
+            <input class="form-control" [(ngModel)]="investigador.fechaNacimiento" type="date" name="fecha" id="fecha"
+                required #fecha="ngModel"><br>
+            <div [hidden]="fecha.valid || fecha.pristine" class="alert alert-danger">Por favor, introduce una fecha
+                válida.</div>
+
+            <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!registroForm.valid"
+                value="Registrarme"><br><br>
+            <a type="button" class="mx-auto w-100 btn btn-warning" routerLink="/">Volver</a><br><br>
+
+
+        </div>
+    </form>
+</div>

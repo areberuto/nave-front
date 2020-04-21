@@ -1,19 +1,22 @@
+<div class="investigadores col-10 mx-auto">
+  <div>
+    <h3>Personal investigador registrado</h3>
+  </div>
+</div>
 <div id="investigadoresContainer" class="row">
-  <div *ngFor="let investigador of investigadores" class="investigador col-sm-6 col-lg-4 mx-auto">
+  <div *ngFor="let investigador of investigadores" class="investigador h-100 col-sm-6 col-md-4 col-lg-3 mx-auto">
     <div class="card" style="background-color: white; color: black">
       <img class="card-img-top" src="assets/photo.png" alt="Card image cap">
       <div class="card-body">
-        <h5 class="card-title">{{investigador.nombre}} {{investigador.apellido1}} {{investigador.apellido2}}</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
+        <h5 class="card-title text-center">{{investigador.nombre}} {{investigador.apellido1}} {{investigador.apellido2}}</h5>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">➖ 🌐 {{investigador.organismo}}</li>
-        <li class="list-group-item">➖ 🏡 {{investigador.ciudad}}, {{investigador.pais}}</li>
         <li class="list-group-item">➖ 📧 {{investigador.correo}}</li>
+        <li class="list-group-item">➖ 🏡 {{investigador.ciudad}}, {{investigador.pais}}</li>
       </ul>
-      <div class="card-body">
-        <a routerLink="/fenomenos/see/{{investigador.id}}" class="card-link">Fenómenos reportados por {{investigador.nombre}}</a>
+      <div class="card-body text-center">
+        <a routerLink="/fenomenos/inv/{{investigador.id}}" class="card-link">Fenómenos reportados por {{investigador.nombre}}</a>
       </div>
     </div>
   </div>

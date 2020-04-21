@@ -1,25 +1,41 @@
 nav {
-  /* border: 1px solid white; */
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  margin: auto;
-}
-
-nav .btn {
-  white-space: normal;
-}
-
-#buscar {
-  background-color: rgb(212, 208, 208);
-  padding: 20px;
-  width: 75%;
-  margin: 0 auto;
-  border-radius: 5px;
-}
-
-h3, h4 {
-
+  background-image: url("src/statics/pattern.png");
   color: white;
-  
+  border-bottom: 6px solid #339;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+nav img {
+  margin-right: 10px;
+}
+
+nav li a {
+
+  border-radius: 5px;
+  transition: background-color 0.3s;
+
+}
+
+nav li a:hover {
+
+  background-color: blue;
+
+}
+
+.nav-item {
+
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+
+a {
+
+  text-decoration: none;
+  color: white;
+
 }

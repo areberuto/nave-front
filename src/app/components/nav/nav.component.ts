@@ -21,17 +21,11 @@ export class NavComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
-  public listaSaludos: String[];
-
-  public saludo: String;
-
-  constructor(private investigadoresService: InvestigadoresService, private loginService: LoginService, private router: Router) { 
-
-    this.listaSaludos = ['¿Cómo estás?', 'Nos alegra tenerte de vuelta.', '¿Tienes novedades?', '¡A investigar!'];
-    this.saludo = this.listaSaludos[Math.floor(Math.random() * this.listaSaludos.length)];
+  constructor(private investigadoresService: InvestigadoresService, private loginService: LoginService, private router: Router) {   
     
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
+
   }
 
   ngOnInit(): void {
@@ -41,6 +35,8 @@ export class NavComponent implements OnInit {
     //el nav según lo que contenga.
     
     this.loginStatus$.subscribe(data => {
+      
+      console.log('algo ha vuelto:', data);
       
       this.loginStatus = data;
 
@@ -64,13 +60,6 @@ export class NavComponent implements OnInit {
       }
 
     });
-
-  }
-
-  log(){
-
-    this.investigador = undefined;
-    this.loginService.logOut();
 
   }
 

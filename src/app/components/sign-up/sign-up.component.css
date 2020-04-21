@@ -1,4 +1,5 @@
-#formulario, #msg {
+#formulario,
+#msg {
   color: black;
   margin: 20px auto;
   background-color: white;
@@ -8,8 +9,12 @@
   width: 75%;
 }
 
-textarea {
+#togglePassword {
+  cursor: pointer;
+  display: inline-block;
+}
 
-    resize: none;
-    
+input#clave {
+  width: 80%;
+  display: inline-block;
 }
