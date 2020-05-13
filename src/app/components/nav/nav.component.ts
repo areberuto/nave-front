@@ -21,10 +21,13 @@ export class NavComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
+  public isMenuCollapsed: Boolean;
+
   constructor(private investigadoresService: InvestigadoresService, private loginService: LoginService, private router: Router) {   
     
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
+    this.isMenuCollapsed = true;
 
   }
 
@@ -33,16 +36,21 @@ export class NavComponent implements OnInit {
     //Al iniciar el componente, nos suscribimos al observable del estado del login.
     //En cuanto se haga login, se emitirá un objeto con el estado del login y se procede a renderizar
     //el nav según lo que contenga.
-    
+
     this.loginStatus$.subscribe(data => {
+
+      //Cuando hay navegación entre páginas, asegura que el menu está colapsado
+
+      this.isMenuCollapsed = true;
       
-      console.log('algo ha vuelto:', data);
+      console.log('Recibiendo loginStatus en nav:', data);
       
       this.loginStatus = data;
 
       if(this.loginStatus.idInv == -1){
 
         this.logAction = "Log in";
+        this.investigador = undefined;
   
       } else if (this.loginStatus.idInv > -1) {
   
@@ -60,6 +68,25 @@ export class NavComponent implements OnInit {
       }
 
     });
+
+  }
+
+  toggle(event){
+
+    event.preventDefault();
+    let boton = document.querySelector(".navbar-toggler");
+    
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+
+    if(this.isMenuCollapsed) {
+
+      boton.innerHTML = "&#9776;";
+
+    } else {
+
+      boton.innerHTML = "&#9747;";
+
+    }
 
   }
 

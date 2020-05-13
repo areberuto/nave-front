@@ -1,29 +1,33 @@
-<nav class="navbar navbar-expand" *ngIf="loginStatus && loginStatus.idInv">
-  <a class="navbar-brand" routerLink="/fenomenos">
+<nav class="navbar navbar-expand-lg" *ngIf="loginStatus && loginStatus.idInv">
+  <a class="navbar-brand" routerLink="/fenomenos" (click)="toggle($event)">
     <img src="./favicon.ico" height="25" alt="Web logo">
-    <span *ngIf="investigador; else saludoPublico" class="d-none d-md-inline">¡Hola {{investigador.nombre}}!</span>
+    <span *ngIf="investigador; else saludoPublico">¡Hola {{investigador.nombre}}!</span>
     <ng-template #saludoPublico>¡Bienvenido/a!</ng-template>
   </a>
-  <!-- Hacer lo de los iconos cuando pueda descargarlos -->
-  <ul class="navbar-nav ml-auto mr-0">
-    <li class="nav-item" *ngIf="investigador">
-      <a class="nav-link" routerLink="profile">
-        <span class="d-lg-inline">Mi perfil</span>
-      </a>
-    </li>
-    <li class="nav-item" *ngIf="investigador">
-      <a class="nav-link" routerLink="addFenomeno">
-        <span class="d-lg-inline">Añadir fenómeno</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="investigadores">Investigadores</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="fenomenos">Fenómenos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="">{{logAction}}</a>
-    </li>
-  </ul>
+
+  <button class="navbar-toggler" type="button" (click)="toggle($event)">
+    &#9776;
+  </button>
+
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto text-center">
+      <li class="nav-item" *ngIf="investigador">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="profile" (click)="toggle($event)">Mi perfil</a>
+      </li>
+      <li class="nav-item" *ngIf="investigador">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="addFenomeno" (click)="toggle($event)">
+          Añadir fenómeno
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="investigadores" (click)="toggle($event)">Investigadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="fenomenos" (click)="toggle($event)">Fenómenos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="" (click)="toggle($event)">{{logAction}}</a>
+      </li>
+    </ul>
+  </div>
 </nav>

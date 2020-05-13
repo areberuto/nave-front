@@ -34,13 +34,6 @@ export class FormFenomenosComponent implements OnInit {
       this.accion = 'Modificar fenómeno';
       this.fenomenosService.getFenomenoById(this.fenomenoId).subscribe(data => {
 
-        if(data.investigadorId != this.loginStatus.idInv){
-
-          alert('No tienes permisos para editar este fenómeno.');
-          this.router.navigate(['/']);
-
-        }
-
         this.fenomeno = data;
         console.log(this.fenomeno);
 

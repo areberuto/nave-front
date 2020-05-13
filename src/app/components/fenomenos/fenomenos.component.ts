@@ -46,6 +46,7 @@ export class FenomenosComponent implements OnInit {
     //- Haber refrescado la página
 
     if (!this.loginStatus.idInv) {
+
       //Si tenemos un token en el storage, es que hemos refrescado la página y
       //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
@@ -57,6 +58,7 @@ export class FenomenosComponent implements OnInit {
           )
           .subscribe(
             (data) => {
+              
               //Para guardar el nuevo token, que tendrá tiempos de
               //expedición y expiración diferentes.
 

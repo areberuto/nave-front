@@ -26,16 +26,16 @@ nav li a:hover {
 
 }
 
-.nav-item {
-
-  margin-left: 10px;
-  margin-right: 10px;
-
-}
-
 a {
 
   text-decoration: none;
   color: white;
+
+}
+
+.navbar-toggler {
+
+  color: white;
+  border: 1px solid white;
 
 }

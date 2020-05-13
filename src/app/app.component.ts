@@ -18,7 +18,6 @@ export class AppComponent {
 
   ngOnInit(){
 
-    this.loginService.logOut();
     
   }
 

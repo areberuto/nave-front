@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-10 mx-auto my-4" id="profile" style="background-color: white; border: 1px solid red;">
-        <h3 class="card-title text-center py-4">Datos personales
+    <div class="col-10 mx-auto my-4" id="profile">
+        <h3 class="card-title text-center py-2">Datos personales
         </h3>
         <div class="card row d-flex flex-md-row p-4" *ngIf="investigador">
 
@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-    <div class="reported col-10 mx-auto my-4">
+    <div class="reported col-10 mx-auto my-4" *ngIf="fenomenos">
         <h3>
             Tus fenómenos
         </h3>

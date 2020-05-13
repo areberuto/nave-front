@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit {
     private fenomenosService: FenomenosService,
     private investigadoresService: InvestigadoresService
   ) {
-    this.fenomenos = [];
     this.mostrarAviso = false;
     this.claveDel = "";
     this.loginStatus = this.loginService.getLoginStatus();
@@ -95,54 +94,73 @@ export class ProfileComponent implements OnInit {
 
       //Si ya había loginStatus (navegación), pedimos los datos
     } else {
+
       this.getDatosPerfil(this.loginStatus.idInv);
       this.getFenomenosByInvestigador(this.loginStatus.idInv);
+
     }
 
     //Si se intenta acceder a esta vista, manualmente, sin tener un idInv de usuario,
     //te devuelve al login
 
     if (this.loginStatus.idInv == -1) {
+
       this.router.navigate(["/"]);
+
     }
   }
 
   getDatosPerfil(idInv: Number) {
+
     this.investigadoresService.getInvestigadorById(idInv).subscribe(
+
       (data) => {
+
         console.log(data);
         this.investigador = data;
+
       },
       (err) => {
+
         console.log(err);
+
       }
+
     );
   }
 
   getFenomenosByInvestigador(idInv: Number) {
+
     this.fenomenosService.getFenomenosByInvestigador(idInv).subscribe(
+
       (fenomenos) => {
+
         console.log(fenomenos);
         this.fenomenos = fenomenos;
+
       },
       (err) => {
+
         console.log(err);
+
       }
     );
   }
 
   deleteFenomeno(id: Number) {
-    if (
-      confirm(
-        "El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?"
-      )
-    ) {
+
+    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")){
+
       this.fenomenosService.deleteFenomeno(id).subscribe(
+
         (data) => {
+
           console.log(data);
           this.getFenomenosByInvestigador(this.investigador.id);
+
         },
         (err) => console.log(err)
+        
       );
     }
   }
