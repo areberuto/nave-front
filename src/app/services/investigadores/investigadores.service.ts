@@ -32,6 +32,20 @@ export class InvestigadoresService {
   
   }
 
+  updateInvestigador(investigador: Investigador){
+
+    let idInv: Number = investigador.id;
+
+    return this.http.put(`${this.url}/updateInv?idInv=${idInv}`, {investigador: investigador});
+
+  }
+
+  modifyPassword(idInv: Number, oldPwd: String, newPwd: String){
+
+    return this.http.put(`${this.url}/updatePwd?idInv=${idInv}`, {oldPwd: oldPwd, newPwd: newPwd});
+
+  }
+
   deleteInv(idInv: Number){
 
     return this.http.delete(`${this.url}/delete?idInv=${idInv}`)

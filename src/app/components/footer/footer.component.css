@@ -1,0 +1,50 @@
+#wrapper {
+    
+    width: 100%;
+    text-align: center;
+    background-color: rgb(84, 68, 156);
+    
+}
+
+.row {
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+}
+
+a {
+
+    text-decoration: none;
+
+}
+
+a:link {
+
+    color: black;
+
+}
+
+a:visited {
+
+    color: black;
+
+}
+
+.fa {
+
+    font-size: 25px;
+    width: 60px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+
+}
+
+.fa:hover {
+
+    transition: background-color 0.35s, color 0.35s;
+    color: white;
+
+}

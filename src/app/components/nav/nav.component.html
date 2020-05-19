@@ -1,13 +1,16 @@
 <nav class="navbar navbar-expand-lg" *ngIf="loginStatus && loginStatus.idInv">
-  <a class="navbar-brand" routerLink="/fenomenos" (click)="toggle($event)">
+  <div class="navbar-brand">
     <img src="./favicon.ico" height="25" alt="Web logo">
     <span *ngIf="investigador; else saludoPublico">¡Hola {{investigador.nombre}}!</span>
     <ng-template #saludoPublico>¡Bienvenido/a!</ng-template>
-  </a>
+  </div>
 
   <button class="navbar-toggler" type="button" (click)="toggle($event)">
     &#9776;
   </button>
+
+  <!--Mini bug: si abres la ventana lo suficiente para que pase de un toggle abierto a expand,
+  cuando vuelve a retraerse el nav sigue en toggle abierto-->
 
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto text-center">

@@ -24,6 +24,13 @@
   height: 225px;
 }
 
+#pwd {
+
+  background-color: greenyellow;
+  border-radius: 5px;
+
+}
+
 #aviso {
 
   background-color: yellow;
@@ -34,5 +41,16 @@
 h3 {
 
   color: white;
+
+}
+
+input#oldPwd, input#newPwd, input#claveDel {
+  width: 80%;
+  display: inline-block;
+}
+
+input + span:hover {
+
+  cursor: pointer;
 
 }

@@ -1,28 +1,33 @@
 nav {
-  background-image: url("src/statics/pattern.png");
+
+  background-image: url("src/statics/stardust.png");
   color: white;
-  border-bottom: 6px solid #339;
+  border-bottom: 6px solid rgb(42, 42, 70);
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   z-index: 3;
+
 }
 
 nav img {
+
   margin-right: 10px;
+  
 }
 
 nav li a {
 
   border-radius: 5px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 
 }
 
 nav li a:hover {
 
-  background-color: blue;
+  background-color: rgb(219, 214, 214);
+  color: black;
 
 }
 

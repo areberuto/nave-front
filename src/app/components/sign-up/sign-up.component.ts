@@ -24,7 +24,7 @@ export class SignUpComponent implements OnInit {
 
   signUp(){
 
-    let submitInvestigador: Investigador = this.investigador;
+    let submitInvestigador = this.investigador;
     submitInvestigador.clave = CryptoJS.SHA3(this.investigador.clave).toString();
 
     console.log('Registrando este investigador:', submitInvestigador);

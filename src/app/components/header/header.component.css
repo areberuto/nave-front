@@ -1,8 +1,10 @@
 header {
+  
   margin: auto;
   text-align: center;
   color: white;
   margin-top: -80px;
+
 }
 
 header h1 {
@@ -13,4 +15,5 @@ header h1 {
 img {
 
   width: 30px;
+
 }

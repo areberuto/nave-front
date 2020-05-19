@@ -63,6 +63,7 @@ export class LoginService {
   }
 
   logOut() {
+
     sessionStorage.removeItem("idToken");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("hashedPass");

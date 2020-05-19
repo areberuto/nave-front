@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit {
 
   constructor() { 
 
-    this.title = 'La nave del misterio';
     this.iconRoute = './favicon.ico';
 
   }

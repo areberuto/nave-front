@@ -38,10 +38,6 @@ export class NavComponent implements OnInit {
     //el nav según lo que contenga.
 
     this.loginStatus$.subscribe(data => {
-
-      //Cuando hay navegación entre páginas, asegura que el menu está colapsado
-
-      this.isMenuCollapsed = true;
       
       console.log('Recibiendo loginStatus en nav:', data);
       
@@ -74,6 +70,7 @@ export class NavComponent implements OnInit {
   toggle(event){
 
     event.preventDefault();
+    
     let boton = document.querySelector(".navbar-toggler");
     
     this.isMenuCollapsed = !this.isMenuCollapsed;

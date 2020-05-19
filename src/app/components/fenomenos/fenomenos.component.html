@@ -14,6 +14,7 @@
             <u>Fenómenos reportados por {{seeInvName}}</u>
         </h3>
         <h4 *ngIf="fenomenos">Total: {{fenomenos.length}} fenómenos</h4>
+        <img src="assets/noresults.gif" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 img-fluid">
 
     </ng-template>
     <div class="col-lg-10 mx-lg-auto">
@@ -28,13 +29,14 @@
                             </app-mapa>
                         </div>
                         <div class="col-md-8">
-                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} ➖ 📅 {{fenomeno.fecha}}</p>
+                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} 📅 {{fenomeno.fecha}}</p>
                             <p>{{fenomeno.contenido}}</p>
                         </div>
                     </div>
 
-                    <div id="autor" class="row mt-4">
-                        <p class="col-12 mb-2">🔎 <a routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}} {{fenomeno.apellidoInv2}}</a>  ➖ 📂 {{fenomeno.categoria}}</p>
+                    <div id="autor" class="row justify-content-between mt-4">
+                        <p class="col-md-4 mb-2">🔎 <a routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}</a></p>
+                        <p class="col-md-4 mb-2 text-md-right">📂 {{fenomeno.categoria}}</p>
                         <div *ngIf="idInvestigador == fenomeno.investigadorId" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
                                 <button class="col-md-2 btn btn-warning mx-1 my-2"

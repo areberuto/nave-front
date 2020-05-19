@@ -3,7 +3,7 @@
         <div class="col-10 mx-auto text-center">
             <h3 class="text-center"><span class="d-none d-sm-inline">✏</span> {{accion}} <span class="d-none d-sm-inline">✏</span></h3><br>
             <h4 class="text-center">¡No te olvides de rellenar todos los campos!</h4><br>
-            <p>Cuando incorporas información nueva a nuestra base de datos, lo harás bajo nuestro <a href="#">código de
+            <p>Cuando incorporas información nueva a nuestra base de datos, lo harás bajo nuestro <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">código de
                     conducta</a>. Si uno de nuestros administradores detecta información no basada en prácticas veraces,
                 este podrá sancionarte.</p>
             <a type="button" class="mx-auto w-100 btn btn-warning" routerLink="/fenomenos">Volver</a><br>
@@ -53,20 +53,20 @@
         </div>
         <div class="col-10 mx-auto text-left">
             <label for="titulo">✍ ➖ Titulo</label>
-            <textarea name="titulo" id="titulo" class="form-control" [(ngModel)]="fenomeno.titulo" rows="4" required
-                #titulo="ngModel"></textarea><br>
+            <textarea name="titulo" id="titulo" class="form-control" [(ngModel)]="fenomeno.titulo" rows="2" required
+                #titulo="ngModel" placeholder="¿Cómo podríamos nombrar este fenómeno?"></textarea><br>
             <div [hidden]="titulo.valid || titulo.pristine" class="alert alert-danger">Por favor, introduce un título
                 válido.</div>
 
             <label for="descripcion">📑 ➖ Descripción corta</label>
             <textarea name="descripcion" id="descripcion" class="form-control" [(ngModel)]="fenomeno.descripcionCorta"
-                rows="4" required #descripcion="ngModel"></textarea><br>
+                rows="4" required #descripcion="ngModel" placeholder="Piensa en un resumen del fenómeno que quieres reportar."></textarea><br>
             <div [hidden]="descripcion.valid || descripcion.pristine" class="alert alert-danger">Por favor, introduce
                 una descripción válida.</div>
 
             <label for="contenido">🧾 ➖ Contenido</label>
-            <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido" rows="16"
-                required #contenido="ngModel"></textarea><br>
+            <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido" rows="12"
+                required #contenido="ngModel" placeholder="Expláyate y no recortes en detalles."></textarea><br>
             <div [hidden]="contenido.valid || contenido.pristine" class="alert alert-danger">Por favor, introduce un
                 contenido válido.</div>
 

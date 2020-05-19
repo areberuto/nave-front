@@ -15,30 +15,33 @@ import * as CryptoJS from "crypto-js";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
+
   public investigador: Investigador;
-  public investigadorMod: Investigador;
   public fenomenos: Array<Fenomeno>;
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
   public mostrarAviso: Boolean;
+  public mostrarPwd: Boolean;
   public claveDel: String;
+  public oldPwd: String;
+  public newPwd: String;
 
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private fenomenosService: FenomenosService,
-    private investigadoresService: InvestigadoresService
-  ) {
+  constructor(private loginService: LoginService, private router: Router, private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService) {
+
     this.mostrarAviso = false;
+    this.mostrarPwd = false;
     this.claveDel = "";
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
+
   }
 
   ngOnInit(): void {
+
     //Suscripción para futuros cambios del loginStatus
 
     this.loginStatus$.subscribe((data) => {
+
       this.loginStatus = data;
 
       //Si estamos aquí dentro, es porque no venimos de navegación SPA. Pedimos datos
@@ -46,6 +49,7 @@ export class ProfileComponent implements OnInit {
 
       this.getDatosPerfil(this.loginStatus.idInv);
       this.getFenomenosByInvestigador(this.loginStatus.idInv);
+
     });
 
     //Si la idInv está a undefined, estamos en el escenario de:
@@ -58,38 +62,39 @@ export class ProfileComponent implements OnInit {
       //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
       if (sessionStorage.getItem("idToken")) {
-        this.loginService
-          .refreshAuth(
-            sessionStorage.getItem("email"),
-            sessionStorage.getItem("hashedPass")
-          )
-          .subscribe(
-            (data) => {
-              //Para guardar el nuevo token, que tendrá tiempos de
-              //expedición y expiración diferentes.
 
-              this.loginService.setSession(data);
+        this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe(
 
-              //Seteamos el login y actualizamos los suscriptores del loginStatus$
+          (data) => {
 
-              this.loginService.setLoginStatus({
-                isAdmin: data["isAdmin"],
-                idInv: data["idInv"],
-              });
-            },
+            //Para guardar el nuevo token, que tendrá tiempos de
+            //expedición y expiración diferentes.
 
-            (err) => {
-              //Si no es válida, devolvemos el error.
+            this.loginService.setSession(data);
 
-              console.log(err);
-            }
-          );
+            //Seteamos el login y actualizamos los suscriptores del loginStatus$
+
+            this.loginService.setLoginStatus({ isAdmin: data["isAdmin"], idInv: data["idInv"] });
+
+          },
+
+          (err) => {
+
+            //Si no es válida, devolvemos el error.
+
+            console.log(err);
+
+          }
+
+        );
       }
 
       //Si tampoco tenemos token, por defecto establecemos el estado a público
       //y lo seteamos en el servicio para que el nav lo reciba.
       else {
+
         this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
+
       }
 
       //Si ya había loginStatus (navegación), pedimos los datos
@@ -108,9 +113,10 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(["/"]);
 
     }
+
   }
 
-  getDatosPerfil(idInv: Number) {
+  getDatosPerfil(idInv: Number): void {
 
     this.investigadoresService.getInvestigadorById(idInv).subscribe(
 
@@ -129,7 +135,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getFenomenosByInvestigador(idInv: Number) {
+  getFenomenosByInvestigador(idInv: Number): void {
 
     this.fenomenosService.getFenomenosByInvestigador(idInv).subscribe(
 
@@ -145,11 +151,49 @@ export class ProfileComponent implements OnInit {
 
       }
     );
+
   }
 
-  deleteFenomeno(id: Number) {
+  actualizarDatos(): void {
 
-    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")){
+    this.investigadoresService.updateInvestigador(this.investigador).subscribe(
+
+      data => {
+
+        if (data['rowCount'] > 0) {
+
+          alert("Datos actualizados con éxito.");
+          console.log(data);
+
+          location.reload();
+
+        }
+
+        else {
+
+          alert("Los datos no han podido actualizarse correctamente.");
+          console.log(data);
+
+        }
+
+        console.log("Esto se imprime y no debería.");
+
+      },
+
+      err => {
+
+        alert("Los datos no han podido actualizarse correctamente.");
+        console.log(err);
+
+      }
+
+    );
+
+  }
+
+  deleteFenomeno(id: Number): void {
+
+    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")) {
 
       this.fenomenosService.deleteFenomeno(id).subscribe(
 
@@ -160,35 +204,115 @@ export class ProfileComponent implements OnInit {
 
         },
         (err) => console.log(err)
-        
+
       );
     }
   }
 
-  deleteInv() {
+  deleteInv(): void {
 
     const hashedClave = CryptoJS.SHA3(this.claveDel).toString();
 
     this.loginService.checkPassword(hashedClave).subscribe(
+
       (data) => {
+
         console.log(data);
 
         this.investigadoresService.deleteInv(this.investigador.id).subscribe(
+
           (data) => {
 
             alert('Tu cuenta y tus fenómenos han sido borrado con éxito.');
             this.router.navigate(['/']);
 
           },
+
           (err) => {
             console.log(err);
           }
         );
       },
+
       (err) => {
+
         console.log(err);
+
       }
+
     );
+
+  }
+
+  verPassword(event): void {
+
+    event.preventDefault();
+    const siblingInput: HTMLElement = event.target.previousSibling;
+    siblingInput.setAttribute("type", "text");
+
+  }
+
+  ocultarPassword(event): void {
+
+    event.preventDefault();
+    const siblingInput: HTMLElement = event.target.previousSibling;
+    siblingInput.setAttribute("type", "password");
+
+  }
+
+  //Muestra instrucciones para modificar contraseña
+
+  mostrarModPwd(event): void {
+
+    event.preventDefault();
+    this.mostrarPwd = !this.mostrarPwd;
+
+  }
+
+  //Muestra instrucciones para borrar usuario
+
+  mostrarWarning(event): void {
+
+    event.preventDefault();
+    this.mostrarAviso = !this.mostrarAviso;
+
+  }
+
+  modPwd(): void {
+
+    const hashedOld = CryptoJS.SHA3(this.oldPwd).toString();
+    const hashedNew = CryptoJS.SHA3(this.newPwd).toString();
+
+    this.investigadoresService.modifyPassword(this.investigador.id, hashedOld, hashedNew).subscribe(
+
+      data => {
+
+        console.log(data);
+
+        //Si se ha modificado la clave, procedemos a guardar el hash en memoria
+        //y recargar para pedir nuevo token
+
+        if (data["rowCount"]) {
+
+          sessionStorage.setItem("hashedPass", data["hashedPass"]);
+          location.reload();
+
+        }
+
+        else {
+
+          alert("Algo ha ido mal.");
+          
+        }
+
+      },
+
+      err => {
+
+        console.log(err);
+
+      }
+    )
 
   }
 }

@@ -15,6 +15,7 @@ import { MapaComponent } from './components/mapa/mapa/mapa.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InvestigadoresComponent,
     MapaComponent,
     SignUpComponent,
-    ProfileComponent
+    ProfileComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

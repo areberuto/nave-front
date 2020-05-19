@@ -1,7 +1,10 @@
 <div class="row">
-    <div class="col-10 mx-auto my-4" id="profile">
-        <h3 class="card-title text-center py-2">Datos personales
+    <div class="col-12 py-4 mb-2">
+        <h3 class="text-center ">Datos personales
         </h3>
+    </div>
+    <div class="col-10 mx-auto my-4" id="profile">
+
         <div class="card row d-flex flex-md-row p-4" *ngIf="investigador">
 
             <div class="col-6 mx-auto py-2 col-lg-4">
@@ -9,7 +12,7 @@
             </div>
             <div class="card-body col-12 col-lg-8 pt-md-0">
                 <div class="card-text">
-                    <form #datosForm="ngForm" id="formulario">
+                    <form #datosForm="ngForm" id="formulario" (ngSubmit)="actualizarDatos()">
                         <div class="col py-2 mx-auto text-left">
                             <div class="row">
                                 <div class="col-12 col-lg-6 mx-auto">
@@ -92,7 +95,32 @@
                             <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!datosForm.valid"
                                 value="Modificar datos"><br><br>
 
-                            <button (click)="mostrarAviso = !mostrarAviso" class="btn btn-danger w-100">Borrar
+                            <button (click)="mostrarModPwd($event)" class="btn btn-success w-100">Modificar
+                                contraseña</button>
+                            <br><br>
+                            <div [hidden]="!mostrarPwd" id="pwd" class="p-4 mb-4">
+
+                                <p>Para modificar tu contraseña, introduce tu antigua y, justo abajo, aquella a la que
+                                    quieres cambiar. Recuerda: ¡6 caracteres mínimo!</p>
+
+                                <form #claveForm="ngForm" (ngSubmit)="modPwd()" class="text-center">
+                                    <input class="form-control" type="password" [(ngModel)]="oldPwd" name="oldPwd"
+                                        minlength="6" placeholder="Contraseña antigua" id="oldPwd" required><span
+                                        class="mx-2" (mousedown)="verPassword($event)"
+                                        (mouseup)="ocultarPassword($event)">👁
+                                    </span><br><br>
+
+                                    <input class="form-control" type="password" [(ngModel)]="newPwd" name="newPwd"
+                                        minlength="6" placeholder="Nueva contraseña" id="newPwd" required><span
+                                        class="mx-2" (mousedown)="verPassword($event)"
+                                        (mouseup)="ocultarPassword($event)">👁
+                                    </span><br><br>
+                                    <input [disabled]="!claveForm.valid" class="btn btn-success w-50" type="submit"
+                                        value="Cambiar contraseña"><br><br>
+                                </form>
+
+                            </div>
+                            <button (click)="mostrarWarning($event)" class="btn btn-danger w-100">Borrar
                                 cuenta</button>
                             <br><br>
                             <div [hidden]="!mostrarAviso" id="aviso" class="p-4">
@@ -101,11 +129,16 @@
                                     irreversible.</p>
                                 <p>Para proceder, introduce tu contraseña.</p>
 
-                                <form #claveForm="ngForm" (ngSubmit)="deleteInv()">
-                                    <input class="form-control w-50" type="password" [(ngModel)]="claveDel" name="claveDel" minlength="6" required><br>
-                                    <input [disabled]="!claveForm.valid" class="btn btn-danger w-50" type="submit" value="Confirmar borrado"><br><br>
+                                <form #deleteForm="ngForm" (ngSubmit)="deleteInv()">
+                                    <input class="form-control w-50" type="password" [(ngModel)]="claveDel"
+                                        name="claveDel" minlength="6" id="claveDel" required><span class="mx-2"
+                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
+                                    </span><br><br>
+
+                                    <input [disabled]="!deleteForm.valid" class="btn btn-danger w-50" type="submit"
+                                        value="Confirmar borrado"><br><br>
                                 </form>
-                                
+
                             </div>
                         </div>
 
@@ -131,14 +164,16 @@
                             </app-mapa>
                         </div>
                         <div class="col-md-8">
-                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} ➖ 📅 {{fenomeno.fecha}}</p>
+                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} 📅 {{fenomeno.fecha}}</p>
                             <p>{{fenomeno.contenido}}</p>
                         </div>
                     </div>
 
-                    <div id="autor" class="row mt-4">
-                        <p class="col-12 mb-2">🔎 {{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}
-                            {{fenomeno.apellidoInv2}} ➖ 📂 {{fenomeno.categoria}}</p>
+                    <div id="autor" class="row justify-content-between mt-4">
+                        <p class="col-md-4 mb-2">🔎 <a
+                                routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}}
+                                {{fenomeno.apellidoInv1}}</a></p>
+                        <p class="col-md-4 mb-2 text-md-right">📂 {{fenomeno.categoria}}</p>
                         <div *ngIf="investigador && (investigador.id == fenomeno.investigadorId)" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
                                 <button class="col-md-2 btn btn-warning mx-1 my-2"
