@@ -1,36 +1,37 @@
-<nav class="navbar navbar-expand-lg" *ngIf="loginStatus && loginStatus.idInv">
+<nav class="navbar navbar-expand-xl" *ngIf="loginStatus && loginStatus.idInv">
   <div class="navbar-brand">
     <img src="./favicon.ico" height="25" alt="Web logo">
     <span *ngIf="investigador; else saludoPublico">¡Hola {{investigador.nombre}}!</span>
     <ng-template #saludoPublico>¡Bienvenido/a!</ng-template>
   </div>
 
-  <button class="navbar-toggler" type="button" (click)="toggle($event)">
-    &#9776;
+  <button (window:resize)="onResize($event)" class="navbar-toggler" type="button" (click)="toggle()">
+    {{icon}}
   </button>
-
-  <!--Mini bug: si abres la ventana lo suficiente para que pase de un toggle abierto a expand,
-  cuando vuelve a retraerse el nav sigue en toggle abierto-->
 
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto text-center">
       <li class="nav-item" *ngIf="investigador">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="profile" (click)="toggle($event)">Mi perfil</a>
+        <a class="nav-link mx-auto mx-lg-4" routerLink="profile" (click)="toggle()">Mi perfil</a>
       </li>
       <li class="nav-item" *ngIf="investigador">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="addFenomeno" (click)="toggle($event)">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="addFenomeno" (click)="toggle()">
           Añadir fenómeno
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="investigadores" (click)="toggle($event)">Investigadores</a>
+        <a class="nav-link mx-auto mx-lg-4" routerLink="investigadores" (click)="toggle()">Investigadores</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="fenomenos" (click)="toggle($event)">Fenómenos</a>
+        <a class="nav-link mx-auto mx-lg-4" routerLink="fenomenos" (click)="toggle()">Fenómenos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="" (click)="toggle($event)">{{logAction}}</a>
+        <a class="nav-link mx-auto mx-lg-4" routerLink="search" (click)="toggle()">Buscar</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link mx-auto mx-lg-4" routerLink="" (click)="toggle()">{{logAction}}</a>
+      </li>
+
     </ul>
   </div>
 </nav>

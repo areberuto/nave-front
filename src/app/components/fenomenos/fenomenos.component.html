@@ -1,25 +1,25 @@
 <div id="fenomenosContainer" class="row">
     <div class="reported col-10 mx-auto">
-        <div
-            *ngIf="seeInv then reportedBy; else reportados">
-        </div>
-    </div>
-    <ng-template #reportados>
         <h3>
             Fenómenos reportados
         </h3>
-    </ng-template>
-    <ng-template #reportedBy>
-        <h3>
-            <u>Fenómenos reportados por {{seeInvName}}</u>
-        </h3>
-        <h4 *ngIf="fenomenos">Total: {{fenomenos.length}} fenómenos</h4>
-        <img src="assets/noresults.gif" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 img-fluid">
+        <div id="resultados" *ngIf="fenomenos && hasParams" class="my-4">
+            <h4>Resultados de la búsqueda   </h4>
+            <div id="notFound" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 text-center">
+                <p>¡No hay fenómenos!</p>
+                <img class="img-fluid" src="assets/noresults.gif">
+                <button type="button" routerLink ="/search" class="btn btn-primary mt-4">¿Probamos con otra búsqueda?</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <img id="loading" *ngIf="!fenomenos" src="assets/loading.gif">
 
-    </ng-template>
     <div class="col-lg-10 mx-lg-auto">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
-            <div class="card px-4">
+            <div class="card p-1">
                 <div class="card-body">
                     <h4 class="card-title">{{fenomeno.titulo}}</h4>
                     <p class="card-text">{{fenomeno.descripcionCorta}}</p>

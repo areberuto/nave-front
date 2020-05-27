@@ -1,5 +1,5 @@
 #investigadoresContainer {
-  padding: 20px 20px;
+  padding: 5px 20px;
 }
 
 .investigador {
@@ -7,13 +7,21 @@
   word-wrap: break-word;
   border: 1px solid black;
   border-radius: 10px;
-  margin: 20px auto;
-  padding: 20px 20px;
 }
 
 .investigadores {
 
   color: white;
   text-align: center;
+
+}
+
+#loading {
+
+  width: 80px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
 
 }

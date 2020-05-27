@@ -6,7 +6,6 @@
     <div class="col-10 mx-auto my-4" id="profile">
 
         <div class="card row d-flex flex-md-row p-4" *ngIf="investigador">
-
             <div class="col-6 mx-auto py-2 col-lg-4">
                 <img class="card-img-top mx-auto" src="assets/photo.png" alt="Profile picture">
             </div>
@@ -95,7 +94,7 @@
                             <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!datosForm.valid"
                                 value="Modificar datos"><br><br>
 
-                            <button (click)="mostrarModPwd($event)" class="btn btn-success w-100">Modificar
+                            <button (click)="mostrarModPwd($event)" type="button" class="btn btn-success w-100">Modificar
                                 contraseña</button>
                             <br><br>
                             <div [hidden]="!mostrarPwd" id="pwd" class="p-4 mb-4">
@@ -115,12 +114,12 @@
                                         class="mx-2" (mousedown)="verPassword($event)"
                                         (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
-                                    <input [disabled]="!claveForm.valid" class="btn btn-success w-50" type="submit"
+                                    <input [disabled]="!claveForm.valid" class="btn btn-success w-100" type="submit"
                                         value="Cambiar contraseña"><br><br>
                                 </form>
 
                             </div>
-                            <button (click)="mostrarWarning($event)" class="btn btn-danger w-100">Borrar
+                            <button (click)="mostrarWarning($event)" type="button" class="btn btn-danger w-100">Borrar
                                 cuenta</button>
                             <br><br>
                             <div [hidden]="!mostrarAviso" id="aviso" class="p-4">
@@ -129,13 +128,13 @@
                                     irreversible.</p>
                                 <p>Para proceder, introduce tu contraseña.</p>
 
-                                <form #deleteForm="ngForm" (ngSubmit)="deleteInv()">
-                                    <input class="form-control w-50" type="password" [(ngModel)]="claveDel"
+                                <form #deleteForm="ngForm" (ngSubmit)="deleteInv()" class="text-center">
+                                    <input class="form-control" type="password" [(ngModel)]="claveDel"
                                         name="claveDel" minlength="6" id="claveDel" required><span class="mx-2"
                                         (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
-                                    <input [disabled]="!deleteForm.valid" class="btn btn-danger w-50" type="submit"
+                                    <input [disabled]="!deleteForm.valid" class="btn btn-danger w-100" type="submit"
                                         value="Confirmar borrado"><br><br>
                                 </form>
 

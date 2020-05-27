@@ -1,21 +1,38 @@
 <app-header></app-header>
 
-<form #loginForm="ngForm" id="formulario" class="col-md-6 mx-auto" (ngSubmit)="checkLogin()">
+<form #loginForm="ngForm" id="formulario" class="col-lg-6 p-4 mx-auto my-2" (ngSubmit)="checkLogin()">
 
   <h3>Acceso personal investigador</h3>
   <div class="form-group">
     <label for="email">Email</label>
-    <input class="form-control" type="email" [(ngModel)]="emailLogin" name="emailLogin" id="emailLogin" placeholder="Introduce tu correo electrónico aquí." #emailForm="ngModel" required>
-    <div [hidden]="emailForm.valid || emailForm.pristine" class="alert alert-danger">Por favor, introduce un email válido.</div>
+    <input class="form-control" type="email" [(ngModel)]="emailLogin" name="emailLogin" id="emailLogin" #emailForm="ngModel" required>
+    <div [hidden]="emailForm.valid || emailForm.pristine" class="alert alert-danger">Por favor, introduce un email
+      válido.</div>
   </div>
   <div class="form-group">
     <label for="clave">Contraseña</label>
-    <input class="form-control" type="password" [(ngModel)]="clave" name="claveLogin" id="clave" placeholder="Tu clave está segura, no te preocupes." #claveForm="ngModel" required>
-    <div [hidden]="claveForm.valid || claveForm.pristine" class="alert alert-danger">Por favor, introduce un valor en la contraseña.</div>
+    <input class="form-control" type="password" [(ngModel)]="clave" name="claveLogin" id="clave" #claveForm="ngModel" required>
+    <div [hidden]="claveForm.valid || claveForm.pristine" class="alert alert-danger">Por favor, introduce un valor en la
+      contraseña.</div>
   </div>
+  <a href="#" (click)="mostrarOlvidada = !mostrarOlvidada">¿Has olvidado tu contraseña?</a><br><br>
   <button [disabled]="!emailForm.valid || !claveForm.valid" type="submit" class="btn btn-primary">Acceder</button>
   <br><br>
   <div [hidden]="!loginIncorrecto" class="alert alert-danger">El usuario y/o la contraseña son incorrectos.</div>
   <p>Puedes acceder a la plataforma como visitante pulsando <a href="#" (click)='loginPublico($event)'>aquí</a>.</p>
   <p>Para acceder con privilegios de usuario, <a routerLink="/signup">registrate</a>.</p>
 </form>
+
+<div id="pwOlvidada" [hidden]="!mostrarOlvidada" class="row w-75 mx-auto align-items-center">
+  <div class="cerrar" (click)="mostrarOlvidada = !mostrarOlvidada">✖</div>
+  <form #olvidadaForm="ngForm" (ngSubmit)="mailOlvidada()" class="col-10 col-md-6 mx-auto my-2 py-3">
+    <h5 class="text-center">Restablecer contraseña</h5>
+    <p>Te enviaremos un correo a la dirección que nos proporciones.</p>
+    <input class="form-control" type="email" [(ngModel)]="emailOlvidada" name="emOlv" id="emOlv"
+      placeholder="tu@email.com" #emOlv="ngModel" required><br>
+    <div [hidden]="emOlv.valid || emOlv.pristine" class="alert alert-danger">Por favor, introduce un email
+      válido.</div>
+    <button [disabled]="!olvidadaForm.valid || !olvidadaForm.valid" type="submit" class="btn btn-primary">Enviar</button>
+    <br>
+  </form>
+</div>

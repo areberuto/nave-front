@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login/login.component';
 import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: "modFenomeno/:idFen",
     component: FormFenomenosComponent
+  },
+  {
+    path: "search",
+    component: SearchComponent
   }
 ];
 

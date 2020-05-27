@@ -7,9 +7,10 @@ header {
 
 }
 
-header h1 {
+header p {
+
   cursor: pointer;
-  font-size: 60px;
+  
 }
 
 img {

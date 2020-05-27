@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Fenomeno } from 'src/app/models/fenomeno/fenomeno';
+import { SearchTarget } from 'src/app/models/search-target/search-target';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,13 @@ export class FenomenosService {
     
   }
 
-  getFenomenos(){
-    
-    return this.http.get<Fenomeno[]>(`${this.url}/`);
+  getFenomenos(searchTarget: SearchTarget){
+
+    const params: HttpParams = JSON.parse(JSON.stringify(searchTarget));
+
+    console.log(params);
+
+    return this.http.get<Fenomeno[]>(`${this.url}/`, {params: params});
 
   }
 

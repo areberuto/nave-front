@@ -91,8 +91,7 @@ export class InvestigadoresComponent implements OnInit {
 
     this.investigadoresService.getInvestigadores().subscribe(data => {
 
-      console.log(data);
-      this.investigadores = data;
+      setTimeout(() => this.investigadores = data, 2000);
 
     }, err => {
 

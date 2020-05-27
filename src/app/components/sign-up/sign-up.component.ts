@@ -24,15 +24,14 @@ export class SignUpComponent implements OnInit {
 
   signUp(){
 
-    let submitInvestigador = this.investigador;
-    submitInvestigador.clave = CryptoJS.SHA3(this.investigador.clave).toString();
+    let submitInvestigador = JSON.parse(JSON.stringify(this.investigador));
+    submitInvestigador.clave = CryptoJS.SHA3(submitInvestigador.clave).toString();
 
     console.log('Registrando este investigador:', submitInvestigador);
 
     this.loginService.registerInvestigador(submitInvestigador).subscribe(data => {
 
-      console.log(data);
-      alert('Registro realizado con éxito. Ya puedes iniciar sesión con tus credenciales.');
+      alert('Registro realizado con éxito. Por favor, dirígite a tu email para verificar tu cuenta.');
       this.router.navigate(['/']);
 
     }, err => {
@@ -52,6 +51,12 @@ export class SignUpComponent implements OnInit {
   ocultarPassword(){
 
     document.getElementById('clave').setAttribute('type', 'password');
+
+  }
+
+  fileUpload(event){
+
+    console.log(event.target.files);
 
   }
 

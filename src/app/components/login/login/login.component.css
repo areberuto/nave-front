@@ -1,13 +1,35 @@
 #formulario {
+
   color: black;
   margin: 25px auto;
   background-color: white;
   border-radius: 5px;
-  padding: 40px;
   
 }
 
 h3 {
   text-align: center;
   margin-bottom: 30px;
+}
+
+#pwOlvidada {
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background-color: rgb(112, 90, 211);
+  border: 2px solid rgb(53, 41, 122);
+  border-radius: 5px;
+
+}
+
+.cerrar {
+
+  cursor: pointer;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+
 }

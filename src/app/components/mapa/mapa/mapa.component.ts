@@ -9,21 +9,18 @@ import { environment } from 'src/environments/environment';
 })
 export class MapaComponent implements OnInit, AfterViewInit {
 
-  @Input() public latitud: Number;
-  @Input() public longitud: Number;
+  @Input() public latitud: number;
+  @Input() public longitud: number;
   @Input() public idFen: Number;
 
   public mapa: mapboxgl.Map;
 
   constructor() {
 
-    console.log('idFen en el constructor:', this.idFen);
     
   }
 
   ngOnInit(): void {
-
-    console.log('idFen en el onInit:', this.idFen);
     
     (mapboxgl as any).accessToken = environment.mapboxToken;
 
@@ -43,15 +40,17 @@ export class MapaComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
 
     const id = `mapa${this.idFen}`;
+    
+    console.log("Latitud:", this.latitud, "Longitud: ", this.longitud);
 
     this.mapa = new mapboxgl.Map({
       container: id,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-5.981415, 37.3836722],
+      center: [this.longitud, this.latitud],
       zoom: 15
     });
 
-    new mapboxgl.Marker().setLngLat([-5.981415, 37.3836722]).addTo(this.mapa);
+    new mapboxgl.Marker().setLngLat([this.longitud, this.latitud]).addTo(this.mapa);
 
   }
 

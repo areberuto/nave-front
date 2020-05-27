@@ -176,8 +176,6 @@ export class ProfileComponent implements OnInit {
 
         }
 
-        console.log("Esto se imprime y no debería.");
-
       },
 
       err => {
@@ -222,20 +220,40 @@ export class ProfileComponent implements OnInit {
         this.investigadoresService.deleteInv(this.investigador.id).subscribe(
 
           (data) => {
+            
+            if (data['rowCount'] > 0) {
 
-            alert('Tu cuenta y tus fenómenos han sido borrado con éxito.');
+              alert('Tu cuenta y tus fenómenos han sido borrado con éxito.');
             this.router.navigate(['/']);
+    
+            }
+    
+            else {
+    
+              alert("Error en el borrado. Vuelve a intentarlo o contacta con el administrador.");
+              console.log(data);
+    
+            }
 
           },
 
           (err) => {
+
+            alert("Error en el borrado. Vuelve a intentarlo o contacta con el administrador.");
             console.log(err);
+
           }
         );
       },
 
       (err) => {
 
+        if(err.status == "401"){
+        
+          alert("Contraseña incorrecta.");
+        
+        }
+        
         console.log(err);
 
       }
@@ -315,4 +333,5 @@ export class ProfileComponent implements OnInit {
     )
 
   }
+
 }

@@ -16,6 +16,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './components/footer/footer.component';
+import { FileComponent } from './components/file/file.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FooterComponent } from './components/footer/footer.component';
     MapaComponent,
     SignUpComponent,
     ProfileComponent,
-    FooterComponent
+    FooterComponent,
+    FileComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

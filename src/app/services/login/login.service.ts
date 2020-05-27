@@ -85,4 +85,22 @@ export class LoginService {
     
   }
 
+  verify(codGen: String){
+
+    return this.http.post(`${this.url}/verify`, {codGen});
+    
+  }
+
+  pwOlvidada(email: String){
+
+    return this.http.post(`${this.url}/pwOlvidada`, {email});
+
+  }
+
+  resetPwd(tmpClave: String, tmpClaveSHA: String){
+
+    return this.http.post(`${this.url}/resetPwd`, {tmpClave, tmpClaveSHA});
+    
+  }
+
 }

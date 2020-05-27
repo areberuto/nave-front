@@ -36,11 +36,10 @@ a {
   text-decoration: none;
   color: white;
 
-}
+} 
 
-.navbar-toggler {
+#buscar {
 
-  color: white;
-  border: 1px solid white;
+  cursor: pointer;
 
 }

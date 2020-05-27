@@ -3,7 +3,6 @@
   word-wrap: break-word;
   border-radius: 10px;
   margin: 20px auto;
-  padding: 10px 20px;
 }
 
 #autor {
@@ -34,4 +33,26 @@ img {
 
   border-radius: 5px;
   
+}
+
+#loading {
+
+  width: 80px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+}
+
+#notFound p {
+
+  color: white;
+
+}
+
+#resultados h4 {
+
+  text-decoration: underline;
+
 }

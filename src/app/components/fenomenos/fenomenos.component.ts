@@ -6,6 +6,7 @@ import { LoginService } from "src/app/services/login/login.service";
 import { LoginStatus } from "src/app/models/login/login-status";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { SearchTarget } from 'src/app/models/search-target/search-target';
 
 @Component({
   selector: "app-fenomenos",
@@ -16,19 +17,17 @@ export class FenomenosComponent implements OnInit {
 
   public fenomenos: Array<Fenomeno>;
   public idInvestigador: Number;
-  public seeInv: Number;
-  public seeInvName: String;
+  public searchTarget: SearchTarget;
+  public hasParams: Boolean;
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
-  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService,private activatedRoute: ActivatedRoute) {
+  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService, private activatedRoute: ActivatedRoute) {
 
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
-
-    if (this.activatedRoute.snapshot.params["seeInv"]) {
-      this.seeInv = this.activatedRoute.snapshot.params["seeInv"];
-    }
+    this.searchTarget = <SearchTarget>{};
+    this.hasParams = false;
 
   }
 
@@ -93,61 +92,32 @@ export class FenomenosComponent implements OnInit {
       this.idInvestigador = this.loginStatus.idInv;
     }
 
-    if (!this.seeInv) {
-      this.getFenomenos();
-    } else {
-      this.getFenomenosUser(this.seeInv);
-    }
+    this.getFenomenos();
 
   }
 
   getFenomenos() {
 
-    this.fenomenosService.getFenomenos().subscribe(
-      (fenomenos) => {
-        console.log(fenomenos);
-        this.fenomenos = fenomenos;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.activatedRoute.queryParams.subscribe( data => {
 
-  }
+      this.searchTarget = <SearchTarget>data;
+      this.hasParams = true;
+      console.log(this.searchTarget);
 
-  getFenomenosUser(seeInv: Number) {
-
-    console.log("Getting fenomenos del usuario", seeInv);
-
-    this.fenomenosService.getFenomenosByInvestigador(seeInv).subscribe(
-      (data) => {
-        console.log(data);
-        console.log(data.length);
-        //Si el usuario tuviera 0 fenómenos, buscamos su nombre. Sino, lo cogemos de aquí.
-
-        if(data.length > 0){
-
-          this.fenomenos = data;
-          this.seeInvName = `${this.fenomenos[0].nombreInvestigador}` + ` ${this.fenomenos[0].apellidoInv1}`;
-
-        } else {
-
-          this.fenomenos = [];
-          this.investigadoresService.getInvestigadorById(seeInv).subscribe(data =>{
-
-            this.seeInvName = `${data.nombre}` + ` ${data.apellido1}`;
-
-          }, err => {
-
-            console.log(err);
-
-          });
+      this.fenomenosService.getFenomenos(this.searchTarget).subscribe(fenomenos => {
+            
+            setTimeout(() => this.fenomenos = fenomenos, 1000);
+    
+        },
+        err => {
+    
+          console.log(err);
+    
         }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+
+      );
+
+    });
 
   }
 

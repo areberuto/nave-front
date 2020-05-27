@@ -1,0 +1,48 @@
+<div id="searchDiv" class="row mx-1 text-center">
+    <form #searchForm="ngForm" id="searchForm" (ngSubmit)="buscar()" class="col-12 col-md-8 col-xl-6 mx-auto p-4">
+        <h3 class="col-12 mx-auto text-center">Búsqueda por parámetros</h3><br>
+        <div class="col-12 mx-auto text-left">
+
+            <div class="row">
+
+                <label for="idInv">👨‍🔬👩‍🔬 ➖ Investigador/a</label>
+                <select class="form-control mb-4" [(ngModel)]="searchTarget.idInv" name="idInv" id="idInv"
+                    #idInv="ngModel" multiple>
+                    <option *ngFor="let investigador of investigadores" [value]="investigador.id">
+                        {{investigador.nombre}} {{investigador.apellido1}} {{investigador.apellido2}}</option>
+                </select>
+                
+
+                <label for="ciudad">🏙 ➖ Ciudad</label>
+                <input class="form-control mb-4" [(ngModel)]="searchTarget.ciudad" type="text" name="ciudad" id="ciudad"
+                    #ciudad="ngModel"><br>
+
+
+                <label for="pais">🌍 ➖ País</label>
+                <input class="form-control mb-4" [(ngModel)]="searchTarget.pais" type="text" name="pais" id="pais"
+                    #pais="ngModel"><br>
+
+
+                <label for="fechaInicio">📅 ➖ Desde</label>
+
+                <input class="form-control mb-4" [(ngModel)]="searchTarget.fechaInicio" type="date" name="fechaInicio"
+                    id="fechaInicio" #fechaInicio="ngModel"><br>
+
+                <label for="fechaFin">📅 ➖ Hasta</label>
+
+                <input class="form-control mb-4" [(ngModel)]="searchTarget.fechaFin" type="date" name="fechaFin"
+                    id="fechaFin" #fechaFin="ngModel"><br>
+
+                <label for="texto">✍ ➖ Texto</label>
+                <textarea name="texto" id="texto" class="form-control mb-4" [(ngModel)]="searchTarget.texto" rows="5"
+                    #texto="ngModel" maxlength="100"
+                    placeholder="El texto se buscará tal y como lo escribas."></textarea><br>
+
+                <input class="btn btn-info w-100" id="submit" type="submit" value="Buscar"><br><br>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>

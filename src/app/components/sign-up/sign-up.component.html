@@ -39,10 +39,16 @@
                 placeholder="¿Cuál es tu segundo apellido?" required #apellido2="ngModel"><br>
             <div [hidden]="apellido2.valid || apellido2.pristine" class="alert alert-danger">Por favor, introduce tu
                 segundo apellido.</div>
-
+            
+            <label for="foto">📷 ➖ Tu foto de perfil</label>
+            <input type="file" class="d-none" name="foto" id="foto" #foto (change)="fileUpload($event)">
+            <div class="text-center my-2">
+                <button type="button" class="btn btn-danger w-75" (click)="foto.click()">Subir archivo</button>
+            </div><br>
 
             <label for="genero">👨‍🔬👩‍🔬 ➖ Género</label>
-            <select class="form-control" [(ngModel)]="investigador.genero" name="genero" id="genero" #genero="ngModel" [value]="'hombre'" required>
+            <select class="form-control" [(ngModel)]="investigador.genero" name="genero" id="genero" #genero="ngModel"
+                [value]="'hombre'" required>
                 <option [value]="'hombre'">Hombre</option>
                 <option [value]="'mujer'">Mujer</option>
             </select><br>
