@@ -44,13 +44,25 @@ h3 {
 
 }
 
-input#oldPwd, input#newPwd, input#claveDel {
+input.clave{
+
   width: 80%;
   display: inline-block;
+  
 }
 
 input + span:hover {
 
   cursor: pointer;
+
+}
+
+#loading {
+
+  width: 50px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
 
 }

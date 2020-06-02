@@ -17,6 +17,8 @@ import * as CryptoJS from "crypto-js";
 export class ProfileComponent implements OnInit {
 
   public investigador: Investigador;
+  public correoExiste: Boolean;
+  public claveControl: String;
   public fenomenos: Array<Fenomeno>;
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
@@ -28,6 +30,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(private loginService: LoginService, private router: Router, private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService) {
 
+    this.correoExiste = false;
+    this.claveControl = "";
     this.mostrarAviso = false;
     this.mostrarPwd = false;
     this.claveDel = "";
@@ -44,12 +48,6 @@ export class ProfileComponent implements OnInit {
 
       this.loginStatus = data;
 
-      //Si estamos aquí dentro, es porque no venimos de navegación SPA. Pedimos datos
-      //pues tras recibir la id:
-
-      this.getDatosPerfil(this.loginStatus.idInv);
-      this.getFenomenosByInvestigador(this.loginStatus.idInv);
-
     });
 
     //Si la idInv está a undefined, estamos en el escenario de:
@@ -58,6 +56,7 @@ export class ProfileComponent implements OnInit {
     //- Haber refrescado la página
 
     if (!this.loginStatus.idInv) {
+
       //Si tenemos un token en el storage, es que hemos refrescado la página y
       //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
@@ -75,6 +74,8 @@ export class ProfileComponent implements OnInit {
             //Seteamos el login y actualizamos los suscriptores del loginStatus$
 
             this.loginService.setLoginStatus({ isAdmin: data["isAdmin"], idInv: data["idInv"] });
+            this.getDatosPerfil(this.loginStatus.idInv);
+            this.getFenomenosByInvestigador(this.loginStatus.idInv);
 
           },
 
@@ -83,6 +84,7 @@ export class ProfileComponent implements OnInit {
             //Si no es válida, devolvemos el error.
 
             console.log(err);
+            this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
 
           }
 
@@ -122,8 +124,11 @@ export class ProfileComponent implements OnInit {
 
       (data) => {
 
-        console.log(data);
-        this.investigador = data;
+        setTimeout(() => {
+          
+          this.investigador = data;
+           
+        }, 1000);
 
       },
       (err) => {
@@ -149,8 +154,7 @@ export class ProfileComponent implements OnInit {
 
         console.log(err);
 
-      }
-    );
+    });
 
   }
 
@@ -160,7 +164,7 @@ export class ProfileComponent implements OnInit {
 
       data => {
 
-        if (data['rowCount'] > 0) {
+        if (data['affectedRows'] > 0) {
 
           alert("Datos actualizados con éxito.");
           console.log(data);
@@ -209,6 +213,8 @@ export class ProfileComponent implements OnInit {
 
   deleteInv(): void {
 
+    console.log(this.claveDel);
+
     const hashedClave = CryptoJS.SHA3(this.claveDel).toString();
 
     this.loginService.checkPassword(hashedClave).subscribe(
@@ -220,19 +226,19 @@ export class ProfileComponent implements OnInit {
         this.investigadoresService.deleteInv(this.investigador.id).subscribe(
 
           (data) => {
-            
+
             if (data['rowCount'] > 0) {
 
               alert('Tu cuenta y tus fenómenos han sido borrado con éxito.');
-            this.router.navigate(['/']);
-    
+              this.router.navigate(['/']);
+
             }
-    
+
             else {
-    
+
               alert("Error en el borrado. Vuelve a intentarlo o contacta con el administrador.");
               console.log(data);
-    
+
             }
 
           },
@@ -248,12 +254,12 @@ export class ProfileComponent implements OnInit {
 
       (err) => {
 
-        if(err.status == "401"){
-        
+        if (err.status == "401") {
+
           alert("Contraseña incorrecta.");
-        
+
         }
-        
+
         console.log(err);
 
       }
@@ -310,17 +316,17 @@ export class ProfileComponent implements OnInit {
         //Si se ha modificado la clave, procedemos a guardar el hash en memoria
         //y recargar para pedir nuevo token
 
-        if (data["rowCount"]) {
+        if (data["hashedPass"]) {
 
-          sessionStorage.setItem("hashedPass", data["hashedPass"]);
-          location.reload();
+          alert("Contraseña actualizada correctamente: inicia sesión de nuevo, por favor.");
+          this.router.navigate(['/']);
 
         }
 
         else {
 
           alert("Algo ha ido mal.");
-          
+
         }
 
       },
@@ -329,8 +335,33 @@ export class ProfileComponent implements OnInit {
 
         console.log(err);
 
+      });
+
+  }
+
+  comprobarDisponibilidad() {
+
+    this.investigadoresService.getInvestigadorByEmail(this.investigador.correo).subscribe(investigador => {
+
+      if (!Object.keys(investigador).length) {
+
+        setTimeout(() => this.correoExiste = false, 500);
+
+      } else {
+
+        if(investigador.id != this.investigador.id){
+
+          setTimeout(() => this.correoExiste = true, 500);
+
+        }
+
       }
-    )
+
+    }, err => {
+
+      console.log(err);
+
+    });
 
   }
 

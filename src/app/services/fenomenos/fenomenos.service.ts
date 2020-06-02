@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Fenomeno } from 'src/app/models/fenomeno/fenomeno';
 import { SearchTarget } from 'src/app/models/search-target/search-target';
+import { Categoria } from 'src/app/models/categoria/categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,6 @@ export class FenomenosService {
 
     const params: HttpParams = JSON.parse(JSON.stringify(searchTarget));
 
-    console.log(params);
-
     return this.http.get<Fenomeno[]>(`${this.url}/`, {params: params});
 
   }
@@ -35,8 +34,14 @@ export class FenomenosService {
 
   getFenomenoById(id: Number){
 
-    return this.http.get<Fenomeno>(`${this.url}?idFen=${id}`);
+    return this.http.get<Fenomeno[]>(`${this.url}?idFen=${id}`);
 
+  }
+  
+  getCategorias(){
+
+    return this.http.get<Categoria[]>(`${this.url}/categorias`);
+    
   }
 
   postFenomeno(fenomeno: Fenomeno){

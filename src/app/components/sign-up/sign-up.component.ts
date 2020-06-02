@@ -3,6 +3,7 @@ import { Investigador } from 'src/app/models/investigador/investigador';
 import { LoginService } from 'src/app/services/login/login.service';
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
+import { InvestigadoresService } from 'src/app/services/investigadores/investigadores.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,19 +13,23 @@ import { Router } from '@angular/router';
 export class SignUpComponent implements OnInit {
 
   public investigador: Investigador;
+  public correoExiste: Boolean;
+  public claveControl: String;
 
-  constructor(private loginService: LoginService, private router: Router) { 
+  constructor(private loginService: LoginService, private investigadoresService: InvestigadoresService, private router: Router) {
 
     this.investigador = <Investigador>{};
+    this.correoExiste = false;
+    this.claveControl = "";
 
   }
 
   ngOnInit(): void {
   }
 
-  signUp(){
+  signUp() {
 
-    let submitInvestigador = JSON.parse(JSON.stringify(this.investigador));
+    const submitInvestigador = JSON.parse(JSON.stringify(this.investigador));
     submitInvestigador.clave = CryptoJS.SHA3(submitInvestigador.clave).toString();
 
     console.log('Registrando este investigador:', submitInvestigador);
@@ -42,21 +47,47 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  verPassword(){
+  verPassword(event) {
 
-    document.getElementById('clave').setAttribute('type', 'text');
-
-  }
-
-  ocultarPassword(){
-
-    document.getElementById('clave').setAttribute('type', 'password');
+    event.preventDefault();
+    const siblingInput: HTMLElement = event.target.previousSibling;
+    siblingInput.setAttribute("type", "text");
 
   }
 
-  fileUpload(event){
+  ocultarPassword(event) {
+
+    event.preventDefault();
+    const siblingInput: HTMLElement = event.target.previousSibling;
+    siblingInput.setAttribute("type", "password");
+
+  }
+
+  fileUpload(event) {
 
     console.log(event.target.files);
+
+  }
+
+  comprobarDisponibilidad() {
+
+    this.investigadoresService.getInvestigadorByEmail(this.investigador.correo).subscribe(investigador => {
+
+      if (!Object.keys(investigador).length) {
+
+        setTimeout(() => this.correoExiste = false, 500);
+
+      } else {
+
+        setTimeout(() => this.correoExiste = true, 500);
+
+      }
+
+    }, err => {
+
+      console.log(err);
+
+    });
 
   }
 

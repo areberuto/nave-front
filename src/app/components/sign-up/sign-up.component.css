@@ -1,20 +1,18 @@
 #formulario,
 #msg {
   color: black;
-  margin: 20px auto;
   background-color: white;
   border-radius: 5px;
   padding-top: 30px;
   padding-bottom: 30px;
-  width: 75%;
 }
 
-#togglePassword {
+.togglePassword {
   cursor: pointer;
   display: inline-block;
 }
 
-input#clave {
+input.clave {
   width: 80%;
   display: inline-block;
 }

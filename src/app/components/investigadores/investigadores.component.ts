@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FenomenosService } from 'src/app/services/fenomenos/fenomenos.service';
 import { InvestigadoresService } from 'src/app/services/investigadores/investigadores.service';
 import { LoginService } from 'src/app/services/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-investigadores',
@@ -18,7 +19,7 @@ export class InvestigadoresComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
-  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService) { 
+  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private router: Router, private loginService: LoginService) {
 
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
@@ -40,51 +41,51 @@ export class InvestigadoresComponent implements OnInit {
     //- Haber escrito la URL manualmente
     //- Haber refrescado la página
 
-    if(!this.loginStatus.idInv){
+    if (!this.loginStatus.idInv) {
 
       //Si tenemos un token en el storage, es que hemos refrescado la página y
       //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
-      if(sessionStorage.getItem('idToken')){
+      if (sessionStorage.getItem('idToken')) {
 
-        this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe( data => {
-  
-            //Para guardar el nuevo token, que tendrá tiempos de
-            //expedición y expiración diferentes.       
-            
-            this.loginService.setSession(data);
-  
-            //Seteamos el login y actualizamos los suscriptores del loginStatus$
-  
-            this.loginService.setLoginStatus({isAdmin: data['isAdmin'], idInv: data['idInv']});
-              
-          },
+        this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe(data => {
+
+          //Para guardar el nuevo token, que tendrá tiempos de
+          //expedición y expiración diferentes.       
+
+          this.loginService.setSession(data);
+
+          //Seteamos el login y actualizamos los suscriptores del loginStatus$
+
+          this.loginService.setLoginStatus({ isAdmin: data['isAdmin'], idInv: data['idInv'] });
+
+        },
 
           (err) => {
-  
+
             //Si no es válida, devolvemos el error.
-  
+
             console.log(err);
 
           }
 
         );
 
-      } 
-      
+      }
+
       //Si tampoco tenemos token, por defecto establecemos el estado a público
       //y lo seteamos en el servicio para que el nav lo reciba.
 
       else {
 
-        this.loginService.setLoginStatus({isAdmin: false, idInv: -1}); 
+        this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
 
       }
 
     }
 
     this.getInvestigadores();
-    
+
   }
 
   getInvestigadores() {
@@ -98,6 +99,37 @@ export class InvestigadoresComponent implements OnInit {
       console.log(err);
 
     });
+
+  }
+
+  deleteInv(idInv: Number) {
+
+    if(confirm("El borrado del perfil y sus fenómenos será irreversible. ¿Desea continuar?")){
+
+      this.investigadoresService.deleteInv(idInv).subscribe(data => {
+
+        if (data['rowCount'] > 0) {
+  
+          alert('El perfil y sus fenómenos asociados han sido borrado con éxito.');
+          this.router.navigate(['/']);
+  
+        }
+  
+        else {
+  
+          alert("Error en el borrado. Vuelve a intentarlo o contacta con el administrador.");
+          console.log(data);
+  
+        }
+  
+      }, err => {
+  
+        alert("Error en el borrado. Vuelve a intentarlo o contacta con el administrador.");
+        console.log(err);
+  
+      });
+
+    }
 
   }
 

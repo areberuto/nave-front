@@ -5,8 +5,9 @@ import { InvestigadoresService } from "src/app/services/investigadores/investiga
 import { LoginService } from "src/app/services/login/login.service";
 import { LoginStatus } from "src/app/models/login/login-status";
 import { Observable } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { SearchTarget } from 'src/app/models/search-target/search-target';
+import { Categoria } from 'src/app/models/categoria/categoria';
 
 @Component({
   selector: "app-fenomenos",
@@ -21,8 +22,9 @@ export class FenomenosComponent implements OnInit {
   public hasParams: Boolean;
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
+  public categorias: Categoria[];
 
-  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService, private activatedRoute: ActivatedRoute) {
+  constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService, private route: Router, private activatedRoute: ActivatedRoute) {
 
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
@@ -57,7 +59,7 @@ export class FenomenosComponent implements OnInit {
           )
           .subscribe(
             (data) => {
-              
+
               //Para guardar el nuevo token, que tendrá tiempos de
               //expedición y expiración diferentes.
 
@@ -93,29 +95,26 @@ export class FenomenosComponent implements OnInit {
     }
 
     this.getFenomenos();
+    this.cargarCategorias();
 
   }
 
   getFenomenos() {
 
-    this.activatedRoute.queryParams.subscribe( data => {
+    this.activatedRoute.queryParams.subscribe(data => {
 
       this.searchTarget = <SearchTarget>data;
-      this.hasParams = true;
-      console.log(this.searchTarget);
+      this.hasParams = Object.keys(this.searchTarget).length != 0;
 
       this.fenomenosService.getFenomenos(this.searchTarget).subscribe(fenomenos => {
-            
-            setTimeout(() => this.fenomenos = fenomenos, 1000);
-    
-        },
-        err => {
-    
-          console.log(err);
-    
-        }
 
-      );
+        setTimeout(() => this.fenomenos = fenomenos, 1000);
+
+      }, err => {
+
+        console.log(err);
+
+      });
 
     });
 
@@ -123,11 +122,7 @@ export class FenomenosComponent implements OnInit {
 
   deleteFenomeno(id: Number) {
 
-    if (
-      confirm(
-        "El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?"
-      )
-    ) {
+    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")) {
       this.fenomenosService.deleteFenomeno(id).subscribe(
         (data) => {
           console.log(data);
@@ -136,6 +131,44 @@ export class FenomenosComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+
+  }
+
+  //TO-DO Categorias, id y navegación desde fenomenos al clickar
+
+  cargarCategorias() {
+
+    this.fenomenosService.getCategorias().subscribe(data => {
+
+      this.categorias = data;
+
+    }, err => {
+
+      console.log(err);
+
+    });
+
+  }
+
+  filtrarCategoria(event, categoria: String) {
+
+    event.preventDefault();
+
+    let found: Boolean = false;
+    let catId: Number;
+
+    for (let i = 0, n = this.categorias.length; i < n && !false; i++) {
+
+      if (this.categorias[i].categoria == categoria) {
+
+        found = true;
+        catId = this.categorias[i].id;
+
+      }
+
+    }
+
+    this.route.navigate([`/fenomenos`]);
 
   }
 }

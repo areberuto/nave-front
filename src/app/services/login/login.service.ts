@@ -18,6 +18,7 @@ export class LoginService {
   public lgStchecker: Observable<Object>;
 
   constructor(private http: HttpClient, private router: Router) {
+    
     //Estado por defecto
 
     this.loginStatus = {
@@ -48,18 +49,18 @@ export class LoginService {
   }
 
   checkLogin(email: String, clave: String) {
-    return this.http.post(`${this.url}/checkLogin`, {
-      email: email,
-      clave: clave,
-    });
+
+    return this.http.post(`${this.url}/checkLogin`, { email: email, clave: clave });
+
   }
 
   setSession(data: object) {
-    console.log("Setteando nuevos datos de session");
 
+    console.log("Setteando nuevos datos de session");
     sessionStorage.setItem("idToken", data["idToken"]);
     sessionStorage.setItem("email", data["email"]);
     sessionStorage.setItem("hashedPass", data["hashedPass"]);
+
   }
 
   logOut() {
@@ -74,33 +75,33 @@ export class LoginService {
   }
 
   registerInvestigador(investigador: Investigador) {
-    
-    return this.http.post(`${this.url}/register`, {investigador: investigador});
+
+    return this.http.post(`${this.url}/register`, { investigador: investigador });
 
   }
 
-  checkPassword(claveInput: String){
+  checkPassword(claveInput: String) {
 
-    return this.http.post(`${this.url}/checkPassword`, {clave: claveInput});
-    
-  }
-
-  verify(codGen: String){
-
-    return this.http.post(`${this.url}/verify`, {codGen});
-    
-  }
-
-  pwOlvidada(email: String){
-
-    return this.http.post(`${this.url}/pwOlvidada`, {email});
+    return this.http.post(`${this.url}/checkPassword`, { clave: claveInput });
 
   }
 
-  resetPwd(tmpClave: String, tmpClaveSHA: String){
+  verify(codGen: String) {
 
-    return this.http.post(`${this.url}/resetPwd`, {tmpClave, tmpClaveSHA});
-    
+    return this.http.post(`${this.url}/verify`, { codGen });
+
+  }
+
+  pwOlvidada(email: String) {
+
+    return this.http.post(`${this.url}/pwOlvidada`, { email });
+
+  }
+
+  resetPwd(tmpClave: String, tmpClaveSHA: String) {
+
+    return this.http.post(`${this.url}/resetPwd`, { tmpClave, tmpClaveSHA });
+
   }
 
 }

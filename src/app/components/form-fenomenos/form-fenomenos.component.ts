@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginStatus } from 'src/app/models/login/login-status';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Observable } from 'rxjs';
+import { Categoria } from 'src/app/models/categoria/categoria';
 
 @Component({
   selector: 'app-form-fenomenos',
@@ -17,6 +18,8 @@ export class FormFenomenosComponent implements OnInit {
   public fenomeno: Fenomeno;
   public investigadorId: Number;
   public fenomenoId: Number;
+
+  public categorias: Categoria[];
 
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
@@ -34,8 +37,11 @@ export class FormFenomenosComponent implements OnInit {
       this.accion = 'Modificar fenómeno';
       this.fenomenosService.getFenomenoById(this.fenomenoId).subscribe(data => {
 
-        this.fenomeno = data;
-        console.log(this.fenomeno);
+        if(data.length){
+
+          this.fenomeno = data[0];
+
+        }
 
       }, err => {
 
@@ -57,27 +63,14 @@ export class FormFenomenosComponent implements OnInit {
 
     });
 
-    //Si la idInv está a undefined, estamos en el escenario de:
-
-    //- Haber escrito la URL manualmente
-    //- Haber refrescado la página
-
     if(!this.loginStatus.idInv){
-
-      //Si tenemos un token en el storage, es que hemos refrescado la página y
-      //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
       if(sessionStorage.getItem('idToken')){
 
         this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe( data => {
-  
-            //Para guardar el nuevo token, que tendrá tiempos de
-            //expedición y expiración diferentes.       
             
             this.loginService.setSession(data);
-  
-            //Seteamos el login y actualizamos los suscriptores del loginStatus$
-  
+    
             this.loginService.setLoginStatus({isAdmin: data['isAdmin'], idInv: data['idInv']});
   
             this.investigadorId = this.loginStatus.idInv;
@@ -85,10 +78,9 @@ export class FormFenomenosComponent implements OnInit {
           },
 
           (err) => {
-  
-            //Si no es válida, devolvemos el error.
-  
+    
             console.log(err);
+            this.loginService.setLoginStatus({isAdmin: false, idInv: -1}); 
 
           }
 
@@ -96,16 +88,11 @@ export class FormFenomenosComponent implements OnInit {
 
       } 
       
-      //Si tampoco tenemos token, por defecto establecemos el estado a público
-      //y lo seteamos en el servicio para que el nav lo reciba.
-
       else {
 
         this.loginService.setLoginStatus({isAdmin: false, idInv: -1}); 
 
       }
-
-    //Si no está a undefined, estaba navegando ya como usuario o público, así que cogemos la idInv de antes.
 
     } else {
 
@@ -113,14 +100,13 @@ export class FormFenomenosComponent implements OnInit {
 
     }
 
-    //Si se intenta acceder a esta vista, manualmente, sin tener un idInv de usuario,
-    //te devuelve al login
-
     if(this.loginStatus.idInv == -1){
 
       this.router.navigate(['/']);
 
     }
+
+    this.cargarCategorias();
 
   }
 
@@ -147,20 +133,23 @@ export class FormFenomenosComponent implements OnInit {
   modFenomeno(){
 
     this.fenomenosService.putFenomeno(this.fenomeno).subscribe(data => {
-
-      console.log(data);
       
+      console.log(data);
+      alert("Fenómeno actualizado con éxito.");
       this.router.navigate(['/fenomenos']);
 
-    }, err => {
+    }, (err) => {
 
-      console.log(err);
+      alert(err.error.msg);
+      console.log(err.error.msg); 
 
     });
 
   }
   
   ejecutarAccion(){
+
+    console.log("Fenómeno que sale:", this.fenomeno);
 
     if(!this.fenomenoId){
 
@@ -171,6 +160,21 @@ export class FormFenomenosComponent implements OnInit {
       this.modFenomeno();
 
     }
+
+  }
+
+  cargarCategorias(){
+
+    this.fenomenosService.getCategorias().subscribe( data => {
+
+      console.log(data);
+      this.categorias = data;
+
+    }, err => {
+
+      console.log(err);
+
+    });
 
   }
 }

@@ -7,7 +7,7 @@
             <h4>Resultados de la búsqueda   </h4>
             <div id="notFound" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 text-center">
                 <p>¡No hay fenómenos!</p>
-                <img class="img-fluid" src="assets/noresults.gif">
+                <img class="img-fluid" src="assets/noresults.gif"><br>
                 <button type="button" routerLink ="/search" class="btn btn-primary mt-4">¿Probamos con otra búsqueda?</button>
             </div>
         </div>
@@ -35,9 +35,9 @@
                     </div>
 
                     <div id="autor" class="row justify-content-between mt-4">
-                        <p class="col-md-4 mb-2">🔎 <a routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}</a></p>
-                        <p class="col-md-4 mb-2 text-md-right">📂 {{fenomeno.categoria}}</p>
-                        <div *ngIf="idInvestigador == fenomeno.investigadorId" class="col-12">
+                        <p class="col-md-4 mb-2">🔎 <a routerLink="/fenomenos" [queryParams]="{idInv: fenomeno.investigadorId}">{{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}</a></p>
+                        <p class="col-md-4 mb-2 text-md-right">📂 <a href="#" (click)="filtrarCategoria($event, fenomeno.categoria)">{{fenomeno.categoria}}</a></p>
+                        <div *ngIf="idInvestigador == fenomeno.investigadorId || loginStatus.isAdmin" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
                                 <button class="col-md-2 btn btn-warning mx-1 my-2"
                                     routerLink="/modFenomeno/{{fenomeno.id}}">Modificar</button>

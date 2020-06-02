@@ -20,14 +20,13 @@ nav img {
 nav li a {
 
   border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: color 0.3s;
 
 }
 
 nav li a:hover {
 
-  background-color: rgb(219, 214, 214);
-  color: black;
+  color: rgb(247, 247, 90);
 
 }
 

@@ -55,6 +55,7 @@ export class NavComponent implements OnInit {
       } else if (this.loginStatus.idInv > -1) {
 
         this.logAction = "Log out";
+
         this.investigadoresService.getInvestigadorById(this.loginStatus.idInv).subscribe(investigador => {
 
           this.investigador = investigador;

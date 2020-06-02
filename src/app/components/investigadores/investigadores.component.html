@@ -19,7 +19,8 @@
         <li class="list-group-item">➖ 🏡 {{investigador.ciudad}}, {{investigador.pais}}</li>
       </ul>
       <div class="card-body text-center">
-        <a routerLink="/fenomenos" [queryParams]="{idInv: investigador.id}" class="card-link">Fenómenos reportados</a>
+        <a routerLink="/fenomenos" [queryParams]="{idInv: investigador.id}" class="card-link">Fenómenos reportados</a><br><br>
+        <button type="button" class="btn btn-danger" (click)="deleteInv(investigador.id)">Borrar perfil</button>
       </div>
     </div>
   </div>

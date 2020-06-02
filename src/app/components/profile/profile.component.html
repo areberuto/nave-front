@@ -1,11 +1,14 @@
 <div class="row">
-    <div class="col-12 py-4 mb-2">
+    <div class="col-12 py-2 mb-2">
         <h3 class="text-center ">Datos personales
         </h3>
+
     </div>
+    <img id="loading" *ngIf="!investigador || !fenomenos" src="assets/loading.gif">
     <div class="col-10 mx-auto my-4" id="profile">
 
-        <div class="card row d-flex flex-md-row p-4" *ngIf="investigador">
+
+        <div class="card row d-flex flex-md-row p-4" *ngIf="investigador && fenomenos">
             <div class="col-6 mx-auto py-2 col-lg-4">
                 <img class="card-img-top mx-auto" src="assets/photo.png" alt="Profile picture">
             </div>
@@ -26,11 +29,14 @@
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="correo">📧 ➖ E-mail</label>
                                     <input class="form-control" [(ngModel)]="investigador.correo" type="text"
-                                        name="correo" id="correo" #correo="ngModel" required><br>
+                                        name="correo" id="correo" #correo="ngModel" (keyup)="comprobarDisponibilidad()"
+                                        required><br>
                                     <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">Por
                                         favor,
                                         introduce un correo
                                         válido.</div>
+                                    <div [hidden]="!correoExiste" class="alert alert-danger">Este correo no está
+                                        disponible.</div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="apellido1">🆔 ➖ Primer apellido</label>
@@ -63,9 +69,9 @@
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="genero">👨‍🔬👩‍🔬 ➖ Género</label>
                                     <select class="form-control" [(ngModel)]="investigador.genero" name="genero"
-                                        id="genero" #genero="ngModel" [value]="'hombre'" required>
-                                        <option [value]="'hombre'">Hombre</option>
-                                        <option [value]="'mujer'">Mujer</option>
+                                        id="genero" #genero="ngModel" [value]="1" required>
+                                        <option [value]="1">Hombre</option>
+                                        <option [value]="2">Mujer</option>
                                     </select><br>
                                     <div [hidden]="genero.valid || genero.pristine" class="alert alert-danger">Por
                                         favor,
@@ -91,30 +97,37 @@
                                 </div>
                             </div>
 
-                            <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!datosForm.valid"
-                                value="Modificar datos"><br><br>
+                            <input class="btn btn-info w-100" id="submit" type="submit"
+                                [disabled]="!datosForm.valid || correoExiste" value="Modificar datos"><br><br>
 
-                            <button (click)="mostrarModPwd($event)" type="button" class="btn btn-success w-100">Modificar
+                            <button (click)="mostrarModPwd($event)" type="button"
+                                class="btn btn-success w-100">Modificar
                                 contraseña</button>
                             <br><br>
                             <div [hidden]="!mostrarPwd" id="pwd" class="p-4 mb-4">
 
-                                <p>Para modificar tu contraseña, introduce tu antigua y, justo abajo, aquella a la que
-                                    quieres cambiar. Recuerda: ¡6 caracteres mínimo!</p>
+                                <p>Para modificar tu contraseña, introduce la actual en el primer campo y, justo abajo,
+                                    tu nueva contraseña. Recuerda: ¡6 caracteres mínimo!</p>
 
                                 <form #claveForm="ngForm" (ngSubmit)="modPwd()" class="text-center">
-                                    <input class="form-control" type="password" [(ngModel)]="oldPwd" name="oldPwd"
-                                        minlength="6" placeholder="Contraseña antigua" id="oldPwd" required><span
+                                    <input class="form-control clave" type="password" [(ngModel)]="oldPwd" name="oldPwd"
+                                        minlength="6" placeholder="Contraseña antigua" required><span class="mx-2"
+                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
+                                    </span><br><br>
+
+                                    <input class="form-control clave" type="password" [(ngModel)]="newPwd" name="newPwd"
+                                        minlength="6" placeholder="Nueva contraseña" required><span class="mx-2"
+                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁</span>
+                                    <input class="form-control clave" type="password" [(ngModel)]="claveControl"
+                                        name="claveCtrl" minlength="6" placeholder="Repite la contraseña" #claveCtrl="ngModel" required><span
                                         class="mx-2" (mousedown)="verPassword($event)"
                                         (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
-                                    <input class="form-control" type="password" [(ngModel)]="newPwd" name="newPwd"
-                                        minlength="6" placeholder="Nueva contraseña" id="newPwd" required><span
-                                        class="mx-2" (mousedown)="verPassword($event)"
-                                        (mouseup)="ocultarPassword($event)">👁
-                                    </span><br><br>
-                                    <input [disabled]="!claveForm.valid" class="btn btn-success w-100" type="submit"
+                                    <div [hidden]="claveCtrl.pristine || claveControl == newPwd"
+                                        class="alert alert-danger">Las claves no coinciden.</div>
+
+                                    <input [disabled]="!claveForm.valid || claveControl != newPwd" class="btn btn-success w-100" type="submit"
                                         value="Cambiar contraseña"><br><br>
                                 </form>
 
@@ -129,8 +142,8 @@
                                 <p>Para proceder, introduce tu contraseña.</p>
 
                                 <form #deleteForm="ngForm" (ngSubmit)="deleteInv()" class="text-center">
-                                    <input class="form-control" type="password" [(ngModel)]="claveDel"
-                                        name="claveDel" minlength="6" id="claveDel" required><span class="mx-2"
+                                    <input class="form-control clave" type="password" [(ngModel)]="claveDel"
+                                        name="claveDel" minlength="6" required><span class="mx-2"
                                         (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
@@ -146,12 +159,12 @@
             </div>
         </div>
     </div>
-    <div class="reported col-10 mx-auto my-4" *ngIf="fenomenos">
+    <div class="reported col-10 mx-auto my-4" *ngIf="fenomenos && investigador">
         <h3>
             Tus fenómenos
         </h3>
     </div>
-    <div class="col-lg-10 mx-lg-auto">
+    <div class="col-lg-10 mx-lg-auto" *ngIf="fenomenos && investigador">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
             <div class="card px-4">
                 <div class="card-body">

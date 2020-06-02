@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         
         this.loginService.setLoginStatus({
 
-          isAdmin: false,
+          isAdmin: data['isAdmin'],
           idInv: data['idInv']
 
         });
@@ -109,6 +109,8 @@ export class LoginComponent implements OnInit {
   
   mailOlvidada(){
 
+    this.mostrarOlvidada = !this.mostrarOlvidada;
+
     this.loginService.pwOlvidada(this.emailOlvidada).subscribe(data => {
 
       alert("Comprueba la bandeja de entrada del correo electrónico.");
@@ -128,19 +130,17 @@ export class LoginComponent implements OnInit {
     const tmpClave = url.substring(url.indexOf("tmpClave=") + "tmpClave=".length);
     const tmpClaveSHA = CryptoJS.SHA3(tmpClave).toString();
 
-    console.log(tmpClave);
-    console.log(tmpClaveSHA);
-
     this.loginService.resetPwd(tmpClave, tmpClaveSHA).subscribe(data => {
       
-      alert("Tu clave ha sido actualizada. Te aconsejamos cambiarla cuanto antes en Mi perfil.");
+      alert("Tu clave ha sido actualizada. Cámbiala cuanto antes en tu perfil.");
       
     }, err => {
 
       alert("Algo ha ido mal a la hora de regenerar tu clave. Vuelve a intentarlo o contacta con el administrador.")
-      console.log("Ha ocurrido un error:", err);
+      console.log(err);
       
     });
 
   }
+
 }

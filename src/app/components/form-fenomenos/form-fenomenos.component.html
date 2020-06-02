@@ -1,9 +1,11 @@
 <div class="row">
-    <div id="msg">
+    <div id="msg" class="py-4 mx-auto my-3">
         <div class="col-10 mx-auto text-center">
-            <h3 class="text-center"><span class="d-none d-sm-inline">✏</span> {{accion}} <span class="d-none d-sm-inline">✏</span></h3><br>
+            <h3 class="text-center"><span class="d-none d-sm-inline">✏</span> {{accion}} <span
+                    class="d-none d-sm-inline">✏</span></h3><br>
             <h4 class="text-center">¡No te olvides de rellenar todos los campos!</h4><br>
-            <p>Cuando incorporas información nueva a nuestra base de datos, lo harás bajo nuestro <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">código de
+            <p>Cuando incorporas información nueva a nuestra base de datos, lo harás bajo nuestro <a
+                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">código de
                     conducta</a>. Si uno de nuestros administradores detecta información no basada en prácticas veraces,
                 este podrá sancionarte.</p>
             <a type="button" class="mx-auto w-100 btn btn-warning" routerLink="/fenomenos">Volver</a><br>
@@ -16,63 +18,81 @@
     <!-- En el formulario, el name de cada entrada será el título de cada campo del value. La propiedad precedida con un # será
          la que nos permita acceder a ese valor dentro de la vista del formulario (por ejemplo, para ver si está pristine o valid)
     -->
-    <form #fenomenosForm="ngForm" id="formulario" (ngSubmit)="ejecutarAccion()">
-        <h3 class="col-10 mx-auto text-center">Datos del fenómeno</h3><br>
-        <div class="col-10 mx-auto text-left">
+    <div id="formulario" class="p-4 mx-auto my-3">
+        <form #fenomenosForm="ngForm" (ngSubmit)="ejecutarAccion()">
+            <h3 class="col-12 mx-auto text-center">Datos del fenómeno</h3><br>
+            <div class="col-12 mx-auto text-left">
 
-            <label for="ciudad">🏙 ➖ Ciudad</label>
-            <input class="form-control" [(ngModel)]="fenomeno.ciudad" type="text" name="ciudad" id="ciudad"
-                placeholder="Ej: Sevilla" #ciudad="ngModel" required><br>
-            <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por favor, introduce una ciudad
-                válida.</div>
+                <label for="ciudad">🏙 ➖ Ciudad</label>
+                <input class="form-control" [(ngModel)]="fenomeno.ciudad" type="text" name="ciudad" id="ciudad"
+                    placeholder="Ej: Sevilla" #ciudad="ngModel" required><br>
+                <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por favor, introduce una
+                    ciudad
+                    válida.</div>
 
-            <label for="pais">🌍 ➖ País</label>
-            <input class="form-control" [(ngModel)]="fenomeno.pais" type="text" name="pais" id="pais"
-                placeholder="Ej: España" required #pais="ngModel"><br>
-            <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país válido.
+                <label for="pais">🌍 ➖ País</label>
+                <input class="form-control" [(ngModel)]="fenomeno.pais" type="text" name="pais" id="pais"
+                    placeholder="Ej: España" required #pais="ngModel"><br>
+                <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país
+                    válido.
+                </div>
+
+                <label for="latitud">🛰 ➖ Latitud</label>
+                <input class="form-control" [(ngModel)]="fenomeno.latitud" type="number" max="90" min="-90"
+                    step="0.000001" name="latitud" id="latitud" placeholder="Latitud" #latitud="ngModel"><br>
+                <div [hidden]="latitud.valid || latitud.pristine" class="alert alert-danger">Por favor, introduce
+                    una latitud válida.</div>
+
+                <label for="longitud">🛰 ➖ Longitud</label>
+                <input class="form-control" [(ngModel)]="fenomeno.longitud" type="number" max="180" min="-180"
+                    step="0.000001" name="longitud" id="longitud" placeholder="Longitud" #longitud="ngModel"><br>
+                <div [hidden]="longitud.valid || longitud.pristine" class="alert alert-danger">Por favor, introduce
+                    una longitud válida.</div>
+
+                <label for="fecha">📅 ➖ Fecha</label>
+                <input class="form-control" [(ngModel)]="fenomeno.fecha" type="date" name="fecha" id="fecha" required
+                    #fecha="ngModel"><br>
+                <div [hidden]="fecha.valid || fecha.pristine" class="alert alert-danger">Por favor, introduce una fecha
+                    válida.</div>
+
+                <label for="categoría">📁 ➖ Categoría</label>
+                <select class="form-control" [(ngModel)]="fenomeno.categoria" name="categoria" id="categoria"
+                    #categoria="ngModel" required>
+                    <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                        {{categoria.categoria}}</option>
+                </select><br>
+                <div [hidden]="categoria.valid || categoria.pristine" class="alert alert-danger">Por favor, selecciona
+                    una categoría
+                    válida.</div>
+
             </div>
-            
-            <label for="latitud">🛰 ➖ Latitud</label>
-            <input class="form-control" [(ngModel)]="fenomeno.latitud" type="number" max="90" min="-90" step="0.000001" name="latitud"
-                id="latitud" placeholder="Latitud" #latitud="ngModel"><br>
-            <div [hidden]="latitud.valid || latitud.pristine" class="alert alert-danger">Por favor, introduce
-                una latitud válida.</div>
+            <div class="col-12 mx-auto text-left">
+                <label for="titulo">✍ ➖ Titulo</label>
+                <textarea name="titulo" id="titulo" class="form-control" [(ngModel)]="fenomeno.titulo" rows="2" required
+                    #titulo="ngModel" placeholder="¿Cómo podríamos nombrar este fenómeno?"></textarea><br>
+                <div [hidden]="titulo.valid || titulo.pristine" class="alert alert-danger">Por favor, introduce un
+                    título
+                    válido.</div>
 
-            <label for="longitud">🛰 ➖ Longitud</label>
-            <input class="form-control" [(ngModel)]="fenomeno.longitud" type="number" max="180" min="-180" step="0.000001" name="longitud"
-                id="longitud" placeholder="Longitud" #longitud="ngModel"><br>
-            <div [hidden]="longitud.valid || longitud.pristine" class="alert alert-danger">Por favor, introduce
-                una longitud válida.</div>
+                <label for="descripcion">📑 ➖ Descripción corta</label>
+                <textarea name="descripcion" id="descripcion" class="form-control"
+                    [(ngModel)]="fenomeno.descripcionCorta" rows="4" required #descripcion="ngModel"
+                    placeholder="Piensa en un resumen del fenómeno que quieres reportar."></textarea><br>
+                <div [hidden]="descripcion.valid || descripcion.pristine" class="alert alert-danger">Por favor,
+                    introduce
+                    una descripción válida.</div>
 
-            <label for="fecha">📅 ➖ Fecha</label>
-            <input class="form-control" [(ngModel)]="fenomeno.fecha" type="date" name="fecha" id="fecha" required
-                #fecha="ngModel"><br>
-            <div [hidden]="fecha.valid || fecha.pristine" class="alert alert-danger">Por favor, introduce una fecha
-                válida.</div>
+                <label for="contenido">🧾 ➖ Contenido</label>
+                <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido"
+                    rows="12" required #contenido="ngModel"
+                    placeholder="Expláyate y no recortes en detalles."></textarea><br>
+                <div [hidden]="contenido.valid || contenido.pristine" class="alert alert-danger">Por favor, introduce un
+                    contenido válido.</div>
 
-        </div>
-        <div class="col-10 mx-auto text-left">
-            <label for="titulo">✍ ➖ Titulo</label>
-            <textarea name="titulo" id="titulo" class="form-control" [(ngModel)]="fenomeno.titulo" rows="2" required
-                #titulo="ngModel" placeholder="¿Cómo podríamos nombrar este fenómeno?"></textarea><br>
-            <div [hidden]="titulo.valid || titulo.pristine" class="alert alert-danger">Por favor, introduce un título
-                válido.</div>
-
-            <label for="descripcion">📑 ➖ Descripción corta</label>
-            <textarea name="descripcion" id="descripcion" class="form-control" [(ngModel)]="fenomeno.descripcionCorta"
-                rows="4" required #descripcion="ngModel" placeholder="Piensa en un resumen del fenómeno que quieres reportar."></textarea><br>
-            <div [hidden]="descripcion.valid || descripcion.pristine" class="alert alert-danger">Por favor, introduce
-                una descripción válida.</div>
-
-            <label for="contenido">🧾 ➖ Contenido</label>
-            <textarea name="contenido" id="contenido" class="form-control" [(ngModel)]="fenomeno.contenido" rows="12"
-                required #contenido="ngModel" placeholder="Expláyate y no recortes en detalles."></textarea><br>
-            <div [hidden]="contenido.valid || contenido.pristine" class="alert alert-danger">Por favor, introduce un
-                contenido válido.</div>
-
-            <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!fenomenosForm.valid"
-                [value]="accion"><br><br>
-            <a type="button" class="btn btn-warning w-100" routerLink="/fenomenos">Volver</a><br>
-        </div>
-    </form>
+                <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!fenomenosForm.valid"
+                    [value]="accion"><br><br>
+                <a type="button" class="btn btn-warning w-100" routerLink="/fenomenos">Volver</a><br>
+            </div>
+        </form>
+    </div>
 </div>

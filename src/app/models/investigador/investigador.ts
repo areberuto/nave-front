@@ -7,7 +7,7 @@ export class Investigador {
     apellido1: String;
     apellido2: String;
     organismo: String;
-    genero: String;
+    genero: Number;
     ciudad: String;
     pais: String;
     fechaNacimiento: Date;

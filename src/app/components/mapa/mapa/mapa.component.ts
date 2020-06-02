@@ -41,8 +41,6 @@ export class MapaComponent implements OnInit, AfterViewInit {
 
     const id = `mapa${this.idFen}`;
     
-    console.log("Latitud:", this.latitud, "Longitud: ", this.longitud);
-
     this.mapa = new mapboxgl.Map({
       container: id,
       style: 'mapbox://styles/mapbox/streets-v11',
