@@ -1,0 +1,76 @@
+<div id="fenomenoContainer" class="row">
+    <img id="loading" *ngIf="!fenomeno && !fenomenoNotFound" src="assets/loading.gif">
+    <h4 id="loadTitle" *ngIf="!fenomeno && !fenomenoNotFound" class="text-center mx-auto">
+        Cargando fenómeno...
+    </h4>
+    <div class="col col-lg-10 mx-lg-auto" *ngIf="fenomeno">
+        <div class="card p-1 fenomeno">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">{{fenomeno.titulo}}</h4>
+                <h6 class="card-title text-center mb-4">(Publicación - {{fenomeno.publicado}})</h6>
+                <div class="row card-text">
+                    <div class="col-12 mx-auto text-justify">
+                        <p>{{fenomeno.descripcionCorta}}</p>
+                    </div>
+                    <div class="mapContainer col-10 my-4 mx-auto">
+                        <app-mapa [idFen]="fenomeno.id" [latitud]="fenomeno.latitud" [longitud]="fenomeno.longitud">
+                        </app-mapa>
+                    </div>
+                    <div class="col-10 mx-auto my-2 justify-content-between">
+                        <div class="row">
+                            <p class="col-sm-12 text-justify col-md-6 text-md-left col-lg text-lg-center">🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}}</p>
+                            <p class="col-sm-12 text-justify col-md-6 text-md-right col-lg text-lg-center">📅 {{fenomeno.fecha}}
+                            </p>
+                            <p class="col-sm-12 text-justify col-md-6 text-md-left col-lg text-lg-center">📝 <a routerLink="/fenomenos" [queryParams]="{idInv: fenomeno.investigadorId}">{{fenomeno.nombreInvestigador}}
+                                    {{fenomeno.apellidoInv1}}</a></p>
+                            <p class="col-sm-12 text-justify col-md-6 text-md-right col-lg text-lg-center">📂 <a routerLink="/fenomenos" [queryParams]="{categoria: fenomeno.categoriaId}">{{fenomeno.categoria}}</a></p>
+                        </div>
+                    </div>
+                    <div class="col-12 mx-auto text-justify">
+                        <p>{{fenomeno.contenido}}</p>
+                    </div>
+                </div>
+                <div id="comentarios" class="row py-2">
+                    <h5 class="col-12 py-2">Comentarios</h5>
+                    <div *ngFor="let comentario of comentarios" class="comentario col-12 my-1 py-1">
+                        <div class="col-12" class="comentador">
+                            <em>
+                                <p>{{comentario.nombre}} {{comentario.apellido1}}</p>
+                            </em>
+                        </div>
+                        <div class="col-12">
+                            <p>{{comentario.comentario}}</p>
+                        </div>
+                        <div class="col">
+                            <p class="pb-0">{{comentario.fecha}}</p>
+                        </div>
+                        <button class="col-md-2 btn btn-danger mx-1 my-2 " *ngIf="investigador && ((comentario.investigadorId == investigador.id) || (loginStatus && loginStatus.isAdmin))" (click)="deleteComentario(comentario.id) ">Borrar</button>
+
+                    </div>
+                    <form #comentarioForm="ngForm" *ngIf="investigador" id="comentarioForm" class="col-12" (ngSubmit)="postComentario()">
+                        <div class="form-group">
+                            <hr>
+                            <textarea class="form-control" type="text" rows="10" cols="40" maxlength="1000" [(ngModel)]="comentario.comentario" name="texto" id="texto" #texto="ngModel" placeholder="..." required></textarea>
+                            <br>
+                            <button [disabled]="!comentarioForm.valid" type="submit" class="btn btn-primary">Enviar comentario</button>
+                        </div>
+                    </form>
+                </div>
+                <div id=" bottom " class="row justify-content-between mt-4 ">
+                    <div class="col-12 " *ngIf="(idInvestigador == fenomeno.investigadorId) || loginStatus.isAdmin ">
+                        <div class="row justify-content-start " id="actionButtons ">
+                            <button class="col-md-2 btn btn-warning mx-1 my-2 " routerLink="/modFenomeno/{{fenomeno.id}} ">Modificar</button>
+                            <button class="col-md-2 btn btn-danger mx-1 my-2 " (click)="deleteFenomeno(fenomeno.id) ">Borrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notFound " class="col-12 mx-auto text-center" *ngIf="fenomenoNotFound ">
+        <h3>¡Oops!</h3>
+        <h4>Nada que mostrar.</h4>
+        <button type="button" routerLink="fenomenos" class="btn btn-primary my-4 ">Volver a fenómenos</button>
+    </div>
+</div>

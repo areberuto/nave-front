@@ -14,25 +14,25 @@ export class InvestigadoresService {
 
   }
 
-  getInvestigadores(){
+  getInvestigadores(): Observable<Investigador[]>{
 
     return this.http.get<Investigador[]>(`${this.url}/`);
 
   }
 
-  getInvestigadorById(id: Number){
+  getInvestigadorById(id: Number): Observable<Investigador>{
 
     return this.http.get<Investigador>(`${this.url}?id=${id}`);
 
   }
 
-  getInvestigadorByEmail(email: String){
+  getInvestigadorByEmail(email: String): Observable<Investigador>{
 
     return this.http.get<Investigador>(`${this.url}?email=${email}`);
   
   }
 
-  updateInvestigador(investigador: Investigador){
+  updateInvestigador(investigador: Investigador): Observable<Object>{
 
     let idInv: Number = investigador.id;
 
@@ -40,13 +40,13 @@ export class InvestigadoresService {
 
   }
 
-  modifyPassword(idInv: Number, oldPwd: String, newPwd: String){
+  modifyPassword(idInv: Number, oldPwd: String, newPwd: String): Observable<Object>{
 
     return this.http.put(`${this.url}/updatePwd?idInv=${idInv}`, {oldPwd: oldPwd, newPwd: newPwd});
 
   }
 
-  deleteInv(idInv: Number){
+  deleteInv(idInv: Number): Observable<Object>{
 
     return this.http.delete(`${this.url}/delete?idInv=${idInv}`)
 

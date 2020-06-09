@@ -1,48 +1,56 @@
 <div id="fenomenosContainer" class="row">
     <div class="reported col-10 mx-auto">
-        <h3>
-            Fenómenos reportados
-        </h3>
+        <div *ngIf="!moderar then fenRep; else fenMod">
+
+        </div>
+        <ng-template #fenRep>
+            <h3>Fenómenos reportados</h3>
+        </ng-template>
+        <ng-template #fenMod>
+            <h3>Fenómenos a moderar</h3>
+        </ng-template>
         <div id="resultados" *ngIf="fenomenos && hasParams" class="my-4">
-            <h4>Resultados de la búsqueda   </h4>
-            <div id="notFound" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 text-center">
-                <p>¡No hay fenómenos!</p>
-                <img class="img-fluid" src="assets/noresults.gif"><br>
-                <button type="button" routerLink ="/search" class="btn btn-primary mt-4">¿Probamos con otra búsqueda?</button>
-            </div>
+            <h4>Resultados de la búsqueda </h4>
+        </div>
+        <div id="notFound" *ngIf="fenomenos && fenomenos.length == 0" class="my-4 text-center">
+            <p>¡No hay fenómenos!</p>
+            <img class="img-fluid" src="assets/noresults.gif"><br>
+            <button *ngIf="!moderar" type="button" routerLink="/search" class="btn btn-primary mt-4">¿Probamos con otra búsqueda?</button>
         </div>
     </div>
-    
-    
-    
+
+
+
     <img id="loading" *ngIf="!fenomenos" src="assets/loading.gif">
 
     <div class="col-lg-10 mx-lg-auto">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
             <div class="card p-1">
                 <div class="card-body">
-                    <h4 class="card-title">{{fenomeno.titulo}}</h4>
-                    <p class="card-text">{{fenomeno.descripcionCorta}}</p>
-                    <div class="row">
+                    <h4 class="card-title" routerLink="/fenomenos/{{fenomeno.id}}">{{fenomeno.titulo}}</h4>
+                    <div class="row card-text">
                         <div class="mapContainer col-md-4 my-4 my-md-0 mx-auto">
                             <app-mapa [idFen]="fenomeno.id" [latitud]="fenomeno.latitud" [longitud]="fenomeno.longitud">
                             </app-mapa>
                         </div>
-                        <div class="col-md-8">
-                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} 📅 {{fenomeno.fecha}}</p>
-                            <p>{{fenomeno.contenido}}</p>
+                        <div class="col-md-8 text-justify">
+                            <p>{{fenomeno.descripcionCorta}}</p>
+                            <p *ngIf="fenomeno.aprobado">🔎 <a routerLink="/fenomenos/{{fenomeno.id}}">Seguir leyendo</a></p>
+                            <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} ➖ 📅 {{fenomeno.fecha}}</p>
                         </div>
+                        <div class="col-12 text-justify my-4" *ngIf="fenomeno.aprobado == 0">
+                            <hr>{{fenomeno.contenido}}</div>
                     </div>
 
                     <div id="autor" class="row justify-content-between mt-4">
-                        <p class="col-md-4 mb-2">🔎 <a routerLink="/fenomenos" [queryParams]="{idInv: fenomeno.investigadorId}">{{fenomeno.nombreInvestigador}} {{fenomeno.apellidoInv1}}</a></p>
-                        <p class="col-md-4 mb-2 text-md-right">📂 <a href="#" (click)="filtrarCategoria($event, fenomeno.categoria)">{{fenomeno.categoria}}</a></p>
+                        <p class="col-md-6 mb-2">📝 <a routerLink="/fenomenos" [queryParams]="{idInv: fenomeno.investigadorId}">{{fenomeno.nombreInvestigador}}
+                                {{fenomeno.apellidoInv1}}</a> ➖ {{fenomeno.publicado}}</p>
+                        <p class="col-md-4 mb-2 text-md-right">📂 <a routerLink="/fenomenos" [queryParams]="{categoria: fenomeno.categoriaId}">{{fenomeno.categoria}}</a></p>
                         <div *ngIf="idInvestigador == fenomeno.investigadorId || loginStatus.isAdmin" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
-                                <button class="col-md-2 btn btn-warning mx-1 my-2"
-                                    routerLink="/modFenomeno/{{fenomeno.id}}">Modificar</button>
-                                <button class="col-md-2 btn btn-danger mx-1 my-2"
-                                    (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
+                                <button *ngIf="fenomeno.aprobado == 0" class="col-md-2 btn btn-success mx-1 my-2" (click)="aprobar($event, fenomeno.id)">Aprobar</button>
+                                <button *ngIf="fenomeno.aprobado" class="col-md-2 btn btn-warning mx-1 my-2" routerLink="/modFenomeno/{{fenomeno.id}}">Modificar</button>
+                                <button class="col-md-2 btn btn-danger mx-1 my-2" (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
                             </div>
                         </div>
                     </div>

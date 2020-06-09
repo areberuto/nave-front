@@ -1,14 +1,10 @@
-#formulario, #msg {
-
-  color: black;
-  background-color: white;
-  border-radius: 5px;
-  width: 90%;
-  
+#formulario,
+#msg {
+    color: black;
+    background-color: white;
+    border-radius: 5px;
 }
 
 textarea {
-
-  resize: none;
-    
+    resize: none;
 }

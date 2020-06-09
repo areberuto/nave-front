@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Fenomeno } from 'src/app/models/fenomeno/fenomeno';
 import { SearchTarget } from 'src/app/models/search-target/search-target';
 import { Categoria } from 'src/app/models/categoria/categoria';
+import { Observable } from 'rxjs';
+import { Comentario } from 'src/app/models/comentario/comentario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,54 +14,82 @@ export class FenomenosService {
 
   private url: string = 'http://localhost:4001/fenomenos';
 
-  constructor(private http: HttpClient) {  
+  constructor(private http: HttpClient) {
 
 
-    
+
   }
 
-  getFenomenos(searchTarget: SearchTarget){
+  getFenomenos(searchTarget: SearchTarget): Observable<Fenomeno[]> {
 
     const params: HttpParams = JSON.parse(JSON.stringify(searchTarget));
 
-    return this.http.get<Fenomeno[]>(`${this.url}/`, {params: params});
+    return this.http.get<Fenomeno[]>(`${this.url}/`, { params: params });
 
   }
 
-  getFenomenosByInvestigador(idInv: Number){
+  getFenomenosByInvestigador(idInv: Number): Observable<Fenomeno[]> {
 
     return this.http.get<Fenomeno[]>(`${this.url}?idInv=${idInv}`);
 
   }
 
-  getFenomenoById(id: Number){
+  getFenomenoById(id: Number): Observable<Fenomeno[]> {
 
     return this.http.get<Fenomeno[]>(`${this.url}?idFen=${id}`);
 
   }
-  
-  getCategorias(){
 
-    return this.http.get<Categoria[]>(`${this.url}/categorias`);
+  getFenomenosModerar(): Observable<Fenomeno[]> {
+
+    return this.http.get<Fenomeno[]>(`${this.url}/moderar`);
+
+  }
+  
+  getComentarios(idFen: Number): Observable<Comentario[]> {
+
+    return this.http.get<Comentario[]>(`${this.url}/comentarios?idFen=${idFen}`);
     
   }
 
-  postFenomeno(fenomeno: Fenomeno){
- 
-    return this.http.post(`${this.url}/`, {fenomeno: fenomeno});
+  getCategorias(): Observable<Categoria[]> {
+
+    return this.http.get<Categoria[]>(`${this.url}/categorias`);
 
   }
 
-  putFenomeno(fenomeno: Fenomeno){
+  postFenomeno(fenomeno: Fenomeno): Observable<Object> {
 
-    console.log("Actualizando fenómeno.");
-    return this.http.put(`${this.url}/`, {fenomeno: fenomeno});
+    return this.http.post(`${this.url}/`, { fenomeno });
 
   }
 
-  deleteFenomeno(id: Number){
+  postComentario(comentario: Comentario): Observable<Object> {
+
+    return this.http.post(`${this.url}/comentarios`, { comentario });
+
+  }
+
+  aprobarFenomeno(idFen: Number): Observable<Object> {
+
+    return this.http.put(`${this.url}/aprobar`, { idFen });
+  }
+
+  putFenomeno(fenomeno: Fenomeno): Observable<Object> {
+
+    return this.http.put(`${this.url}/`, { fenomeno });
+
+  }
+
+  deleteFenomeno(id: Number): Observable<Object> {
 
     return this.http.delete(`${this.url}?id=${id}`);
+
+  }
+
+  deleteComentario(idCom: Number, comIdInv: Number): Observable<Object>{
+
+    return this.http.delete(`${this.url}/comentarios?id=${idCom}&comIdInv=${comIdInv}`);
 
   }
 

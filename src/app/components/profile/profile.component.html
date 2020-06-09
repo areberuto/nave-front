@@ -1,134 +1,93 @@
 <div class="row">
     <div class="col-12 py-2 mb-2">
-        <h3 class="text-center ">Datos personales
+        <h3 class="text-center">Datos personales
         </h3>
-
     </div>
     <img id="loading" *ngIf="!investigador || !fenomenos" src="assets/loading.gif">
-    <div class="col-10 mx-auto my-4" id="profile">
-
-
+    <div class="col col-md-10 mx-2 mx-md-auto my-4" id="profile">
         <div class="card row d-flex flex-md-row p-4" *ngIf="investigador && fenomenos">
-            <div class="col-6 mx-auto py-2 col-lg-4">
+            <div class="col-10 col-sm-6 mx-auto p-2 col-lg-4">
                 <img class="card-img-top mx-auto" src="assets/photo.png" alt="Profile picture">
             </div>
-            <div class="card-body col-12 col-lg-8 pt-md-0">
+            <div class="card-body col-12 col-lg-8 p-0 pt-md-0">
                 <div class="card-text">
                     <form #datosForm="ngForm" id="formulario" (ngSubmit)="actualizarDatos()">
                         <div class="col py-2 mx-auto text-left">
                             <div class="row">
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="nombre">🆔 ➖ Tu nombre</label>
-                                    <input class="form-control" [(ngModel)]="investigador.nombre" type="text"
-                                        name="nombre" id="nombre" required #nombre="ngModel"><br>
-                                    <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce un nombre.
+                                    <input class="form-control" [(ngModel)]="investigador.nombre" type="text" name="nombre" id="nombre" required #nombre="ngModel"><br>
+                                    <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">Por favor, introduce un nombre.
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="correo">📧 ➖ E-mail</label>
-                                    <input class="form-control" [(ngModel)]="investigador.correo" type="text"
-                                        name="correo" id="correo" #correo="ngModel" (keyup)="comprobarDisponibilidad()"
-                                        required><br>
-                                    <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce un correo
-                                        válido.</div>
-                                    <div [hidden]="!correoExiste" class="alert alert-danger">Este correo no está
-                                        disponible.</div>
+                                    <input class="form-control" [(ngModel)]="investigador.correo" type="text" name="correo" id="correo" #correo="ngModel" (keyup)="comprobarDisponibilidad()" required><br>
+                                    <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">Por favor, introduce un correo válido.
+                                    </div>
+                                    <div [hidden]="!correoExiste" class="alert alert-danger">Este correo no está disponible.
+                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="apellido1">🆔 ➖ Primer apellido</label>
-                                    <input class="form-control" [(ngModel)]="investigador.apellido1" type="text"
-                                        name="apellido1" id="apellido1" required #apellido1="ngModel"><br>
-                                    <div [hidden]="apellido1.valid || apellido1.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce tu
-                                        primer apellido.</div>
+                                    <input class="form-control" [(ngModel)]="investigador.apellido1" type="text" name="apellido1" id="apellido1" required #apellido1="ngModel"><br>
+                                    <div [hidden]="apellido1.valid || apellido1.pristine" class="alert alert-danger">Por favor, introduce tu primer apellido.</div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="apellido2">🆔 ➖ Segundo apellido</label>
-                                    <input class="form-control" [(ngModel)]="investigador.apellido2" type="text"
-                                        name="apellido2" id="apellido2" required #apellido2="ngModel"><br>
-                                    <div [hidden]="apellido2.valid || apellido2.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce tu
-                                        segundo apellido.</div>
+                                    <input class="form-control" [(ngModel)]="investigador.apellido2" type="text" name="apellido2" id="apellido2" required #apellido2="ngModel"><br>
+                                    <div [hidden]="apellido2.valid || apellido2.pristine" class="alert alert-danger">Por favor, introduce tu segundo apellido.</div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="organismo">🌐 ➖ Organismo</label>
-                                    <input class="form-control" [(ngModel)]="investigador.organismo" type="text"
-                                        name="organismo" id="organismo" required #organismo="ngModel"><br>
-                                    <div [hidden]="organismo.valid || organismo.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce un
-                                        organismo.</div>
+                                    <input class="form-control" [(ngModel)]="investigador.organismo" type="text" name="organismo" id="organismo" required #organismo="ngModel"><br>
+                                    <div [hidden]="organismo.valid || organismo.pristine" class="alert alert-danger">Por favor, introduce un organismo.
+                                    </div>
 
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="genero">👨‍🔬👩‍🔬 ➖ Género</label>
-                                    <select class="form-control" [(ngModel)]="investigador.genero" name="genero"
-                                        id="genero" #genero="ngModel" [value]="1" required>
-                                        <option [value]="1">Hombre</option>
-                                        <option [value]="2">Mujer</option>
+                                    <select class="form-control" [(ngModel)]="investigador.genero" name="genero" id="genero" #genero="ngModel" required>
+                                        <option [value]="'hombre'">Hombre</option>
+                                        <option [value]="'mujer'">Mujer</option>
                                     </select><br>
-                                    <div [hidden]="genero.valid || genero.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        selecciona tu género.</div>
+                                    <div [hidden]="genero.valid || genero.pristine" class="alert alert-danger">Por favor, selecciona tu género.</div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="ciudad">🏙 ➖ Ciudad</label>
-                                    <input class="form-control" [(ngModel)]="investigador.ciudad" type="text"
-                                        name="ciudad" id="ciudad" #ciudad="ngModel" required><br>
-                                    <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por
-                                        favor,
-                                        introduce una ciudad
-                                        válida.</div>
+                                    <input class="form-control" [(ngModel)]="investigador.ciudad" type="text" name="ciudad" id="ciudad" #ciudad="ngModel" required><br>
+                                    <div [hidden]="ciudad.valid || ciudad.pristine" class="alert alert-danger">Por favor, introduce una ciudad válida.
+                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mx-auto">
                                     <label for="pais">🌍 ➖ País</label>
-                                    <input class="form-control" [(ngModel)]="investigador.pais" type="text" name="pais"
-                                        id="pais" required #pais="ngModel"><br>
-                                    <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor,
-                                        introduce
-                                        un país válido.
+                                    <input class="form-control" [(ngModel)]="investigador.pais" type="text" name="pais" id="pais" required #pais="ngModel"><br>
+                                    <div [hidden]="pais.valid || pais.pristine" class="alert alert-danger">Por favor, introduce un país válido.
                                     </div>
                                 </div>
                             </div>
 
-                            <input class="btn btn-info w-100" id="submit" type="submit"
-                                [disabled]="!datosForm.valid || correoExiste" value="Modificar datos"><br><br>
+                            <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!datosForm.valid || correoExiste" value="Modificar datos"><br><br>
 
-                            <button (click)="mostrarModPwd($event)" type="button"
-                                class="btn btn-success w-100">Modificar
+                            <button (click)="mostrarModPwd($event)" type="button" class="btn btn-success w-100">Modificar
                                 contraseña</button>
                             <br><br>
                             <div [hidden]="!mostrarPwd" id="pwd" class="p-4 mb-4">
 
-                                <p>Para modificar tu contraseña, introduce la actual en el primer campo y, justo abajo,
-                                    tu nueva contraseña. Recuerda: ¡6 caracteres mínimo!</p>
+                                <p>Para modificar tu contraseña, introduce la actual en el primer campo y, justo abajo, tu nueva contraseña. Recuerda: ¡6 caracteres mínimo!</p>
 
                                 <form #claveForm="ngForm" (ngSubmit)="modPwd()" class="text-center">
-                                    <input class="form-control clave" type="password" [(ngModel)]="oldPwd" name="oldPwd"
-                                        minlength="6" placeholder="Contraseña antigua" required><span class="mx-2"
-                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
+                                    <input class="form-control clave" type="password" [(ngModel)]="oldPwd" name="oldPwd" minlength="6" placeholder="Contraseña antigua" required><span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
-                                    <input class="form-control clave" type="password" [(ngModel)]="newPwd" name="newPwd"
-                                        minlength="6" placeholder="Nueva contraseña" required><span class="mx-2"
-                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁</span>
-                                    <input class="form-control clave" type="password" [(ngModel)]="claveControl"
-                                        name="claveCtrl" minlength="6" placeholder="Repite la contraseña" #claveCtrl="ngModel" required><span
-                                        class="mx-2" (mousedown)="verPassword($event)"
+                                    <input class="form-control clave" type="password" [(ngModel)]="newPwd" name="newPwd" minlength="6" placeholder="Nueva contraseña" required><span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁</span>
+                                    <input class="form-control clave" type="password" [(ngModel)]="claveControl" name="claveCtrl" minlength="6" placeholder="Repite la contraseña" #claveCtrl="ngModel" required><span class="mx-2" (mousedown)="verPassword($event)"
                                         (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
-                                    <div [hidden]="claveCtrl.pristine || claveControl == newPwd"
-                                        class="alert alert-danger">Las claves no coinciden.</div>
+                                    <div [hidden]="claveCtrl.pristine || claveControl == newPwd" class="alert alert-danger">Las claves no coinciden.</div>
 
-                                    <input [disabled]="!claveForm.valid || claveControl != newPwd" class="btn btn-success w-100" type="submit"
-                                        value="Cambiar contraseña"><br><br>
+                                    <input [disabled]="!claveForm.valid || claveControl != newPwd" class="btn btn-success w-100" type="submit" value="Cambiar contraseña"><br><br>
                                 </form>
 
                             </div>
@@ -137,18 +96,15 @@
                             <br><br>
                             <div [hidden]="!mostrarAviso" id="aviso" class="p-4">
 
-                                <p>¡Atención! El borrado de tu cuenta, además de borrar tus fenómenos reportados, será
-                                    irreversible.</p>
+                                <p>¡Atención! El borrado de tu cuenta, además de borrar tus fenómenos reportados, será irreversible.
+                                </p>
                                 <p>Para proceder, introduce tu contraseña.</p>
 
                                 <form #deleteForm="ngForm" (ngSubmit)="deleteInv()" class="text-center">
-                                    <input class="form-control clave" type="password" [(ngModel)]="claveDel"
-                                        name="claveDel" minlength="6" required><span class="mx-2"
-                                        (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
+                                    <input class="form-control clave" type="password" [(ngModel)]="claveDel" name="claveDel" minlength="6" required><span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)">👁
                                     </span><br><br>
 
-                                    <input [disabled]="!deleteForm.valid" class="btn btn-danger w-100" type="submit"
-                                        value="Confirmar borrado"><br><br>
+                                    <input [disabled]="!deleteForm.valid" class="btn btn-danger w-100" type="submit" value="Confirmar borrado"><br><br>
                                 </form>
 
                             </div>
@@ -164,34 +120,31 @@
             Tus fenómenos
         </h3>
     </div>
-    <div class="col-lg-10 mx-lg-auto" *ngIf="fenomenos && investigador">
+    <div class="col-lg-10 mx-lg-auto">
         <div *ngFor="let fenomeno of fenomenos" class="fenomeno">
-            <div class="card px-4">
+            <div class="card p-1">
                 <div class="card-body">
-                    <h4 class="card-title">{{fenomeno.titulo}}</h4>
-                    <p class="card-text">{{fenomeno.descripcionCorta}}</p>
-                    <div class="row">
+                    <h4 class="card-title" routerLink="/fenomenos/{{fenomeno.id}}">{{fenomeno.titulo}}</h4>
+                    <div class="row card-text">
                         <div class="mapContainer col-md-4 my-4 my-md-0 mx-auto">
                             <app-mapa [idFen]="fenomeno.id" [latitud]="fenomeno.latitud" [longitud]="fenomeno.longitud">
                             </app-mapa>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8 text-justify">
+                            <p>{{fenomeno.descripcionCorta}}</p>
+                            <p>🔎 <a href="/fenomenos/{{fenomeno.id}}">Seguir leyendo</a></p>
                             <p>🌎 {{fenomeno.ciudad}}, {{fenomeno.pais}} 📅 {{fenomeno.fecha}}</p>
-                            <p>{{fenomeno.contenido}}</p>
                         </div>
                     </div>
 
                     <div id="autor" class="row justify-content-between mt-4">
-                        <p class="col-md-4 mb-2">🔎 <a
-                                routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}}
+                        <p class="col-md-4 mb-2">📝 <a routerLink="/fenomenos/inv/{{fenomeno.investigadorId}}">{{fenomeno.nombreInvestigador}}
                                 {{fenomeno.apellidoInv1}}</a></p>
-                        <p class="col-md-4 mb-2 text-md-right">📂 {{fenomeno.categoria}}</p>
+                        <p class="col-md-4 mb-2 text-md-right">📂 <a routerLink="/fenomenos" [queryParams]="{categoria: fenomeno.categoriaId}">{{fenomeno.categoria}}</a></p>
                         <div *ngIf="investigador && (investigador.id == fenomeno.investigadorId)" class="col-12">
                             <div class="row justify-content-start" id="actionButtons">
-                                <button class="col-md-2 btn btn-warning mx-1 my-2"
-                                    routerLink="/modFenomeno/{{fenomeno.id}}">Modificar</button>
-                                <button class="col-md-2 btn btn-danger mx-1 my-2"
-                                    (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
+                                <button class="col-md-2 btn btn-warning mx-1 my-2" routerLink="/modFenomeno/{{fenomeno.id}}">Modificar</button>
+                                <button class="col-md-2 btn btn-danger mx-1 my-2" (click)="deleteFenomeno(fenomeno.id)">Borrar</button>
                             </div>
                         </div>
                     </div>

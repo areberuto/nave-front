@@ -24,22 +24,11 @@ export class MapaComponent implements OnInit, AfterViewInit {
     
     (mapboxgl as any).accessToken = environment.mapboxToken;
 
-    // setTimeout(() => {
-
-    //   this.mapa = new mapboxgl.Map({
-    //     container: id,
-    //     style: 'mapbox://styles/mapbox/streets-v11',
-    //     center: [-5.981415, 37.3836722],
-    //     zoom: 15
-    //   });
-
-    // }, 0);
-
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit(): void{
 
-    const id = `mapa${this.idFen}`;
+    const id: string = `mapa${this.idFen}`;
     
     this.mapa = new mapboxgl.Map({
       container: id,

@@ -1,37 +1,39 @@
 <nav class="navbar navbar-expand-xl" *ngIf="loginStatus && loginStatus.idInv">
-  <div class="navbar-brand">
-    <img src="./favicon.ico" height="25" alt="Web logo">
-    <span *ngIf="investigador; else saludoPublico">¡Hola {{investigador.nombre}}!</span>
-    <ng-template #saludoPublico>¡Bienvenido/a!</ng-template>
-  </div>
+    <div class="navbar-brand">
+        <img src="./favicon.ico" height="25" alt="Web logo">
+        <span id="title" routerLink="fenomenos">LaNave <span *ngIf="loginStatus && loginStatus.isAdmin">(admin)</span></span>
+    </div>
 
-  <button (window:resize)="onResize($event)" class="navbar-toggler" type="button" (click)="toggle()">
+    <button (window:resize)="onResize($event)" class="navbar-toggler" type="button" (click)="toggle()">
     {{icon}}
   </button>
 
-  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-    <ul class="navbar-nav ml-auto text-center">
-      <li class="nav-item" *ngIf="investigador">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="profile" (click)="toggle()">Mi perfil</a>
-      </li>
-      <li class="nav-item" *ngIf="investigador">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="addFenomeno" (click)="toggle()">
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item" *ngIf="investigador">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="profile" (click)="toggle()">Mi perfil</a>
+            </li>
+            <li class="nav-item" *ngIf="investigador && loginStatus.isAdmin">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="moderar/{{investigador.id}}" (click)="toggle()">Moderar</a>
+            </li>
+            <li class="nav-item" *ngIf="investigador">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="addFenomeno" (click)="toggle()">
           Añadir fenómeno
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="investigadores" (click)="toggle()">Investigadores</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="fenomenos" (click)="toggle()">Fenómenos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="search" (click)="toggle()">Buscar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link mx-auto mx-lg-4" routerLink="" (click)="toggle()">{{logAction}}</a>
-      </li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="investigadores" (click)="toggle()">Investigadores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="fenomenos" (click)="toggle()">Fenómenos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="search" (click)="toggle()">Buscar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-auto mx-lg-4" routerLink="" (click)="toggle()">{{logAction}}</a>
+            </li>
 
-    </ul>
-  </div>
+        </ul>
+    </div>
 </nav>

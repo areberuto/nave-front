@@ -8,16 +8,16 @@ import { FenomenosComponent } from './components/fenomenos/fenomenos.component';
 import { FormFenomenosComponent } from './components/form-fenomenos/form-fenomenos.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
-import { LoginComponent } from './components/login/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { InvestigadoresComponent } from './components/investigadores/investigadores.component';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.service';
-import { MapaComponent } from './components/mapa/mapa/mapa.component';
+import { MapaComponent } from './components/mapa/mapa.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './components/footer/footer.component';
-import { FileComponent } from './components/file/file.component';
 import { SearchComponent } from './components/search/search.component';
+import { FenComentariosComponent } from './components/fen-comentarios/fen-comentarios.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { SearchComponent } from './components/search/search.component';
     SignUpComponent,
     ProfileComponent,
     FooterComponent,
-    FileComponent,
-    SearchComponent
+    SearchComponent,
+    FenComentariosComponent
   ],
   imports: [
     BrowserModule,

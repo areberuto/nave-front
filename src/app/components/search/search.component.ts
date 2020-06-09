@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { Investigador } from 'src/app/models/investigador/investigador';
 import { InvestigadoresService } from 'src/app/services/investigadores/investigadores.service';
 import { Router, NavigationExtras } from '@angular/router';
+import { Categoria } from 'src/app/models/categoria/categoria';
+import { FenomenosService } from 'src/app/services/fenomenos/fenomenos.service';
 
 @Component({
   selector: 'app-search',
@@ -18,8 +20,9 @@ export class SearchComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
   public investigadores: Investigador[];
+  public categorias: Categoria[];
 
-  constructor(private router: Router, private loginService: LoginService, private investigadoresService: InvestigadoresService) {
+  constructor(private router: Router, private loginService: LoginService, private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService) {
 
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
@@ -49,37 +52,29 @@ export class SearchComponent implements OnInit {
 
       if (sessionStorage.getItem("idToken")) {
 
-        this.loginService
-          .refreshAuth(
-            sessionStorage.getItem("email"),
-            sessionStorage.getItem("hashedPass")
-          )
-          .subscribe(
-            (data) => {
+        this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe(
+          
+          data => {
 
-              //Para guardar el nuevo token, que tendrá tiempos de
-              //expedición y expiración diferentes.
+            //Para guardar el nuevo token, que tendrá tiempos de
+            //expedición y expiración diferentes.
 
-              this.loginService.setSession(data);
+            this.loginService.setSession(data);
 
-              //Seteamos el login y actualizamos los suscriptores del loginStatus$
+            //Seteamos el login y actualizamos los suscriptores del loginStatus$
 
-              this.loginService.setLoginStatus({
-                isAdmin: data["isAdmin"],
-                idInv: data["idInv"],
-              });
+            this.loginService.setLoginStatus({isAdmin: data["isAdmin"], idInv: data["idInv"],});
 
-            },
+          }, err => {
 
-            (err) => {
+            //Si no es válida, devolvemos el error.
 
-              //Si no es válida, devolvemos el error.
+            console.log(err);
 
-              console.log(err);
+          }
 
-            }
+        );
 
-          );
       }
 
       //Si tampoco tenemos token, por defecto establecemos el estado a público
@@ -92,14 +87,15 @@ export class SearchComponent implements OnInit {
       }
 
     }
-    
+
     this.cargarNombres();
+    this.cargarCategorias();
 
   }
 
-  cargarNombres(){
+  cargarNombres(): void {
 
-    this.investigadoresService.getInvestigadores().subscribe( data => {
+    this.investigadoresService.getInvestigadores().subscribe(data => {
 
       this.investigadores = data;
 
@@ -111,10 +107,23 @@ export class SearchComponent implements OnInit {
 
   }
 
-  buscar() {
+  cargarCategorias(): void {
 
-    console.log(this.searchTarget);
-    let extras: NavigationExtras = {queryParams: {idInv: this.searchTarget.idInv, ciudad: this.searchTarget.ciudad, pais: this.searchTarget.pais, fechaInicio: this.searchTarget.fechaInicio, fechaFin: this.searchTarget.fechaFin, texto: this.searchTarget.texto}};
+    this.fenomenosService.getCategorias().subscribe(data => {
+
+      this.categorias = data;
+
+    }, err => {
+
+      console.log(err);
+
+    });
+
+  }
+
+  buscar(): void {
+
+    let extras: NavigationExtras = { queryParams: { idInv: this.searchTarget.idInv, ciudad: this.searchTarget.ciudad, pais: this.searchTarget.pais, categoria: this.searchTarget.categoria, fechaInicio: this.searchTarget.fechaInicio, fechaFin: this.searchTarget.fechaFin, publicadoInicio: this.searchTarget.publicadoInicio, publicadoFin: this.searchTarget.publicadoFin, texto: this.searchTarget.texto } };
 
     this.router.navigate([`/fenomenos`], extras);
 

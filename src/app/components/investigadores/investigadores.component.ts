@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 export class InvestigadoresComponent implements OnInit {
 
   public investigadores: Array<Investigador>;
-
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
 
@@ -88,7 +87,7 @@ export class InvestigadoresComponent implements OnInit {
 
   }
 
-  getInvestigadores() {
+  getInvestigadores(): void {
 
     this.investigadoresService.getInvestigadores().subscribe(data => {
 
@@ -102,7 +101,7 @@ export class InvestigadoresComponent implements OnInit {
 
   }
 
-  deleteInv(idInv: Number) {
+  deleteInv(idInv: Number): void {
 
     if(confirm("El borrado del perfil y sus fenómenos será irreversible. ¿Desea continuar?")){
 

@@ -1,0 +1,49 @@
+.fenomeno {
+    color: black;
+    word-wrap: break-word;
+    border-radius: 10px;
+    margin: 10px auto;
+}
+
+#actionButtons {
+    padding: 0 15px;
+}
+
+.mapContainer {
+    height: 225px;
+}
+
+img {
+    border-radius: 5px;
+}
+
+#loading {
+    width: 50px;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+h4 {
+    text-decoration: underline;
+}
+
+#notFound {
+    color: white;
+}
+
+#loadTitle {
+    color: white;
+    text-decoration: none;
+}
+
+#comentarios {
+    background-color: rgb(186, 223, 248);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.comentario {
+    background-color: rgb(240, 240, 248);
+}

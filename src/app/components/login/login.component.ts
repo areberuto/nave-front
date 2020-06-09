@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     if(location.href.indexOf('codGen') != -1){
 
@@ -46,11 +46,10 @@ export class LoginComponent implements OnInit {
         
   }
 
-  verify(){
+  verify(): void{
 
-    const url = location.href;
-    const codGen = url.substring(url.indexOf("=") + 1);
-    console.log(codGen);
+    const url: string = location.href;
+    const codGen: string = url.substring(url.indexOf("=") + 1);
 
     this.loginService.verify(codGen).subscribe(data => {
       
@@ -66,9 +65,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  checkLogin(){
+  checkLogin(): void{
 
-    const hashedClave = CryptoJS.SHA3(this.clave).toString();
+    const hashedClave: String = CryptoJS.SHA3(this.clave).toString();
 
     this.loginService.checkLogin(this.emailLogin, hashedClave).subscribe(
 
@@ -99,7 +98,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  loginPublico(event: Event){
+  loginPublico(event: Event): void{
 
     event.preventDefault();
     this.loginService.setLoginStatus({isAdmin: false, idInv: -1});
@@ -107,7 +106,7 @@ export class LoginComponent implements OnInit {
 
   }
   
-  mailOlvidada(){
+  mailOlvidada(): void{
 
     this.mostrarOlvidada = !this.mostrarOlvidada;
 
@@ -124,11 +123,11 @@ export class LoginComponent implements OnInit {
 
   }
 
-  resetPwd(){
+  resetPwd(): void{
 
-    const url = location.href;
-    const tmpClave = url.substring(url.indexOf("tmpClave=") + "tmpClave=".length);
-    const tmpClaveSHA = CryptoJS.SHA3(tmpClave).toString();
+    const url: string = location.href;
+    const tmpClave: string = url.substring(url.indexOf("tmpClave=") + "tmpClave=".length);
+    const tmpClaveSHA: String = CryptoJS.SHA3(tmpClave).toString();
 
     this.loginService.resetPwd(tmpClave, tmpClaveSHA).subscribe(data => {
       

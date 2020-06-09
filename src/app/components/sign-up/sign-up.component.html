@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="row">
 
-    <div id="msg" class="col col-md-10 mx-2 mx-md-auto my-2 px-4 text-center">
+    <div id="msg" class="col col-md-8 mx-2 mx-md-auto my-2 px-4 text-center">
         <h3><span class="d-none d-sm-inline">👋</span> ¡Hola camarada! <span class="d-none d-sm-inline">👋</span></h3>
         <br>
         <h4>Necesitaremos que rellenes todos los campos para poder registrarte.</h4><br>
@@ -19,8 +19,8 @@
     <!-- En el formulario, el name de cada entrada será el título de cada campo del value. La propiedad precedida con un # será
          la que nos permita acceder a ese valor dentro de la vista del formulario (por ejemplo, para ver si está pristine o valid)
     -->
-    <div id="formulario" class="col col-md-10 mx-2 mx-md-auto my-2 px-4">
-        <form #registroForm="ngForm"  (ngSubmit)="signUp()">
+    <div id="formulario" class="col col-md-8 mx-2 mx-md-auto my-2 px-4">
+        <form #registroForm="ngForm" (ngSubmit)="signUp()" enctype="multipart/form-data">
             <h3 class="col text-center">Tus datos</h3><br>
 
             <div class="col col-md-10 py-4 mx-auto text-left">
@@ -44,11 +44,16 @@
                 <div [hidden]="apellido2.valid || apellido2.pristine" class="alert alert-danger">Por favor, introduce tu
                     segundo apellido.</div>
 
-                <label for="foto">📷 ➖ Tu foto de perfil</label>
-                <input type="file" class="d-none" name="foto" id="foto" #foto (change)="fileUpload($event)">
+                <label for="invAvatar">📷 ➖ Foto de perfil</label>
+                <input type="file" accept="image/png, image/jpeg" class="d-none" name="invAvatar" id="invAvatar" #invAvatar
+                    (change)="fileUpload($event)" required>
+                <div class="text-center mb-4">
+                    <img id="preview" [src]="preview.src" [hidden]="!avatarOk" height="200">
+                </div>
                 <div class="text-center my-2">
-                    <button type="button" class="btn btn-danger w-75" (click)="foto.click()">Subir archivo</button>
+                    <button type="button" class="btn btn-danger w-75" (click)="invAvatar.click()">Subir archivo</button>
                 </div><br>
+
 
                 <label for="genero">👨‍🔬👩‍🔬 ➖ Género</label>
                 <select class="form-control" [(ngModel)]="investigador.genero" name="genero" id="genero"
@@ -69,21 +74,27 @@
 
                 <label for="clave">🔑 ➖ Clave</label>
 
-                <div>
+                <div class="text-center">
 
-                    <input class="form-control clave" [(ngModel)]="investigador.clave" type="password" minlength="6" name="clave" placeholder="Cuanto más compleja, mejor." #clave="ngModel" required>
-                    <span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)" class="togglePassword">👁
+                    <input class="form-control clave" [(ngModel)]="investigador.clave" type="password" minlength="6"
+                        name="clave" placeholder="Cuanto más compleja, mejor." #clave="ngModel" required>
+                    <span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)"
+                        class="togglePassword">👁
                     </span>
 
-                    <input class="form-control clave" type="password" [(ngModel)]="claveControl" minlength="6" name="claveCtrl" placeholder="Repite aquí la clave." #claveCtrl="ngModel" required>
-                    <span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)" class="togglePassword">👁
+                    <input class="form-control clave" type="password" [(ngModel)]="claveControl" minlength="6"
+                        name="claveCtrl" placeholder="Repite aquí la clave." #claveCtrl="ngModel" required>
+                    <span class="mx-2" (mousedown)="verPassword($event)" (mouseup)="ocultarPassword($event)"
+                        class="togglePassword">👁
                     </span>
 
                 </div>
                 <br>
 
-                <div [hidden]="clave.valid || clave.pristine" class="alert alert-danger">Seis carácteres como mínimo.</div>
-                <div [hidden]="claveCtrl.pristine || claveControl == investigador.clave" class="alert alert-danger">Las claves no coinciden.</div>
+                <div [hidden]="clave.valid || clave.pristine" class="alert alert-danger">Seis carácteres como mínimo.
+                </div>
+                <div [hidden]="claveCtrl.pristine || claveControl == investigador.clave" class="alert alert-danger">Las
+                    claves no coinciden.</div>
 
                 <label for="organismo">🌐 ➖ Organismo</label>
                 <input class="form-control" [(ngModel)]="investigador.organismo" type="text"
@@ -112,9 +123,11 @@
                 <div [hidden]="fecha.valid || fecha.pristine" class="alert alert-danger">Por favor, introduce una fecha
                     válida.</div>
 
-                <input class="btn btn-info w-100" id="submit" type="submit" [disabled]="!registroForm.valid || correoExiste || claveControl != investigador.clave"
+                <input class="btn btn-info w-100" id="submit" type="submit"
+                    [disabled]="!registroForm.valid || correoExiste || claveControl != investigador.clave"
                     value="Registrarme"><br><br>
                 <a type="button" class="mx-auto w-100 btn btn-warning" routerLink="/">Volver</a><br><br>
+
             </div>
         </form>
     </div>

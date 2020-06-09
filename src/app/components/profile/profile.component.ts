@@ -42,23 +42,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //Suscripción para futuros cambios del loginStatus
-
     this.loginStatus$.subscribe((data) => {
 
       this.loginStatus = data;
 
     });
 
-    //Si la idInv está a undefined, estamos en el escenario de:
-
-    //- Haber escrito la URL manualmente
-    //- Haber refrescado la página
-
     if (!this.loginStatus.idInv) {
-
-      //Si tenemos un token en el storage, es que hemos refrescado la página y
-      //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
 
       if (sessionStorage.getItem("idToken")) {
 
@@ -66,22 +56,14 @@ export class ProfileComponent implements OnInit {
 
           (data) => {
 
-            //Para guardar el nuevo token, que tendrá tiempos de
-            //expedición y expiración diferentes.
-
             this.loginService.setSession(data);
-
-            //Seteamos el login y actualizamos los suscriptores del loginStatus$
 
             this.loginService.setLoginStatus({ isAdmin: data["isAdmin"], idInv: data["idInv"] });
             this.getDatosPerfil(this.loginStatus.idInv);
-            this.getFenomenosByInvestigador(this.loginStatus.idInv);
 
           },
 
           (err) => {
-
-            //Si no es válida, devolvemos el error.
 
             console.log(err);
             this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
@@ -91,24 +73,17 @@ export class ProfileComponent implements OnInit {
         );
       }
 
-      //Si tampoco tenemos token, por defecto establecemos el estado a público
-      //y lo seteamos en el servicio para que el nav lo reciba.
       else {
 
         this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
 
       }
 
-      //Si ya había loginStatus (navegación), pedimos los datos
     } else {
 
       this.getDatosPerfil(this.loginStatus.idInv);
-      this.getFenomenosByInvestigador(this.loginStatus.idInv);
 
     }
-
-    //Si se intenta acceder a esta vista, manualmente, sin tener un idInv de usuario,
-    //te devuelve al login
 
     if (this.loginStatus.idInv == -1) {
 
@@ -125,13 +100,13 @@ export class ProfileComponent implements OnInit {
       (data) => {
 
         setTimeout(() => {
-          
+                    
           this.investigador = data;
+          this.getFenomenosByInvestigador(this.loginStatus.idInv);
            
         }, 1000);
 
-      },
-      (err) => {
+      }, err => {
 
         console.log(err);
 
@@ -204,18 +179,19 @@ export class ProfileComponent implements OnInit {
           console.log(data);
           this.getFenomenosByInvestigador(this.investigador.id);
 
-        },
-        (err) => console.log(err)
-
+        }, (err) => console.log(err)
+        
       );
+    
     }
+  
   }
 
   deleteInv(): void {
 
     console.log(this.claveDel);
 
-    const hashedClave = CryptoJS.SHA3(this.claveDel).toString();
+    const hashedClave: String = CryptoJS.SHA3(this.claveDel).toString();
 
     this.loginService.checkPassword(hashedClave).subscribe(
 
@@ -268,7 +244,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  verPassword(event): void {
+  verPassword(event: any): void {
 
     event.preventDefault();
     const siblingInput: HTMLElement = event.target.previousSibling;
@@ -276,7 +252,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  ocultarPassword(event): void {
+  ocultarPassword(event: any): void {
 
     event.preventDefault();
     const siblingInput: HTMLElement = event.target.previousSibling;
@@ -284,18 +260,14 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  //Muestra instrucciones para modificar contraseña
-
-  mostrarModPwd(event): void {
+  mostrarModPwd(event: any): void {
 
     event.preventDefault();
     this.mostrarPwd = !this.mostrarPwd;
 
   }
 
-  //Muestra instrucciones para borrar usuario
-
-  mostrarWarning(event): void {
+  mostrarWarning(event: any): void {
 
     event.preventDefault();
     this.mostrarAviso = !this.mostrarAviso;
@@ -304,17 +276,14 @@ export class ProfileComponent implements OnInit {
 
   modPwd(): void {
 
-    const hashedOld = CryptoJS.SHA3(this.oldPwd).toString();
-    const hashedNew = CryptoJS.SHA3(this.newPwd).toString();
+    const hashedOld: String = CryptoJS.SHA3(this.oldPwd).toString();
+    const hashedNew: String = CryptoJS.SHA3(this.newPwd).toString();
 
     this.investigadoresService.modifyPassword(this.investigador.id, hashedOld, hashedNew).subscribe(
 
       data => {
 
         console.log(data);
-
-        //Si se ha modificado la clave, procedemos a guardar el hash en memoria
-        //y recargar para pedir nuevo token
 
         if (data["hashedPass"]) {
 
@@ -339,7 +308,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  comprobarDisponibilidad() {
+  comprobarDisponibilidad(): void {
 
     this.investigadoresService.getInvestigadorByEmail(this.investigador.correo).subscribe(investigador => {
 

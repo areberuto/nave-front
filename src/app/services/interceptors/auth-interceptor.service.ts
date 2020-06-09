@@ -13,36 +13,35 @@ import { Observable } from 'rxjs';
 
 export class AuthInterceptor implements HttpInterceptor {
 
-  intercept(req: HttpRequest<any>, next: HttpHandler):
-    Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-      const idToken = sessionStorage.getItem("idToken");
+    const idToken = sessionStorage.getItem("idToken");
 
-      //Si el token está presente, clonamos la
-      //petición y le añadimos el token en la cabecera.
+    //Si el token está presente, clonamos la
+    //petición y le añadimos el token en la cabecera.
 
-      if (idToken) {
+    if (idToken) {
 
-          const cloned = req.clone({
-              headers: req.headers.set("Authorization",
-                  `Bearer ${idToken}`)
-          });
+      const cloned = req.clone({
+        headers: req.headers.set("Authorization",
+          `Bearer ${idToken}`)
+      });
 
-          //Pasamos la petición al siguiente handler
-          //que en este caso es el HttpClient final.
+      //Pasamos la petición al siguiente handler
+      //que en este caso es el HttpClient final.
 
-          return next.handle(cloned);
-      }
+      return next.handle(cloned);
+    }
 
-      //Si no hay token, pasamos la petición
-      //tal cual
+    //Si no hay token, pasamos la petición
+    //tal cual
 
-      else {
+    else {
 
-          return next.handle(req);
+      return next.handle(req);
 
-      }
+    }
 
   }
-  
+
 }

@@ -23,6 +23,7 @@ export class FenomenosComponent implements OnInit {
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
   public categorias: Categoria[];
+  public moderar: Boolean;
 
   constructor(private fenomenosService: FenomenosService, private investigadoresService: InvestigadoresService, private loginService: LoginService, private route: Router, private activatedRoute: ActivatedRoute) {
 
@@ -31,84 +32,103 @@ export class FenomenosComponent implements OnInit {
     this.searchTarget = <SearchTarget>{};
     this.hasParams = false;
 
+    this.moderar = location.href.indexOf("moderar") != -1;
+
   }
 
-  ngOnInit() {
-
-    //Suscripción para futuros cambios del loginStatus
+  ngOnInit(): void {
 
     this.loginStatus$.subscribe((data) => {
+
       this.loginStatus = data;
+
     });
-
-    //Si la idInv está a undefined, estamos en el escenario de:
-
-    //- Haber escrito la URL manualmente
-    //- Haber refrescado la página
 
     if (!this.loginStatus.idInv) {
 
-      //Si tenemos un token en el storage, es que hemos refrescado la página y
-      //antes habíamos hecho login. Procedemos a intentar refrescar permisos.
-
       if (sessionStorage.getItem("idToken")) {
-        this.loginService
-          .refreshAuth(
-            sessionStorage.getItem("email"),
-            sessionStorage.getItem("hashedPass")
-          )
-          .subscribe(
-            (data) => {
+        
+        this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe((data) => {
 
-              //Para guardar el nuevo token, que tendrá tiempos de
-              //expedición y expiración diferentes.
+          this.loginService.setSession(data);
 
-              this.loginService.setSession(data);
+          this.loginService.setLoginStatus({ isAdmin: data["isAdmin"], idInv: data["idInv"] });
+          this.idInvestigador = this.loginStatus.idInv;
 
-              //Seteamos el login y actualizamos los suscriptores del loginStatus$
+          if(this.activatedRoute.snapshot.params['idModerador']){
+            
+            if(!this.loginStatus.isAdmin){
 
-              this.loginService.setLoginStatus({
-                isAdmin: data["isAdmin"],
-                idInv: data["idInv"],
-              });
+              this.route.navigate(['/']);
 
-              this.idInvestigador = this.loginStatus.idInv;
-            },
-
-            (err) => {
-              //Si no es válida, devolvemos el error.
-
-              console.log(err);
             }
-          );
+
+            this.getFenomenosModerar();
+      
+          } else {
+      
+            this.getFenomenos();
+      
+          }
+
+        }, (err) => {
+
+          console.log(err);
+
+        });
+
       }
 
-      //Si tampoco tenemos token, por defecto establecemos el estado a público
-      //y lo seteamos en el servicio para que el nav lo reciba.
       else {
+
         this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
+
+        if(this.activatedRoute.snapshot.params['idModerador']){
+
+          this.route.navigate(['/']);
+
+        }
+
+        this.getFenomenos();
+
       }
 
-      //Si no está a undefined, estaba navegando ya como usuario o público, así que cogemos la idInv de antes.
     } else {
-      this.idInvestigador = this.loginStatus.idInv;
-    }
 
-    this.getFenomenos();
-    this.cargarCategorias();
+      this.idInvestigador = this.loginStatus.idInv;
+
+      if(this.activatedRoute.snapshot.params['idModerador']){
+      
+        if(!this.loginStatus.isAdmin){
+
+          this.route.navigate(['/']);
+
+        }
+
+        this.getFenomenosModerar();
+  
+      } else {
+  
+        this.getFenomenos();
+  
+      }
+
+    }
 
   }
 
-  getFenomenos() {
+  getFenomenos(): void {
 
     this.activatedRoute.queryParams.subscribe(data => {
 
+      this.fenomenos = undefined;
       this.searchTarget = <SearchTarget>data;
       this.hasParams = Object.keys(this.searchTarget).length != 0;
 
       this.fenomenosService.getFenomenos(this.searchTarget).subscribe(fenomenos => {
-
+        console.log(fenomenos);
         setTimeout(() => this.fenomenos = fenomenos, 1000);
+        window.scroll(0, 0);
 
       }, err => {
 
@@ -120,27 +140,12 @@ export class FenomenosComponent implements OnInit {
 
   }
 
-  deleteFenomeno(id: Number) {
+  getFenomenosModerar(): void {
 
-    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")) {
-      this.fenomenosService.deleteFenomeno(id).subscribe(
-        (data) => {
-          console.log(data);
-          this.getFenomenos();
-        },
-        (err) => console.log(err)
-      );
-    }
+    this.fenomenosService.getFenomenosModerar().subscribe(fenomenos => {
 
-  }
-
-  //TO-DO Categorias, id y navegación desde fenomenos al clickar
-
-  cargarCategorias() {
-
-    this.fenomenosService.getCategorias().subscribe(data => {
-
-      this.categorias = data;
+      setTimeout(() => this.fenomenos = fenomenos, 1000);
+      window.scroll(0, 0);
 
     }, err => {
 
@@ -150,25 +155,46 @@ export class FenomenosComponent implements OnInit {
 
   }
 
-  filtrarCategoria(event, categoria: String) {
+  deleteFenomeno(id: Number): void {
 
-    event.preventDefault();
+    if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")) {
+      
+      this.fenomenosService.deleteFenomeno(id).subscribe(
+        (data) => {
 
-    let found: Boolean = false;
-    let catId: Number;
+          this.route.navigate(['/fenomenos']);
 
-    for (let i = 0, n = this.categorias.length; i < n && !false; i++) {
+        }, (err) => {
+          
+          console.log(err)
 
-      if (this.categorias[i].categoria == categoria) {
-
-        found = true;
-        catId = this.categorias[i].id;
-
-      }
+      });
 
     }
 
-    this.route.navigate([`/fenomenos`]);
+  }
+
+  aprobar(event: Event, idFen: Number): void {
+
+    event.preventDefault();
+
+    if(confirm("Al aprobar el fenómeno, este podrá ser visto por el resto de usuarios y el público. ¿Quieres proceder?")){
+
+      this.fenomenosService.aprobarFenomeno(idFen).subscribe(data => {
+
+        alert("Fenómeno aprobado.");
+        this.fenomenos = undefined;
+        this.getFenomenosModerar();
+
+      }, err => {
+
+        console.log("Algo ha ido mal.");
+
+      });
+
+    }
+
 
   }
+
 }

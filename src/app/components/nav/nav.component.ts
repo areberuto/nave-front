@@ -5,8 +5,6 @@ import { LoginService } from 'src/app/services/login/login.service';
 import { Router } from '@angular/router';
 import { LoginStatus } from 'src/app/models/login/login-status';
 import { Observable } from 'rxjs';
-import { Fenomeno } from 'src/app/models/fenomeno/fenomeno';
-import { SearchTarget } from 'src/app/models/search-target/search-target';
 
 @Component({
   selector: 'app-nav',
@@ -43,8 +41,6 @@ export class NavComponent implements OnInit {
 
     this.loginStatus$.subscribe(data => {
 
-      console.log('Recibiendo loginStatus en nav:', data);
-
       this.loginStatus = data;
 
       if (this.loginStatus.idInv == -1) {
@@ -72,7 +68,7 @@ export class NavComponent implements OnInit {
 
   }
 
-  toggle() {
+  toggle(): void {
 
     this.isMenuCollapsed = !this.isMenuCollapsed;
 
@@ -88,7 +84,7 @@ export class NavComponent implements OnInit {
 
   }
 
-  onResize(event) {
+  onResize(event: any): void {
 
     if (!this.isMenuCollapsed && event.target.innerWidth >= 1200) {
 

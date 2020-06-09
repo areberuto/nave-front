@@ -18,15 +18,14 @@ export class FormFenomenosComponent implements OnInit {
   public fenomeno: Fenomeno;
   public investigadorId: Number;
   public fenomenoId: Number;
-
   public categorias: Categoria[];
-
   public loginStatus: LoginStatus;
   public loginStatus$: Observable<LoginStatus>;
   
   constructor(private fenomenosService: FenomenosService, private loginService: LoginService, private router: Router, private activatedRoute: ActivatedRoute) { 
 
     this.fenomeno = <Fenomeno>{};
+    this.fenomeno.categoriaId = 1;
 
     this.loginStatus = this.loginService.getLoginStatus();
     this.loginStatus$ = this.loginService.getLoginStatus$();
@@ -35,6 +34,7 @@ export class FormFenomenosComponent implements OnInit {
 
       this.fenomenoId = this.activatedRoute.snapshot.params['idFen'];
       this.accion = 'Modificar fenómeno';
+      
       this.fenomenosService.getFenomenoById(this.fenomenoId).subscribe(data => {
 
         if(data.length){
@@ -110,16 +110,13 @@ export class FormFenomenosComponent implements OnInit {
 
   }
 
-  addFenomeno(){
+  addFenomeno(): void {
 
-    console.log(this.fenomeno);
-    
     this.fenomeno.investigadorId = this.investigadorId;
 
     this.fenomenosService.postFenomeno(this.fenomeno).subscribe(data => {
 
-      console.log(data);
-
+      alert("Tu fenómeno ha pasado a fase de moderación.\n\nSerá visible cuando el personal administrador lo apruebe.")
       this.router.navigate(['/fenomenos']);
 
     }, err => {
@@ -130,26 +127,22 @@ export class FormFenomenosComponent implements OnInit {
 
   }
 
-  modFenomeno(){
+  modFenomeno(): void {
 
     this.fenomenosService.putFenomeno(this.fenomeno).subscribe(data => {
       
-      console.log(data);
       alert("Fenómeno actualizado con éxito.");
       this.router.navigate(['/fenomenos']);
 
     }, (err) => {
 
-      alert(err.error.msg);
       console.log(err.error.msg); 
 
     });
 
   }
   
-  ejecutarAccion(){
-
-    console.log("Fenómeno que sale:", this.fenomeno);
+  ejecutarAccion(): void {
 
     if(!this.fenomenoId){
 
@@ -163,11 +156,10 @@ export class FormFenomenosComponent implements OnInit {
 
   }
 
-  cargarCategorias(){
+  cargarCategorias(): void {
 
-    this.fenomenosService.getCategorias().subscribe( data => {
+    this.fenomenosService.getCategorias().subscribe(data => {
 
-      console.log(data);
       this.categorias = data;
 
     }, err => {
@@ -177,4 +169,5 @@ export class FormFenomenosComponent implements OnInit {
     });
 
   }
+
 }

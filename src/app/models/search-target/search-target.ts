@@ -1,11 +1,13 @@
 export class SearchTarget {
 
-    idInv: Number[];
+    idInv: Number;
     ciudad: String;
     pais: String;
     fechaInicio: Date;
     fechaFin: Date;
-    categoria: String;
+    publicadoInicio: Date;
+    publicadoFin: Date;
+    categoria: Number;
     texto: String;
 
 }

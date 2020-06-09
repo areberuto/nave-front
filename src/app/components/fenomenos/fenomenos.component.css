@@ -5,6 +5,12 @@
   margin: 20px auto;
 }
 
+.fenomeno h4{
+
+  cursor: pointer;
+  
+}
+
 #autor {
   border-top: 2px solid black;
   padding-top: 10px;
