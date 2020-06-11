@@ -5,6 +5,7 @@ import { SearchTarget } from 'src/app/models/search-target/search-target';
 import { Categoria } from 'src/app/models/categoria/categoria';
 import { Observable } from 'rxjs';
 import { Comentario } from 'src/app/models/comentario/comentario';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,9 @@ import { Comentario } from 'src/app/models/comentario/comentario';
 
 export class FenomenosService {
 
-  private url: string = 'http://localhost:4001/fenomenos';
+  private url: string = `${environment.apiUrl}/fenomenos`;
 
   constructor(private http: HttpClient) {
-
 
 
   }
@@ -34,9 +34,9 @@ export class FenomenosService {
 
   }
 
-  getFenomenoById(id: Number): Observable<Fenomeno[]> {
+  getFenomenoById(idFen: Number): Observable<Fenomeno[]> {
 
-    return this.http.get<Fenomeno[]>(`${this.url}?idFen=${id}`);
+    return this.http.get<Fenomeno[]>(`${this.url}?idFen=${idFen}`);
 
   }
 

@@ -9,8 +9,6 @@ declare let L;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  public title: string = 'La nave del misterio';
   
   constructor(private loginService: LoginService){
 

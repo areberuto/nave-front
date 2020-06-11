@@ -9,7 +9,7 @@
 <div id="investigadoresContainer" class="row">
     <div *ngFor="let investigador of investigadores" class="investigador col-sm-6 col-lg-4 mx-auto my-4">
         <div class="card h-100" style="background-color: white; color: black">
-            <img class="card-img-top" src="assets/photo.png" alt="Card image cap">
+            <img class="card-img-top" src="assets/photo.png" alt="Avatar de {{investigador.nombre}} {{investigador.apellido1}}">
             <div class="card-body">
                 <h5 class="card-title text-center">{{investigador.nombre}} {{investigador.apellido1}} {{investigador.apellido2}}</h5>
             </div>

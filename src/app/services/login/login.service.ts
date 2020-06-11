@@ -4,6 +4,7 @@ import { Investigador } from "src/app/models/investigador/investigador";
 import { Router } from "@angular/router";
 import { LoginStatus } from "src/app/models/login/login-status";
 import { Subject, Observable } from "rxjs";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 
@@ -12,7 +13,7 @@ import { Subject, Observable } from "rxjs";
 })
 export class LoginService {
 
-  private url: string = "http://localhost:4001/login";
+  private url: string = `${environment.apiUrl}/login`;
 
   private loginStatus: LoginStatus;
 

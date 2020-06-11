@@ -1,14 +1,14 @@
 <div class="row">
-    <div id="msg" class="col-11 col-md-8 mx-auto py-4 my-3 text-center">
+    <div id="msg" class="col col-md-10 col-xl-8 mx-2 mx-md-auto my-2 p-4 text-center">
         <h3 class="text-center"><span class="d-none d-sm-inline">✏</span> {{accion}} <span class="d-none d-sm-inline">✏</span></h3><br>
         <h4 class="text-center">¡No te olvides de rellenar todos los campos!</h4><br>
         <p>Cuando incorporas información nueva a nuestra base de datos, lo harás bajo nuestro <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">código de
                 conducta</a>. Si uno de nuestros administradores detecta información no basada en prácticas veraces, este podrá sancionarte.</p>
-        <a type="button" class="mx-auto w-100 btn btn-warning" routerLink="/fenomenos">Volver</a><br>
+        <button type="button" class="mx-auto w-25 btn btn-warning" routerLink="/fenomenos">Volver</button><br>
     </div>
 </div>
 <div class="row">
-    <form id="formulario" class="col-11 col-md-8 p-4 mx-auto my-3" #fenomenosForm="ngForm" (ngSubmit)="ejecutarAccion()">
+    <form id="formulario" class="col col-md-10 col-xl-8 mx-2 mx-md-auto my-2 p-4" #fenomenosForm="ngForm" (ngSubmit)="ejecutarAccion()">
         <h3 class="col-12 mx-auto text-center">Datos del fenómeno</h3><br>
         <div class="col-12 mx-auto text-left">
             <div class="row justify-content-between">

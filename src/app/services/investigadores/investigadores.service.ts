@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Investigador } from 'src/app/models/investigador/investigador';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvestigadoresService {
 
-  private url: string = 'http://localhost:4001/investigadores';
+  private url: string = `${environment.apiUrl}/investigadores`;
 
   constructor(private http: HttpClient) {  
 

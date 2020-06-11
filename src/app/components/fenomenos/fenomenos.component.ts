@@ -47,28 +47,29 @@ export class FenomenosComponent implements OnInit {
     if (!this.loginStatus.idInv) {
 
       if (sessionStorage.getItem("idToken")) {
-        
+
         this.loginService.refreshAuth(sessionStorage.getItem("email"), sessionStorage.getItem("hashedPass")).subscribe((data) => {
 
           this.loginService.setSession(data);
 
           this.loginService.setLoginStatus({ isAdmin: data["isAdmin"], idInv: data["idInv"] });
+          
           this.idInvestigador = this.loginStatus.idInv;
 
-          if(this.activatedRoute.snapshot.params['idModerador']){
-            
-            if(!this.loginStatus.isAdmin){
+          if (this.activatedRoute.snapshot.params['idModerador']) {
+
+            if (!this.loginStatus.isAdmin || this.loginStatus.idInv != this.activatedRoute.snapshot.params['idModerador']) {
 
               this.route.navigate(['/']);
 
             }
 
             this.getFenomenosModerar();
-      
+
           } else {
-      
+
             this.getFenomenos();
-      
+
           }
 
         }, (err) => {
@@ -83,7 +84,7 @@ export class FenomenosComponent implements OnInit {
 
         this.loginService.setLoginStatus({ isAdmin: false, idInv: -1 });
 
-        if(this.activatedRoute.snapshot.params['idModerador']){
+        if (this.activatedRoute.snapshot.params['idModerador']) {
 
           this.route.navigate(['/']);
 
@@ -97,20 +98,20 @@ export class FenomenosComponent implements OnInit {
 
       this.idInvestigador = this.loginStatus.idInv;
 
-      if(this.activatedRoute.snapshot.params['idModerador']){
-      
-        if(!this.loginStatus.isAdmin){
+      if (this.activatedRoute.snapshot.params['idModerador']) {
+
+        if (!this.loginStatus.isAdmin || this.loginStatus.idInv != this.activatedRoute.snapshot.params['idModerador']) {
 
           this.route.navigate(['/']);
 
         }
 
         this.getFenomenosModerar();
-  
+
       } else {
-  
+
         this.getFenomenos();
-  
+
       }
 
     }
@@ -126,7 +127,7 @@ export class FenomenosComponent implements OnInit {
       this.hasParams = Object.keys(this.searchTarget).length != 0;
 
       this.fenomenosService.getFenomenos(this.searchTarget).subscribe(fenomenos => {
-        console.log(fenomenos);
+
         setTimeout(() => this.fenomenos = fenomenos, 1000);
         window.scroll(0, 0);
 
@@ -158,17 +159,17 @@ export class FenomenosComponent implements OnInit {
   deleteFenomeno(id: Number): void {
 
     if (confirm("El borrado del fenómeno seleccionado será irreversible.\n\n¿Desea proceder con la operación?")) {
-      
+
       this.fenomenosService.deleteFenomeno(id).subscribe(
         (data) => {
 
           this.route.navigate(['/fenomenos']);
 
         }, (err) => {
-          
+
           console.log(err)
 
-      });
+        });
 
     }
 
@@ -178,7 +179,7 @@ export class FenomenosComponent implements OnInit {
 
     event.preventDefault();
 
-    if(confirm("Al aprobar el fenómeno, este podrá ser visto por el resto de usuarios y el público. ¿Quieres proceder?")){
+    if (confirm("Al aprobar el fenómeno, este podrá ser visto por el resto de usuarios y el público. ¿Quieres proceder?")) {
 
       this.fenomenosService.aprobarFenomeno(idFen).subscribe(data => {
 
