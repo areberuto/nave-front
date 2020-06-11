@@ -41,6 +41,8 @@ Para utilizar la funcionalidad, en el archivo ./server/middleware/middleLogin.js
 lineas 15 y 16, están las propiedades donde se puede incluir una cuenta de correo y una
 clave para emitir los correos.
 
+Igualmente, en la línea 37, hay que repetir la dirección de correo en la propiedad "from".
+
 
 
 FRONT-END
